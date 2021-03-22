@@ -1,15 +1,16 @@
 'use strict'
 
 const audio = document.querySelector('.audio');
-const btn = document.querySelector('.btn-container');
-const buttons = document.querySelectorAll('.btn');
+const buttons = document.querySelector('.btn-container');
+const notesBtn = document.querySelector('.btn-notes');
+const lettersBtn = document.querySelector('.btn-letters');
 const piano = document.querySelector('.piano');
 const pianoKeys = document.querySelectorAll('.piano-key');
 const scrBtn = document.querySelector('.fullscreen');
 
-/* ======================================================================== */
 
-const changeScrMode = () => { 
+
+const changeScreenMode = () => { 
   if(document.fullscreenElement) {
     document.exitFullscreen();
 
@@ -20,31 +21,58 @@ const changeScrMode = () => {
   }
 }
 
-/* ======================================================================== */
+
+const changeKeyNotation = (type) => {
+  if(type == 'letter') {
+    pianoKeys.forEach(key => {
+      key.classList.add('piano-key-letter'); 
+    });
+  };
+  
+  if(type == 'note') {
+    pianoKeys.forEach(key => {
+      key.classList.remove('piano-key-letter'); 
+    });
+  };
+}
+
 
 const playSound = (src) => {
   const audio = new Audio();
   audio.src = src;
-  audio.currentTime = -1;
+  //Change time to negative to eliminate click sound with provided audio assets
+  audio.currentTime = -0.1;
   audio.play();
 }
 
-/* ======================================================================== */
 
-const activateKey = (event) => {
-  let note = event.target.dataset.note;
+const activateKey = (e) => {
+  //The argument can be an event or element itself
+  let el = e.target || e;
+  let note = el.dataset.note;
 
+  //If click was made between keys but still inside parent container 
+  //the note would be equal undefined so check for this to prevent erros in console
   if(note) {
-    event.target.classList.add('piano-key-active', 'piano-key-active-pseudo');
+    el.classList.add(
+      'piano-key-active',
+      'piano-key-active-pseudo'
+      );
+
     playSound(`assets/audio/${note}.mp3`);
   }
 }
 
-const deactivateKey = (event) => {
-  event.target.classList.remove('piano-key-active', 'piano-key-active-pseudo');
+const deactivateKey = (e) => {
+   //The argument can be an event or element itself
+  let el = e.target || e; 
+
+  el.classList.remove(
+    'piano-key-active',
+    'piano-key-active-pseudo'
+    );
 }
 
-/* ======================================================================== */
 
 const enableKey = (event) => {
   activateKey(event);
@@ -64,13 +92,46 @@ const disableKey = (event) => {
   });
 }
 
-/* ======================================================================== */
 
-window.addEventListener('keydown', enableKey);
-window.addEventListener('keyup', disableKey);
+window.addEventListener('keydown', event => {
+  //Exit function if key is held down to prevent sound repeating
+  if(event.repeat) return;
+
+  pianoKeys.forEach(key => {
+    let code = event.code;
+    let letter = `Key${key.dataset.letter}`;
+
+    if(code == letter) activateKey(key);
+  });
+});
+
+window.addEventListener('keyup', event => {
+  pianoKeys.forEach(key => {
+    deactivateKey(key);
+  });
+});
 
 piano.addEventListener('mousedown', enableKey);
 piano.addEventListener('mouseup', disableKey);
 piano.addEventListener('mouseleave', disableKey);
+scrBtn.addEventListener('click', changeScreenMode);
 
-scrBtn.addEventListener('click', changeScrMode);
+buttons.addEventListener('click', event => {
+  if(event.target == notesBtn) {
+    if(!notesBtn.classList.contains('btn-active')) {
+      notesBtn.classList.add('btn-active');
+      lettersBtn.classList.remove('btn-active');
+
+      changeKeyNotation('note');
+    }
+  };
+
+  if(event.target == lettersBtn) {
+    if(!lettersBtn.classList.contains('btn-active')) {
+      lettersBtn.classList.add('btn-active');
+      notesBtn.classList.remove('btn-active');
+
+      changeKeyNotation('letter');
+    }
+  };
+});

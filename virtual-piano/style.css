@@ -102,6 +102,7 @@ body {
   cursor: pointer;
 }
 .piano-key:hover {
+  filter: drop-shadow(0 0 10px #fff);
   background-color: #fff;
 }
 
@@ -127,6 +128,9 @@ body {
   pointer-events: auto;
   transform-origin: center top;
   margin: 0px;
+}
+.piano-key.sharp:hover {
+  filter: drop-shadow(0 0 15px #1a1e22);
 }
 .piano-key.piano-key-active,
 .piano-key.sharp.piano-key-active {
@@ -162,6 +166,7 @@ body {
 .piano-key:hover::before,
 .piano-key:hover::after {
   color: #d7dfe6;
+  filter: drop-shadow(0 0 10px lightgray);
 }
 .piano-key-active:hover::before,
 .piano-key-active:hover::after {
@@ -252,6 +257,7 @@ body {
   transition: 0.3s;
 }
 .github:hover {
+  filter: drop-shadow(0 0 5px #00b4a4);
   color: #fff;
 }
 
@@ -266,6 +272,7 @@ body {
   background-repeat: no-repeat;
   background-position: left center;
   padding-right: 111px;
+  transition: filter 0.3s;
 }
 .rss-year {
   position: absolute;
@@ -277,6 +284,9 @@ body {
   line-height: 0.9;
   font-weight: bold;
   transition: 0.3s;
+}
+.rss:hover {
+  filter: drop-shadow(0 0 5px #00b4a4);
 }
 .rss:hover .rss-year {
   right: -5px;

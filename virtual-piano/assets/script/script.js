@@ -111,9 +111,8 @@ window.addEventListener('keyup', event => {
   });
 });
 
+window.addEventListener('mouseup', disableKey);
 piano.addEventListener('mousedown', enableKey);
-piano.addEventListener('mouseup', disableKey);
-piano.addEventListener('mouseleave', disableKey);
 scrBtn.addEventListener('click', changeScreenMode);
 
 buttons.addEventListener('click', event => {

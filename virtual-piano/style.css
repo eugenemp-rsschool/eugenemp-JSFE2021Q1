@@ -4,15 +4,12 @@
   box-sizing: border-box;
   user-select: none;
 }
-
 a:focus {
   outline: 0;
 }
-
 html {
   background: #313940;
 }
-
 body {
   min-height: 100vh;
   background-color: #313940;
@@ -20,7 +17,6 @@ body {
   background: #313940;
   overflow-x: hidden;
 }
-
 .header {
   text-align: center;
   width: 100%;
@@ -33,7 +29,6 @@ body {
   font-weight: 300;
   color: #fff;
 }
-
 .main {
   min-height: calc(100vh - 110px);
   padding: 60px 10px 0;
@@ -45,7 +40,6 @@ body {
   max-width: 1140px;
   margin: 0 auto;
 }
-
 .btn-container {
   display: flex;
   justify-content: space-between;
@@ -81,7 +75,6 @@ body {
 .btn-active:hover {
   background-color: #00c9b7;
 }
-
 .piano {
   position: relative;
   display: flex;
@@ -105,7 +98,6 @@ body {
   filter: drop-shadow(0 0 10px #fff);
   background-color: #fff;
 }
-
 .keys-sharp {
   position: absolute;
   top: 0;
@@ -116,7 +108,6 @@ body {
   justify-content: space-between;
   pointer-events: none;
 }
-
 .piano-key.sharp {
   width: 54px;
   height: 170px;
@@ -130,13 +121,14 @@ body {
   margin: 0px;
 }
 .piano-key.sharp:hover {
+  background-color: #1a1e22;
   filter: drop-shadow(0 0 15px #1a1e22);
 }
 .piano-key.piano-key-active,
 .piano-key.sharp.piano-key-active {
-  background-color: #00b4a4;
+  background-color: #00c9b7;
   transform: scale(0.96);
-  filter: drop-shadow(0 0 10px #00b4a4);
+  filter: drop-shadow(0 0 10px #00c9b7);
 }
 .piano-key.none {
   background-color: transparent;
@@ -198,11 +190,10 @@ body {
 .piano-key-active::before {
   color: #00b4a4;
 }
-
 .fullscreen {
   position: fixed;
-  top: 120px;
-  right: 40px;
+  top: 10px;
+  right: 20px;
   width: 40px;
   height: 40px;
   background-color: rgba(255, 255, 255, 0.3);
@@ -215,6 +206,7 @@ body {
 }
 .fullscreen:hover {
   background-color: rgba(255, 255, 255, 0.5);
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
 }
 .fullscreen:active {
   background-color: rgba(255, 255, 255, 0.8);
@@ -225,7 +217,6 @@ body {
 :-webkit-full-screen .fullscreen {
   background-image: url("assets/svg/fullscreen-exit.svg");
 }
-
 .footer {
   border-top: 1px solid;
   border-image-slice: 1;
@@ -240,7 +231,6 @@ body {
   max-width: 1140px;
   margin: 0 auto;
 }
-
 .github {
   display: block;
   width: 120px;
@@ -258,10 +248,9 @@ body {
   transition: 0.3s;
 }
 .github:hover {
-  filter: drop-shadow(0 0 5px #00b4a4);
   color: #fff;
+  filter: drop-shadow(0 0 5px #00b4a4);
 }
-
 .rss {
   display: block;
   position: relative;
@@ -273,7 +262,7 @@ body {
   background-repeat: no-repeat;
   background-position: left center;
   padding-right: 111px;
-  transition: filter 0.3s;
+  transition: 0.3s;
 }
 .rss-year {
   position: absolute;
@@ -293,16 +282,8 @@ body {
   right: -5px;
   letter-spacing: 0;
 }
-
 @media (max-width: 768px) {
-  .fullscreen {
-    top: 10px;
-    right: 20px;
-    width: 40px;
-    height: 40px;
-  }
 }
-
 @media (max-width: 600px) {
   .main {
     padding-top: 40px;

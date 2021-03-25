@@ -13,6 +13,10 @@ body {
   font-family: 'Open Sans', Arial, Helvetica, sans-serif;
   overflow-x: hidden;
 }
+.canvas {
+  width: 672px;
+  height: 420px;
+}
 .header {
   text-align: center;
   width: 100%;
@@ -208,7 +212,7 @@ output {
   --saturate: 100%;
   --hue: 0deg;
 }
-img {
+/* img {
   height: 100%;
   width: 100%;
   max-height: 520px;
@@ -217,7 +221,7 @@ img {
   filter: blur(var(--blur, 0px)) invert(var(--invert, 0%))
     sepia(var(--sepia, 0%)) saturate(var(--saturate, 100%))
     hue-rotate(var(--hue, 0deg));
-}
+} */
 .fullscreen {
   position: fixed;
   top: 10px;

@@ -11,11 +11,13 @@ body {
   min-height: 100vh;
   background-color: #313940;
   font-family: 'Open Sans', Arial, Helvetica, sans-serif;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
+  overflow: hidden;
 }
 .canvas {
-  width: 672px;
-  height: 420px;
+  max-width: 100%;
+  width: min-content;
+  height: min-content;
 }
 .header {
   text-align: center;
@@ -312,6 +314,7 @@ output {
   right: -5px;
   letter-spacing: 0;
 }
+
 @media (max-width: 1024px) {
   .main {
     padding-top: 40px;
@@ -343,6 +346,7 @@ output {
     max-width: 100%;
   }
 }
+
 @media (max-width: 375px) {
   .btn {
     min-width: 145px;

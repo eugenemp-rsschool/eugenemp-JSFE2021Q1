@@ -9,6 +9,7 @@
   <link href="https://fonts.gstatic.com" rel="preconnect" />
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;800&display=swap" rel="stylesheet" />
   <link href="style.css" rel="stylesheet" />
+  <link href="assets/styles/modal.css" rel="stylesheet">
   <title>photo-filter</title>
 </head>
 
@@ -16,31 +17,32 @@
   <header class="header">
     <h1 class="header-title">Photo-filter</h1>
   </header>
+
   <main class="main">
     <div class="filters">
       <label>
         Blur:
-        <input name="blur" data-sizing="px" type="range" min="0" max="10" value="0" />
+        <input class="filter" name="blur" data-sizing="px" data-default="0" type="range" min="0" max="10" value="0" />
         <output name="result">0</output>
       </label>
       <label>
         Invert:
-        <input name="invert" data-sizing="%" type="range" min="0" max="100" value="0" />
+        <input class="filter" name="invert" data-sizing="%" data-default="0" type="range" min="0" max="100" value="0" />
         <output name="result">0</output>
       </label>
       <label>
         Sepia:
-        <input name="sepia" data-sizing="%" type="range" min="0" max="100" value="0" />
+        <input class="filter" name="sepia" data-sizing="%" data-default="0" type="range" min="0" max="100" value="0" />
         <output name="result">0</output>
       </label>
       <label>
         Saturate:
-        <input name="saturate" data-sizing="%" type="range" min="0" max="200" value="100" />
+        <input class="filter" name="saturate" data-sizing="%" data-default="100" type="range" min="0" max="200" value="100" />
         <output name="result">100</output>
       </label>
       <label>
         Hue rotate:
-        <input name="hue" data-sizing="deg" type="range" min="0" max="360" value="0" />
+        <input class="filter" name="hue" data-sizing="deg" data-default="0" type="range" min="0" max="360" value="0" />
         <output name="result">0</output>
       </label>
     </div>
@@ -55,9 +57,11 @@
         <button class="btn btn-save">Save picture</button>
       </div>
       <!-- <img src="assets/img/img.jpg" alt="image" /> -->
-      <canvas class="canvas"></canvas>
+
+      <canvas id="canvas" class="canvas"></canvas>
     </div>
   </main>
+
   <footer class="footer">
     <div class="footer-container">
       <a class="github" href="https://github.com/eugenemp" target="_blank" rel="noopener noreferrer">@eugenemp</a>
@@ -67,7 +71,9 @@
     </div>
   </footer>
   <button class="fullscreen openfullscreen"></button>
+
   <script src="assets/script/script.js"></script>
+  <script src="assets/script/modal.js"></script>
 </body>
 
 </html>

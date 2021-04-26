@@ -11,8 +11,14 @@ const imageElement = document.querySelector(".image");
 
 let canvasFilter = "";
 let imageSource = "assets/img/img.jpg";
-let blurRatio;
 
+
+function getBlurRatio() {
+  let widthRatio = imageElement.naturalWidth / imageElement.width;
+  let heightRatio = imageElement.naturalHeight / imageElement.height;
+  return (widthRatio >= heightRatio) ? Math.floor(widthRatio * 100) / 100 :
+                                       Math.floor(heightRatio * 100) / 100;
+}
 
 function saveImage() {
 
@@ -65,6 +71,8 @@ function initFilterChanger() {
 
     if (elem.name == "hue") {
       filterValues["hue-rotate"] = elem.value + elem.dataset.sizing;
+    } else if (elem.name == "blur") {
+      filterValues[elem.name] = elem.value * getBlurRatio() + elem.dataset.sizing;
     } else filterValues[elem.name] = elem.value + elem.dataset.sizing;
 
     let arr = Object.entries(filterValues);

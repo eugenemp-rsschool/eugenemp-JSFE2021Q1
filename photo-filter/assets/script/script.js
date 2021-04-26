@@ -130,9 +130,7 @@ const changeFilter = initFilterChanger();
 const nextPicture = initNextPicture(".jpg");
 
 
-filters.addEventListener("input", e => {
-  changeFilter(e.target);
-});
+filters.addEventListener("input", e => changeFilter(e.target));
 
 btnScrMode.addEventListener("click", changeScrMode);
 
@@ -150,6 +148,7 @@ fileInput.addEventListener("change", e => {
 });
 
 // Init first picture
-drawImage(imageSource);
+resetFilter();
+imageElement.src = imageSource;
 
 

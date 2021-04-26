@@ -63,7 +63,10 @@ function initFilterChanger() {
   };
 
   return function (elem) {
-    let output = elem.nextElementSibling;
+    let output;
+    if (elem.nextElementSibling.name = "result") {
+      output = elem.nextElementSibling;
+    };
     output.value = elem.value;
 
     imageElement.style.setProperty(`--${elem.name}`,
@@ -135,13 +138,16 @@ const changeFilter = initFilterChanger();
 const nextPicture = initNextPicture(".jpg");
 
 
-filters.addEventListener("input", e => changeFilter(e.target));
+filters.addEventListener("input", e => {
+  console.log(e.target);
+  changeFilter(e.target);
+});
 
 btnScrMode.addEventListener("click", changeScrMode);
 
 btnContainer.addEventListener("click", e => {
   let elem = e.target;
-
+  
   if (elem.matches(".btn-next")) nextPicture(getDayPart());
   if (elem.matches(".btn-reset")) resetFilter();
   if (elem.matches(".btn-load")) drawImage();

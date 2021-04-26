@@ -41,7 +41,7 @@ function loadImage() {
   reader.readAsDataURL(selectedFile);
   reader.onload = () => {
     imageSource = reader.result;
-    drawImage(imageSource);
+    imageElement.src = imageSource;
   };
 }
 

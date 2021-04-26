@@ -16,8 +16,7 @@ let imageSource = "assets/img/img.jpg";
 function getBlurRatio() {
   let widthRatio = imageElement.naturalWidth / imageElement.width;
   let heightRatio = imageElement.naturalHeight / imageElement.height;
-  return (widthRatio >= heightRatio) ? Math.floor(widthRatio * 100) / 100 :
-                                       Math.floor(heightRatio * 100) / 100;
+  return (widthRatio >= heightRatio) ? widthRatio : heightRatio;
 }
 
 function saveImage() {
@@ -138,14 +137,11 @@ const changeFilter = initFilterChanger();
 const nextPicture = initNextPicture(".jpg");
 
 
-filters.addEventListener("input", e => {
-  console.log(e.target);
-  changeFilter(e.target);
-});
-
+filters.addEventListener("input", e => changeFilter(e.target));
+fileInput.addEventListener("change", e => loadImage());
 btnScrMode.addEventListener("click", changeScrMode);
-
 btnContainer.addEventListener("click", e => {
+
   let elem = e.target;
   
   if (elem.matches(".btn-next")) nextPicture(getDayPart());
@@ -154,12 +150,6 @@ btnContainer.addEventListener("click", e => {
   if (elem.matches(".btn-save")) saveImage();
 });
 
-fileInput.addEventListener("change", e => {
-  loadImage();
-});
-
 // Init first picture
 resetFilter();
 imageElement.src = imageSource;
-
-

@@ -62,8 +62,6 @@ function initFilterChanger() {
 
     imageElement.style.setProperty(`--${elem.name}`,
               `${elem.value}${elem.dataset.sizing}`);
-    console.log(`--${elem.name}`,
-    `${elem.value}${elem.dataset.sizing}`);
 
     if (elem.name == "hue") {
       filterValues["hue-rotate"] = elem.value + elem.dataset.sizing;
@@ -74,7 +72,6 @@ function initFilterChanger() {
     arr.forEach(item => {
       canvasFilter += `${item[0]}(${item[1]})`;
     });
-    console.log(canvasFilter);
   }
 }
 

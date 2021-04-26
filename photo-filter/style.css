@@ -15,9 +15,10 @@ body {
   overflow: hidden;
 }
 .canvas {
-  max-width: 100%;
-  width: min-content;
-  height: min-content;
+  display: none;
+  max-height: 520px;
+  max-width: 830px;
+  background-color: transparent;
 }
 .header {
   text-align: center;
@@ -214,7 +215,7 @@ output {
   --saturate: 100%;
   --hue: 0deg;
 }
-/* img {
+.image {
   height: 100%;
   width: 100%;
   max-height: 520px;
@@ -223,7 +224,7 @@ output {
   filter: blur(var(--blur, 0px)) invert(var(--invert, 0%))
     sepia(var(--sepia, 0%)) saturate(var(--saturate, 100%))
     hue-rotate(var(--hue, 0deg));
-} */
+}
 .fullscreen {
   position: fixed;
   top: 10px;

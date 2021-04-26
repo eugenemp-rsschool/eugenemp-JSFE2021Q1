@@ -1,86 +1,98 @@
 "use strict"
 
-const canvas = document.getElementById("canvas");
+const canvas = document.querySelector(".canvas");
 const ctx = canvas.getContext("2d");
-
 const filters = document.querySelector(".filters");
+const filterList = document.querySelectorAll(".filter");
 const btnContainer = document.querySelector(".btn-container");
 const btnScrMode = document.querySelector(".openfullscreen");
+const fileInput = document.querySelector(".btn-load--input");
 
-const inputElement = document.querySelector(".btn-load--input");
+let currentFilter = "";
+let imageSource = "assets/img/img.jpg";
+let blurRatio;
 
-const currentFilterValues = {
-  blur: 0,
-  invert: 0,
-  sepia: 0,
-  saturate: 0,
-  hue: 0
-};
 
-/* ========================================================================= */
-
-function drawImage(src, filter) {
-  let image = new Image();
-
+function drawImage(src) {
+  const image = new Image();
+  
   image.setAttribute('crossOrigin', 'anonymous');
   image.src = src;
   image.onload = function () {
     canvas.width = image.width;
     canvas.height = image.height;
-    ctx.filter = filter;
-    ctx.drawImage(image, 0, 0);
-
+    blurRatio = Math.round(image.height / canvas.offsetHeight);
+    ctx.filter = currentFilter;
+    ctx.drawImage(image, 0, 0, image.width, image.height);
   };
 }
 
 
+function saveImage() {
 
+  const image = new Image();
 
+  
+  image.setAttribute('crossOrigin', 'anonymous');
+  image.src = imageSource;
+  image.onload = function () {
+    let link = document.createElement('a');
 
-
-
-
-function saveImage(fileName) {
-  fileName = fileName || "image";
-  let link = document.createElement('a');
-
-  link.href = canvas.toDataURL();
-  link.download = fileName;
-  link.click();
-  link.delete;
+    canvas.width = image.width;
+    canvas.height = image.height;
+    ctx.filter = canvasFilter;
+    ctx.drawImage(image, 0, 0, image.width, image.height);
+    link.href = canvas.toDataURL();
+    link.download = "image.png";
+    link.click();
+    link.delete;
+  };
 }
 
 
+function loadImage() {
+  const selectedFile = fileInput.files[0];
+  const reader = new FileReader();
 
-
-
-
-
-
-function changeFilter(elem) {
-  let value = elem.value;
-  let output = elem.nextElementSibling;
-
-  currentFilterValues[elem.name] = value;
-  output.value = `${currentFilterValues[elem.name]}`;
-
-  let filter = `${elem.name}(${currentFilterValues[elem.name]}px)`;
-  drawImage("/photo-filter/assets/img/img.jpg", filter);
-
-  console.log(`Filter: ${elem.name}, value: ${output.value}`);
-  console.log(`${elem.name}(${currentFilterValues[elem.name]}px)`);
+  reader.readAsDataURL(selectedFile);
+  reader.onload = () => {
+    imageSource = reader.result;
+    drawImage(imageSource);
+  };
 }
 
 
+function initFilterChanger() {
+  const filterValues = {
+    "blur": "0px",
+    "invert": "0%",
+    "sepia": "0%",
+    "saturate": "0%",
+    "hue-rotate": "0deg",
+  };
 
+  return function (elem) {
+    let value;
 
+    if(elem.name == "blur") {
+      value = elem.value * Math.round(blurRatio);
+    } else value = elem.value;
 
+    let output = elem.nextElementSibling;
+    let arr = Object.entries(filterValues);
 
+    output.value = elem.value;
+    filterValues[elem.name] = value + elem.dataset.sizing;
+    currentFilter = "";
+    arr.forEach(item => {
+      currentFilter += `${item[0]}(${item[1]})`;
+    });
+    drawImage(imageSource);
+  }
+}
 
 
 function resetFilter() {
-  const filterList = document.querySelectorAll(".filter");
-  
   filterList.forEach(input => {
     input.value = input.dataset.default;
     changeFilter(input);
@@ -88,27 +100,32 @@ function resetFilter() {
 }
 
 
+function getDayPart (hour) {
+  let date = new Date();
+  let time = hour || date.getHours();
+
+  return (time >= 6  && time < 12) ? "morning" :
+         (time >= 12 && time < 18) ?     "day" :
+         (time >= 18) ?     "evening" : "night";
+}
 
 
+function initNextPicture(format) {
+  let i = 0;
+  const picIndex = [ 
+    "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", 
+    "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"
+  ]
+  
+  return function (dayTime) {
+    imageSource = (
+      `https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${dayTime}/${picIndex[i] + format}`
+      );
 
-
-
-
-function nextPicture(dayTime) {
-  const link = (
-    `https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${dayTime}`
-    );
-
-  let time = new Date();
-
-
+    drawImage(imageSource);
+    (i == picIndex.length - 1) ? i = 0 : i++;
+  }
 } 
-
-
-
-
-
-
 
 
 function changeScrMode() {
@@ -122,25 +139,30 @@ function changeScrMode() {
 }
 
 
+const changeFilter = initFilterChanger();
+const nextPicture = initNextPicture(".jpg");
 
 
-/* ========================================================================= */
-
-filters.addEventListener('input', e => {
+filters.addEventListener("input", e => {
   changeFilter(e.target);
 });
 
-btnContainer.addEventListener('click', e => {
+btnScrMode.addEventListener("click", changeScrMode);
+
+btnContainer.addEventListener("click", e => {
   let elem = e.target;
 
-  if(elem.matches('.btn-reset')) resetFilter();
-  //if(elem.matches('.btn-next')) ;
-  if (elem.matches('.btn-load')) drawImage();
-  if (elem.matches('.btn-save')) saveImage();
+  if (elem.matches(".btn-next")) nextPicture(getDayPart());
+  if (elem.matches(".btn-reset")) resetFilter();
+  if (elem.matches(".btn-load")) drawImage();
+  if (elem.matches(".btn-save")) saveImage();
 });
 
-btnScrMode.addEventListener('click', changeScrMode);
+fileInput.addEventListener("change", e => {
+  loadImage();
+});
+
+// Init first picture
+drawImage(imageSource);
 
 
-/* ========================================================================= */
-drawImage("/photo-filter/assets/img/img.jpg");

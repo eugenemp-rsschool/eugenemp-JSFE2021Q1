@@ -8,7 +8,7 @@ const btnContainer = document.querySelector(".btn-container");
 const btnScrMode = document.querySelector(".openfullscreen");
 const fileInput = document.querySelector(".btn-load--input");
 
-let currentFilter = "";
+let canvasFilter = "";
 let imageSource = "assets/img/img.jpg";
 let blurRatio;
 
@@ -56,22 +56,24 @@ function initFilterChanger() {
   };
 
   return function (elem) {
-    let value;
-
-    if(elem.name == "blur") {
-      value = elem.value * Math.round(blurRatio);
-    } else value = elem.value;
-
     let output = elem.nextElementSibling;
-    let arr = Object.entries(filterValues);
-
     output.value = elem.value;
-    filterValues[elem.name] = value + elem.dataset.sizing;
-    currentFilter = "";
+
+    imageElement.style.setProperty(`--${elem.name}`,
+              `${elem.value}${elem.dataset.sizing}`);
+    console.log(`--${elem.name}`,
+    `${elem.value}${elem.dataset.sizing}`);
+
+    if (elem.name == "hue") {
+      filterValues["hue-rotate"] = elem.value + elem.dataset.sizing;
+    } else filterValues[elem.name] = elem.value + elem.dataset.sizing;
+
+    let arr = Object.entries(filterValues);
+    canvasFilter = "";
     arr.forEach(item => {
-      currentFilter += `${item[0]}(${item[1]})`;
+      canvasFilter += `${item[0]}(${item[1]})`;
     });
-    drawImage(imageSource);
+    console.log(canvasFilter);
   }
 }
 

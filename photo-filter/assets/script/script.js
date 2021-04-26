@@ -13,26 +13,10 @@ let imageSource = "assets/img/img.jpg";
 let blurRatio;
 
 
-function drawImage(src) {
-  const image = new Image();
-  
-  image.setAttribute('crossOrigin', 'anonymous');
-  image.src = src;
-  image.onload = function () {
-    canvas.width = image.width;
-    canvas.height = image.height;
-    blurRatio = Math.round(image.height / canvas.offsetHeight);
-    ctx.filter = currentFilter;
-    ctx.drawImage(image, 0, 0, image.width, image.height);
-  };
-}
-
-
 function saveImage() {
 
   const image = new Image();
 
-  
   image.setAttribute('crossOrigin', 'anonymous');
   image.src = imageSource;
   image.onload = function () {

@@ -7,6 +7,7 @@ const filterList = document.querySelectorAll(".filter");
 const btnContainer = document.querySelector(".btn-container");
 const btnScrMode = document.querySelector(".openfullscreen");
 const fileInput = document.querySelector(".btn-load--input");
+const imageElement = document.querySelector(".image");
 
 let canvasFilter = "";
 let imageSource = "assets/img/img.jpg";
@@ -108,7 +109,7 @@ function initNextPicture(format) {
       `https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${dayTime}/${picIndex[i] + format}`
       );
 
-    drawImage(imageSource);
+      imageElement.src = imageSource;
     (i == picIndex.length - 1) ? i = 0 : i++;
   }
 } 

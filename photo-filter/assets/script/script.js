@@ -133,21 +133,51 @@ function changeScrMode() {
 }
 
 
+function removeBtnActiveState() {
+  let buttons = document.querySelectorAll(".btn");
+  buttons.forEach(button => {
+    if (button.classList.contains("btn-active")) {
+      button.classList.remove("btn-active");
+    }
+  });
+}
+
+
 const changeFilter = initFilterChanger();
 const nextPicture = initNextPicture(".jpg");
 
 
 filters.addEventListener("input", e => changeFilter(e.target));
-fileInput.addEventListener("change", e => loadImage());
+fileInput.addEventListener("change", e => {
+  if(fileInput.value.length) {
+    removeBtnActiveState();
+    e.target.parentNode.classList.add("btn-active");
+  };
+  loadImage();
+});
 btnScrMode.addEventListener("click", changeScrMode);
 btnContainer.addEventListener("click", e => {
 
   let elem = e.target;
   
-  if (elem.matches(".btn-next")) nextPicture(getDayPart());
-  if (elem.matches(".btn-reset")) resetFilter();
-  if (elem.matches(".btn-load")) drawImage();
-  if (elem.matches(".btn-save")) saveImage();
+  if (elem.matches(".btn-next")) {
+    removeBtnActiveState();
+    elem.classList.add("btn-active");
+    nextPicture(getDayPart());
+  }
+  if (elem.matches(".btn-reset")) {
+    removeBtnActiveState();
+    elem.classList.add("btn-active");
+    resetFilter();
+  }
+  if (elem.matches(".btn-load")) {
+    drawImage();
+  }
+  if (elem.matches(".btn-save")) {
+    removeBtnActiveState();
+    elem.classList.add("btn-active");
+    saveImage();
+  }
 });
 
 // Init first picture

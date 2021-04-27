@@ -154,6 +154,7 @@ fileInput.addEventListener("change", e => {
     e.target.parentNode.classList.add("btn-active");
   };
   loadImage();
+  fileInput.value = '';
 });
 btnScrMode.addEventListener("click", changeScrMode);
 btnContainer.addEventListener("click", e => {
@@ -169,9 +170,6 @@ btnContainer.addEventListener("click", e => {
     removeBtnActiveState();
     elem.classList.add("btn-active");
     resetFilter();
-  }
-  if (elem.matches(".btn-load")) {
-    drawImage();
   }
   if (elem.matches(".btn-save")) {
     removeBtnActiveState();

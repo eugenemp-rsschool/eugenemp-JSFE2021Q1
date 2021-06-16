@@ -1,0 +1,93 @@
+.car-mgmt {
+  &__wrapper {
+    width: 410px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid #7c7c7c;
+    border-radius: 10px;
+    background-color: #545454;
+    box-shadow: 0 4px 10px 5px #232323;
+  }
+
+  &__create__form,
+  &__update__form {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+  }
+
+  &__btn__wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+  }
+}
+
+.car-mgmt__create__btn,
+.car-mgmt__update__btn,
+.car-mgmt__btn {
+  &__submit,
+  &__race,
+  &__reset,
+  &__generate {
+    width: 80px;
+    height: 30px;
+    background-color: #686868;
+    border: 1px solid #7c7c7c;
+    border-radius: 4px;
+    box-shadow: 0 3px 5px #232323;
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #c4c4c4;
+    transition: 0.1s ease-in-out;
+    transition-property: background-color, box-shadow;
+  }
+
+  &__race,
+  &__reset {
+    background-color: #686e28;
+    border: 1px solid #7c6e28;
+  }
+
+  &__generate {
+    width: 150px;
+  }
+
+  &__submit:hover,
+  &__generate:hover {
+    background-color: #747474;
+    box-shadow: 0 5px 10px #232323;
+  }
+
+  &__race:hover,
+  &__reset:hover {
+    background-color: #848b32;
+    box-shadow: 0 5px 10px #232323;
+  }
+
+  &__submit:active,
+  &__generate:active {
+    background-color: #aaaaaa;
+    color: #ffffff;
+    box-shadow: 0 0 2px #232323;
+    transition: none;
+  }
+
+  &__race:active,
+  &__reset:active {
+    background-color: #686e28;
+    color: #ffffff;
+    box-shadow: 0 0 2px #232323;
+    transition: none;
+  }
+}

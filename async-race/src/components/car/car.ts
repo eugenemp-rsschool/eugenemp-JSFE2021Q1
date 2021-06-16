@@ -44,8 +44,8 @@ class Car {
   }
 
   render(): HTMLElement {
-    this.finish.style.backgroundImage = 'assets/images/finish.svg';
-    this.car.style.backgroundImage = 'assets/images/car.svg';
+    this.finish.style.backgroundImage = 'url(assets/images/finish.svg)';
+    this.car.style.backgroundImage = 'url(assets/images/car.svg)';
 
     [
       this.btnSelect,

@@ -1,3 +1,5 @@
+$row-height: 30px;
+
 .page {
   &__winners {
     display: flex;
@@ -13,12 +15,19 @@
   &__garage__heading {
     margin: 0;
     font-family: 'Roboto', sans-serif;
-    font-size: 40px;
+    font-size: 34px;
     font-weight: 700;
     text-transform: uppercase;
     text-shadow: 0 3px 5px #230f03;
     color: #dbdbdb;
-    
+  }
+
+  &__amount {
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    text-shadow: 0 3px 5px #230f03;
+    color: #dbdbdb;
   }
 }
 
@@ -28,15 +37,22 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    gap: 20px;
     width: 80%;
-    height: 50%;
-    border: 1px solid #747474;
+    height: auto;
+    padding-bottom: $row-height;
+    border: 2px solid #626262;
+    background-color: rgba($color: #ffffff, $alpha: 0.2);
+    box-shadow: 0 3px 5px #232323;
   }
 
-  &__table__head,
+  &__table__head{
+    width: 100%;
+  }
+
   &__table__row {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     width: 100%;
   }
 
@@ -46,6 +62,61 @@
   &__table__header__wins,
   &__table__header__time {
     width: 20%;
-    height: 20px;
+    height: $row-height;
+    background-color: rgba($color: #746800, $alpha: 0.5);
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    text-shadow: 0 1px 3px #230f03;
+    color: #dbdbdb;
+  }
+
+  &__amount,
+  &__page-num {
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    text-shadow: 0 3px 5px #230f03;
+    color: #dbdbdb;
+  }
+
+  &__btn {
+    &__wrapper {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      width: 410px;
+    }
+
+    &__prev,
+    &__next {
+      width: 90px;
+      height: 40px;
+      background-color: #686868;
+      border: 1px solid #7c7c7c;
+      border-radius: 5px;
+      box-shadow: 0 3px 5px #232323;
+      font-family: 'Roboto', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      text-transform: uppercase;
+      color: #c4c4c4;
+      transition: 0.1s ease-in-out;
+      transition-property: background-color, box-shadow;
+    }
+
+    &__prev:hover,
+    &__next:hover {
+      background-color: #747474;
+      box-shadow: 0 5px 10px #232323;
+    }
+
+    &__prev:active,
+    &__next:active {
+      background-color: #aaaaaa;
+      box-shadow: 0 0 2px #232323;
+      color: #ffffff;
+      transition: none;
+    }
   }
 }

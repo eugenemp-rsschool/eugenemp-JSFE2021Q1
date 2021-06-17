@@ -25,6 +25,8 @@ class Car {
 
   private readonly finish: HTMLElement;
 
+  private readonly carID: number;
+
   constructor(maker: string, color: string, id: number, model = '') {
     this.carWrapper = new Component('div', ['car__wrapper']).render();
     this.carHeader = new Component('div', ['car__header']).render();
@@ -34,6 +36,8 @@ class Car {
     this.finish = new Component('div', ['car__finish']).render();
     this.car = new Component('div', ['car']).render();
 
+    this.carID = id;
+
     this.btnSelect = new Button('btn__select', 'Select').render();
     this.btnRemove = new Button('btn__remove', 'Remove').render();
     this.btnStart = new Button('btn__start', 'Start').render();
@@ -41,11 +45,20 @@ class Car {
 
     this.carMaker.innerText = maker;
     this.carModel.innerText = model;
+
+    this.btnRemove.addEventListener('clic', () => this.deleteCar(this.carID));
+  }
+
+  deleteCar(id: number): void {
+    const url = `http://localhost:3000/garage/:${id}`;
+
+    fetch(url, { method: 'DELETE' })
+      .then((value) => console.log(value));
   }
 
   render(): HTMLElement {
-    this.finish.style.backgroundImage = 'url(assets/images/finish.svg)';
-    this.car.style.backgroundImage = 'url(assets/images/car.svg)';
+    this.finish.style.backgroundImage = 'url(assets/images/car-finish.svg)';
+    this.car.style.backgroundImage = 'url(assets/images/car-car.svg)';
 
     [
       this.btnSelect,

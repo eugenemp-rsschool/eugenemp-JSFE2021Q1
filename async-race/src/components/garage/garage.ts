@@ -10,7 +10,6 @@ import {
   createCar,
   deleteCar,
   updateCar,
-  getCarsCount,
 } from '../shared/api';
 import './garage.scss';
 
@@ -93,6 +92,7 @@ class Garage {
           (updateInputColor as HTMLInputElement).value,
         );
         (updateForm as HTMLFormElement).reset();
+        this.selectedCar = -1;
       }
     });
   }
@@ -121,7 +121,24 @@ class Garage {
         return response.json();
       })
       .then((cars) => cars.forEach((car: CarObj) => {
-        this.garageWrapper.appendChild(new Car(car.name, car.color, car.id).render());
+        const carElem = new Car(car.name, car.color, car.id).render();
+        carElem.addEventListener('click', (e) => {
+          if ((e.target as HTMLElement).classList.contains('btn__remove')) {
+            this.deleteCarFromServer(parseInt(carElem.id, 10));
+          }
+
+          if ((e.target as HTMLElement).classList.contains('btn__select')) {
+            getCar(parseInt(carElem.id, 10))
+              .then((carInfo) => {
+                this.selectedCar = parseInt(carElem.id, 10);
+                const updateInputName = this.carMgMt.querySelector('.car-mgmt__update__input-name');
+                const updateInputColor = this.carMgMt.querySelector('.car-mgmt__update__input-color');
+                (updateInputName as HTMLInputElement).value = carInfo.name;
+                (updateInputColor as HTMLInputElement).value = carInfo.color;
+              });
+          }
+        });
+        this.garageWrapper.appendChild(carElem);
       }));
 
     this.page = page;

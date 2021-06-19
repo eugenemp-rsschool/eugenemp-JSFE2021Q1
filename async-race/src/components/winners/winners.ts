@@ -10,6 +10,7 @@ import {
   deleteWinner,
   updateWinner,
   getWinnersCount,
+  getCar,
 } from '../shared/api';
 import './winners.scss';
 
@@ -65,7 +66,7 @@ class Winners {
     this.winnersNumber = new Component('th', ['winners__table__header__num']).render();
     this.winnersNumber.innerText = 'Number';
     this.winnersCar = new Component('th', ['winners__table__header__car']).render();
-    this.winnersCar.innerText = 'Car';
+    this.winnersCar.innerText = 'Car color';
     this.winnersName = new Component('th', ['winners__table__header__name']).render();
     this.winnersName.innerText = 'Name';
     this.winnersWins = new Component('th', ['winners__table__header__wins']).render();
@@ -78,19 +79,17 @@ class Winners {
     this.btnNext = new Button('winners__btn__next', 'Next page').render();
     this.pageNum = new Component('span', ['winners__page-num']).render();
 
-    this.btnWrapper.addEventListener('click', (e) => {
-      if (e.target === this.btnPrev) {
-        this.getWinnersFromServer(this.page -= 1);
-      }
-
-      if (e.target === this.btnNext) {
-        this.getWinnersFromServer(this.page += 1);
-      }
+    this.pageWinners.addEventListener('click', (e) => {
+      if (e.target === this.winnersNumber) this.getWinnersFromServer(this.page, 10, 'id', 'ASC');
+      if (e.target === this.winnersWins) this.getWinnersFromServer(this.page, 10, 'wins', 'ASC');
+      if (e.target === this.winnersTime) this.getWinnersFromServer(this.page, 10, 'time', 'ASC');
+      if (e.target === this.btnPrev) this.getWinnersFromServer(this.page -= 1);
+      if (e.target === this.btnNext) this.getWinnersFromServer(this.page += 1);
     });
   }
 
   // Get all winners from server
-  getWinnersFromServer(page: number, limit = 7, sort = 'id', order = 'ASC'): void {
+  getWinnersFromServer(page: number, limit = 10, sort = 'id', order = 'ASC'): void {
     this.winnersTable.childNodes.forEach((node) => {
       if ((node as HTMLElement).classList.contains('winner__table__row')) node.remove();
     });
@@ -101,7 +100,7 @@ class Winners {
         this.winnersAmount.innerText = `Winners: ${winnersCount}`;
 
         if (winnersCount) {
-          this.pagesAmount = Math.ceil(parseInt(winnersCount, 10) / 7);
+          this.pagesAmount = Math.ceil(parseInt(winnersCount, 10) / 10);
 
           if (this.pagesAmount === this.page) {
             this.btnNext.classList.add('garage__btn__next_inactive');
@@ -115,12 +114,16 @@ class Winners {
         return response.json();
       })
       .then((winners) => winners.forEach((winner: WinnerObj) => {
-        this.winnersTable.appendChild(new Winner(
-          winners.indexOf(winner),
-          '',
-          winner.wins,
-          winner.time,
-        ).render());
+        getCar(winner.id)
+          .then((car) => {
+            this.winnersTable.appendChild(new Winner(
+              car.id,
+              car.name,
+              winner.wins,
+              winner.time,
+              car.color,
+            ).render());
+          });
       }));
 
     this.page = page;
@@ -137,7 +140,7 @@ class Winners {
   addWinnerToServer(carID: number, carWins: number, carTime: number): void {
     createWinner(carID, carWins, carTime)
       .then((winner) => {
-        this.getWinnerFromServer(this.page);
+        this.getWinnersFromServer(this.page);
         console.log(winner);
       });
   }
@@ -161,7 +164,8 @@ class Winners {
   }
 
   render():HTMLElement {
-    this.getWinnersFromServer(this.page);
+    // this.getWinnersFromServer(this.page);
+    this.addWinnerToServer(2, 3, 12);
 
     [
       this.winnersNumber,

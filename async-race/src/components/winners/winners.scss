@@ -71,6 +71,12 @@ $row-height: 30px;
     color: #dbdbdb;
   }
 
+  &__table__header__num,
+  &__table__header__wins,
+  &__table__header__time {
+    cursor: pointer;
+  }
+
   &__amount,
   &__page-num {
     font-family: 'Roboto', sans-serif;

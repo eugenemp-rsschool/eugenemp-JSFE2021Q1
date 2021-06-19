@@ -14,12 +14,12 @@ class Winner {
 
   private readonly winnerTime: HTMLElement;
 
-  constructor(num: number, name = 'test', wins: number, time: number, car = '') {
+  constructor(id: number, name: string, wins: number, time: number, color: string) {
     this.winnerTRow = new Component('tr', ['winner__table__row']).render();
     this.winnerNumber = new Component('td', ['winner__table__number']).render();
-    this.winnerNumber.innerText = num.toString();
+    this.winnerNumber.innerText = id.toString();
     this.winnerCar = new Component('td', ['winner__table__car']).render();
-    this.winnerCar.style.backgroundColor = car;
+    this.winnerCar.style.backgroundColor = color;
     this.winnerName = new Component('td', ['winner__table__name']).render();
     this.winnerName.innerText = name;
     this.winnerWins = new Component('td', ['winner__table__wins']).render();

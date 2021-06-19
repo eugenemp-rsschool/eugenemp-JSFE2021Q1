@@ -82,6 +82,7 @@ class Garage {
           (createInputName as HTMLInputElement).value,
           (createInputColor as HTMLInputElement).value,
         );
+        (createForm as HTMLFormElement).reset();
       }
 
       if (e.target === updateForm) {
@@ -91,6 +92,7 @@ class Garage {
           (updateInputName as HTMLInputElement).value,
           (updateInputColor as HTMLInputElement).value,
         );
+        (updateForm as HTMLFormElement).reset();
       }
     });
   }

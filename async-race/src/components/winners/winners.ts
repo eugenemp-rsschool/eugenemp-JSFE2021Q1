@@ -9,7 +9,6 @@ import {
   createWinner,
   deleteWinner,
   updateWinner,
-  getWinnersCount,
   getCar,
 } from '../shared/api';
 import './winners.scss';

@@ -1,4 +1,5 @@
 import Component from '../shared/component';
+import createCarSVG from '../car/car-svg';
 import './winner.scss';
 
 class Winner {
@@ -19,7 +20,7 @@ class Winner {
     this.winnerNumber = new Component('td', ['winner__table__number']).render();
     this.winnerNumber.innerText = id.toString();
     this.winnerCar = new Component('td', ['winner__table__car']).render();
-    this.winnerCar.style.backgroundColor = color;
+    this.winnerCar.innerHTML = createCarSVG(color);
     this.winnerName = new Component('td', ['winner__table__name']).render();
     this.winnerName.innerText = name;
     this.winnerWins = new Component('td', ['winner__table__wins']).render();

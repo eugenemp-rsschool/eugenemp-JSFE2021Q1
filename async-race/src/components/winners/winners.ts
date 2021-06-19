@@ -164,8 +164,7 @@ class Winners {
   }
 
   render():HTMLElement {
-    // this.getWinnersFromServer(this.page);
-    this.addWinnerToServer(2, 3, 12);
+    this.getWinnersFromServer(this.page);
 
     [
       this.winnersNumber,

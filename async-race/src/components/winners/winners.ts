@@ -1,8 +1,16 @@
 import Component from '../shared/component';
 import Main from '../page/main';
 import Button from '../shared/button';
-import Winner from './winner';
-import { WinnerObj } from '../shared/api';
+import Winner from '../winner/winner';
+import {
+  WinnerObj,
+  getWinners,
+  getWinner,
+  createWinner,
+  deleteWinner,
+  updateWinner,
+  getWinnersCount,
+} from '../shared/api';
 import './winners.scss';
 
 class Winners {
@@ -40,6 +48,8 @@ class Winners {
 
   private page = 1;
 
+  private pagesAmount = 1;
+
   constructor() {
     this.mainElement = new Main().render();
     this.pageWinners = new Component('div', ['page__winners']).render();
@@ -70,28 +80,38 @@ class Winners {
 
     this.btnWrapper.addEventListener('click', (e) => {
       if (e.target === this.btnPrev) {
-        if (this.page === 1) return;
-        this.getWinners(this.page -= 1);
+        this.getWinnersFromServer(this.page -= 1);
       }
+
       if (e.target === this.btnNext) {
-        this.getWinners(this.page += 1);
+        this.getWinnersFromServer(this.page += 1);
       }
     });
   }
 
-  getWinners(page: number, pageSort = '', pageOrder = ''): void {
-    const url = 'http://localhost:3000/winners';
-    const params = `?_limit=7&_page=${page}`;
-    const sort = `_sort=${pageSort}`;
-    const order = `_order=${pageOrder}`;
-
+  // Get all winners from server
+  getWinnersFromServer(page: number, limit = 7, sort = 'id', order = 'ASC'): void {
     this.winnersTable.childNodes.forEach((node) => {
       if ((node as HTMLElement).classList.contains('winner__table__row')) node.remove();
     });
 
-    fetch(url + params)
+    getWinners(page, limit, sort, order)
       .then((response) => {
-        this.winnersAmount.innerText = `Winners: ${response.headers.get('X-Total-Count')}`;
+        const winnersCount = response.headers.get('X-Total-Count');
+        this.winnersAmount.innerText = `Winners: ${winnersCount}`;
+
+        if (winnersCount) {
+          this.pagesAmount = Math.ceil(parseInt(winnersCount, 10) / 7);
+
+          if (this.pagesAmount === this.page) {
+            this.btnNext.classList.add('garage__btn__next_inactive');
+          } else this.btnNext.classList.remove('garage__btn__next_inactive');
+
+          if (this.page === 1) {
+            this.btnPrev.classList.add('garage__btn__prev_inactive');
+          } else this.btnPrev.classList.remove('garage__btn__prev_inactive');
+        }
+
         return response.json();
       })
       .then((winners) => winners.forEach((winner: WinnerObj) => {
@@ -107,8 +127,41 @@ class Winners {
     this.pageNum.innerText = `Page: ${this.page}`;
   }
 
+  // Get spicified winner from server
+  getWinnerFromServer(id: number): void {
+    getWinner(id)
+      .then((car) => car);
+  }
+
+  // Add new winner to server's database
+  addWinnerToServer(carID: number, carWins: number, carTime: number): void {
+    createWinner(carID, carWins, carTime)
+      .then((winner) => {
+        this.getWinnerFromServer(this.page);
+        console.log(winner);
+      });
+  }
+
+  // Detele specified winner from server's database
+  deleteWinnerFromServer(id: number): void {
+    deleteWinner(id)
+      .then(() => {
+        this.getWinnersFromServer(this.page);
+        console.log('Winner deleted!');
+      });
+  }
+
+  // Update specified winner in server's database
+  updateWinnerOnServer(id: number, carWins: number, carTime: number): void {
+    updateWinner(id, carWins, carTime)
+      .then((winner) => {
+        this.getWinnersFromServer(this.page);
+        console.log(winner);
+      });
+  }
+
   render():HTMLElement {
-    this.getWinners(this.page);
+    this.getWinnersFromServer(this.page);
 
     [
       this.winnersNumber,

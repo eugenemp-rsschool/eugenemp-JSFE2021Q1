@@ -51,7 +51,7 @@ export async function createCar(carName: string, carColor: string): Promise<CarO
   return response.json();
 }
 
-export async function deteleCar(id: number): Promise<void> {
+export async function deleteCar(id: number): Promise<void> {
   const path = `/garage/:${id}`;
   const response = await fetch(url + path, { method: 'DELETE' });
 
@@ -92,7 +92,7 @@ export async function getWinners(
   return response;
 }
 
-export async function getWinner(id: string): Promise<WinnerObj> {
+export async function getWinner(id: number): Promise<WinnerObj> {
   const path = `/winners/:${id}`;
   const response = await fetch(url + path);
 

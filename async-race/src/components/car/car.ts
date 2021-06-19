@@ -1,5 +1,6 @@
 import Component from '../shared/component';
 import Button from '../shared/button';
+import createCarSVG from './car-svg';
 import './car.scss';
 
 class Car {
@@ -36,6 +37,7 @@ class Car {
     this.finish = new Component('div', ['car__finish']).render();
     this.car = new Component('div', ['car']).render();
 
+    this.carWrapper.id = id.toString();
     this.carID = id;
 
     this.btnSelect = new Button('btn__select', 'Select').render();
@@ -43,22 +45,14 @@ class Car {
     this.btnStart = new Button('btn__start', 'Start').render();
     this.btnStop = new Button('btn__stop', 'Stop').render();
 
+    this.car.innerHTML = createCarSVG(color);
+
     this.carMaker.innerText = maker;
     this.carModel.innerText = model;
-
-    this.btnRemove.addEventListener('clic', () => this.deleteCar(this.carID));
-  }
-
-  deleteCar(id: number): void {
-    const url = `http://localhost:3000/garage/:${id}`;
-
-    fetch(url, { method: 'DELETE' })
-      .then((value) => console.log(value));
   }
 
   render(): HTMLElement {
     this.finish.style.backgroundImage = 'url(assets/images/car-finish.svg)';
-    this.car.style.backgroundImage = 'url(assets/images/car-car.svg)';
 
     [
       this.btnSelect,

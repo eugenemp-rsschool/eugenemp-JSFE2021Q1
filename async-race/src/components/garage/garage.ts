@@ -3,7 +3,15 @@ import Main from '../page/main';
 import Button from '../shared/button';
 import CarMgmt from '../car-mgmt/car-mgmt';
 import Car from '../car/car';
-import { CarObj } from '../shared/api';
+import {
+  CarObj,
+  getCars,
+  getCar,
+  createCar,
+  deleteCar,
+  updateCar,
+  getCarsCount,
+} from '../shared/api';
 import './garage.scss';
 
 class Garage {
@@ -25,9 +33,13 @@ class Garage {
 
   private readonly btnNext: HTMLElement;
 
-  private readonly pageNum: HTMLElement;
+  private readonly pageNumElement: HTMLElement;
 
   private page = 1;
+
+  private pagesAmount = 1;
+
+  private selectedCar = -1;
 
   constructor() {
     this.mainElement = new Main().render();
@@ -43,15 +55,15 @@ class Garage {
     this.btnWrapper = new Component('div', ['garage__btn__wrapper']).render();
     this.btnPrev = new Button('garage__btn__prev', 'Prev page').render();
     this.btnNext = new Button('garage__btn__next', 'Next page').render();
-    this.pageNum = new Component('span', ['garage__page-num']).render();
+    this.pageNumElement = new Component('span', ['garage__page-num']).render();
 
     this.btnWrapper.addEventListener('click', (e) => {
       if (e.target === this.btnPrev) {
-        if (this.page === 1) return;
-        this.getCars(this.page -= 1);
+        this.getCarsFromServer(this.page -= 1);
       }
+
       if (e.target === this.btnNext) {
-        this.getCars(this.page += 1);
+        this.getCarsFromServer(this.page += 1);
       }
     });
 
@@ -59,29 +71,51 @@ class Garage {
       const createForm = this.carMgMt.querySelector('.car-mgmt__create__form');
       const createInputName = this.carMgMt.querySelector('.car-mgmt__create__input-name');
       const createInputColor = this.carMgMt.querySelector('.car-mgmt__create__input-color');
+
       const updateForm = this.carMgMt.querySelector('.car-mgmt__update__form');
       const updateInputName = this.carMgMt.querySelector('.car-mgmt__update__input-name');
       const updateInputColor = this.carMgMt.querySelector('.car-mgmt__update__input-color');
 
       if (e.target === createForm) {
         e.preventDefault();
-        this.createCar({
-          name: (createInputName as HTMLInputElement).value,
-          color: (createInputColor as HTMLInputElement).value,
-        });
+        this.addCarToServer(
+          (createInputName as HTMLInputElement).value,
+          (createInputColor as HTMLInputElement).value,
+        );
+      }
+
+      if (e.target === updateForm) {
+        e.preventDefault();
+        this.updateCarOnServer(
+          this.selectedCar,
+          (updateInputName as HTMLInputElement).value,
+          (updateInputColor as HTMLInputElement).value,
+        );
       }
     });
   }
 
-  getCars(page: number): void {
-    const url = 'http://localhost:3000/garage';
-    const params = `?_limit=7&_page=${page}`;
-
+  // Gat all cars from server
+  getCarsFromServer(page: number): void {
     this.garageWrapper.innerHTML = '';
 
-    fetch(url + params)
+    getCars(page)
       .then((response) => {
-        this.carAmount.innerText = `Cars: ${response.headers.get('X-Total-Count')}`;
+        const carsCount = response.headers.get('X-Total-Count');
+        this.carAmount.innerText = `Cars: ${carsCount}`;
+
+        if (carsCount) {
+          this.pagesAmount = Math.ceil(parseInt(carsCount, 10) / 7);
+
+          if (this.pagesAmount === this.page) {
+            this.btnNext.classList.add('garage__btn__next_inactive');
+          } else this.btnNext.classList.remove('garage__btn__next_inactive');
+
+          if (this.page === 1) {
+            this.btnPrev.classList.add('garage__btn__prev_inactive');
+          } else this.btnPrev.classList.remove('garage__btn__prev_inactive');
+        }
+
         return response.json();
       })
       .then((cars) => cars.forEach((car: CarObj) => {
@@ -89,32 +123,44 @@ class Garage {
       }));
 
     this.page = page;
-    this.pageNum.innerText = `Page: ${this.page}`;
+    this.pageNumElement.innerText = `Page: ${this.page}`;
   }
 
-  getCar(id: number): void {
-    const url = `http://localhost:3000/garage/:${id}`;
-
-    fetch(url)
-      .then((response) => response.json())
-      .then((car) => console.log(car));
+  // Get specified car from server
+  getCarFromServer(id: number): void {
+    getCar(id)
+      .then((car) => car);
   }
 
-  createCar(data: { name: string, color: string }): void {
-    const url = 'http://localhost:3000/garage';
+  // Add new car to server's database
+  addCarToServer(carName: string, carColor: string): void {
+    createCar(carName, carColor)
+      .then((car) => {
+        this.getCarsFromServer(this.page);
+        console.log(car);
+      });
+  }
 
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-      .then((car) => this.getCars(1));
+  // Delete specified car from server
+  deleteCarFromServer(id: number): void {
+    deleteCar(id)
+      .then(() => {
+        this.getCarsFromServer(this.page);
+        console.log('Car deleted!');
+      });
+  }
+
+  // Update specified car in server's database
+  updateCarOnServer(id: number, carName: string, carColor: string): void {
+    updateCar(id, carName, carColor)
+      .then((car) => {
+        this.getCarsFromServer(this.page);
+        console.log(car);
+      });
   }
 
   render():HTMLElement {
-    this.getCars(this.page);
+    this.getCarsFromServer(this.page);
 
     [
       this.pageHeading,
@@ -125,7 +171,7 @@ class Garage {
 
     [
       this.btnPrev,
-      this.pageNum,
+      this.pageNumElement,
       this.btnNext,
     ].forEach((btn) => this.btnWrapper.appendChild(btn));
 

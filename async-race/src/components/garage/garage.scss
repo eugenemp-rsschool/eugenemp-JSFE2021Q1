@@ -78,5 +78,14 @@
       color: #ffffff;
       transition: none;
     }
+
+    &__prev_inactive,
+    &__next_inactive {
+      pointer-events: none;
+      background-color: #484848;
+      border: 1px solid #585858;
+      color: #868686;
+      transition: none;
+    }
   }
 }

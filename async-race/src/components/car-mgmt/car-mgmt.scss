@@ -35,11 +35,19 @@
     text-shadow: 0 1px 3px #232323;
   }
 
+  &__update__input-name_inactive {
+    background-color: #74736a;
+  }
+
   &__create__input-color,
   &__update__input-color {
     border-style: none;
     border-radius: 4px;
     background-color: #7c7c7c;
+  }
+
+  &__update__input-color_inactive {
+    background-color: #474747;
   }
 
   &__btn__wrapper {
@@ -70,6 +78,13 @@
       color: #c4c4c4;
       transition: 0.1s ease-in-out;
       transition-property: background-color, box-shadow;
+    }
+
+    &__submit_inactive {
+      pointer-events: none;
+      background-color: #484848;
+      border: 1px solid #585858;
+      color: #868686;
     }
 
     &__race,

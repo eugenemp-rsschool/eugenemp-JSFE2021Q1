@@ -10,6 +10,7 @@ import {
   createCar,
   deleteCar,
   updateCar,
+  deleteWinner,
 } from '../shared/api';
 import generateCars from '../generate-cars/generate-cars';
 import './garage.scss';
@@ -123,7 +124,8 @@ class Garage {
         if (carsCount) {
           this.pagesAmount = Math.ceil(parseInt(carsCount, 10) / 7);
 
-          if (this.pagesAmount === this.page) {
+          if (this.pagesAmount === this.page
+           || this.pagesAmount === 0) {
             this.btnNext.classList.add('garage__btn__next_inactive');
           } else this.btnNext.classList.remove('garage__btn__next_inactive');
 
@@ -139,6 +141,7 @@ class Garage {
         carElem.addEventListener('click', (e) => {
           if ((e.target as HTMLElement).classList.contains('btn__remove')) {
             this.deleteCarFromServer(parseInt(carElem.id, 10));
+            this.deleteWinnerFromServer(parseInt(carElem.id, 10));
           }
 
           if ((e.target as HTMLElement).classList.contains('btn__select')) {
@@ -187,6 +190,17 @@ class Garage {
     updateCar(id, carName, carColor)
       .then(() => {
         this.getCarsFromServer(this.page);
+      });
+  }
+
+  // Detele specified winner from server's database
+  deleteWinnerFromServer(id: number): void {
+    deleteWinner(id)
+      .then(() => {
+        console.log('Winner deleted');
+      })
+      .catch((e) => {
+        console.log(e);
       });
   }
 

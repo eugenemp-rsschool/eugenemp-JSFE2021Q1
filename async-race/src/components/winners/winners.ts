@@ -20,8 +20,6 @@ class Winners {
 
   private readonly pageHeading: HTMLElement;
 
-  private readonly winnersAmount: HTMLElement;
-
   private readonly winnersTable: HTMLElement;
 
   private readonly winnersTHead: HTMLElement;
@@ -54,9 +52,12 @@ class Winners {
     this.mainElement = new Main().render();
     this.pageWinners = new Component('div', ['page__winners']).render();
     this.pageHeading = new Component('h2', ['page__winners__heading']).render();
+    this.pageHeading.innerText = 'Winners(0)';
 
-    this.winnersAmount = new Component('span', ['garage__amount']).render();
-    this.winnersAmount.innerText = 'Winners: 6';
+    this.btnWrapper = new Component('div', ['winners__btn__wrapper']).render();
+    this.btnPrev = new Button('winners__btn__prev', 'Prev page').render();
+    this.btnNext = new Button('winners__btn__next', 'Next page').render();
+    this.pageNum = new Component('span', ['winners__page-num']).render();
 
     this.winnersTable = new Component('table', ['winners__table']).render();
     this.winnersTHead = new Component('thead', ['winners__table__head']).render();
@@ -72,11 +73,6 @@ class Winners {
     this.winnersWins.innerText = 'Wins';
     this.winnersTime = new Component('th', ['winners__table__header__time']).render();
     this.winnersTime.innerText = 'Best time (seconds)';
-
-    this.btnWrapper = new Component('div', ['winners__btn__wrapper']).render();
-    this.btnPrev = new Button('winners__btn__prev', 'Prev page').render();
-    this.btnNext = new Button('winners__btn__next', 'Next page').render();
-    this.pageNum = new Component('span', ['winners__page-num']).render();
 
     this.pageWinners.addEventListener('click', (e) => {
       if (e.target === this.winnersNumber) this.getWinnersFromServer(this.page, 10, 'id', 'ASC');
@@ -96,7 +92,7 @@ class Winners {
     getWinners(page, limit, sort, order)
       .then((response) => {
         const winnersCount = response.headers.get('X-Total-Count');
-        this.winnersAmount.innerText = `Winners: ${winnersCount}`;
+        this.pageHeading.innerText = `Winners(${winnersCount})`;
 
         if (winnersCount) {
           this.pagesAmount = Math.ceil(parseInt(winnersCount, 10) / 10);
@@ -138,9 +134,8 @@ class Winners {
   // Add new winner to server's database
   addWinnerToServer(carID: number, carWins: number, carTime: number): void {
     createWinner(carID, carWins, carTime)
-      .then((winner) => {
+      .then(() => {
         this.getWinnersFromServer(this.page);
-        console.log(winner);
       });
   }
 
@@ -149,21 +144,25 @@ class Winners {
     deleteWinner(id)
       .then(() => {
         this.getWinnersFromServer(this.page);
-        console.log('Winner deleted!');
       });
   }
 
   // Update specified winner in server's database
   updateWinnerOnServer(id: number, carWins: number, carTime: number): void {
     updateWinner(id, carWins, carTime)
-      .then((winner) => {
+      .then(() => {
         this.getWinnersFromServer(this.page);
-        console.log(winner);
       });
   }
 
   render():HTMLElement {
     this.getWinnersFromServer(this.page);
+
+    [
+      this.btnPrev,
+      this.pageNum,
+      this.btnNext,
+    ].forEach((btn) => this.btnWrapper.appendChild(btn));
 
     [
       this.winnersNumber,
@@ -178,17 +177,10 @@ class Winners {
 
     [
       this.pageHeading,
-      this.winnersAmount,
+      this.btnWrapper,
       this.winnersTable,
     ].forEach((elem) => this.pageWinners.appendChild(elem));
 
-    [
-      this.btnPrev,
-      this.pageNum,
-      this.btnNext,
-    ].forEach((btn) => this.btnWrapper.appendChild(btn));
-
-    this.pageWinners.appendChild(this.btnWrapper);
     this.mainElement.appendChild(this.pageWinners);
 
     return this.mainElement;

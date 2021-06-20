@@ -25,8 +25,6 @@ class Garage {
 
   private readonly garageWrapper: HTMLElement;
 
-  private readonly carAmount: HTMLElement;
-
   private readonly btnWrapper: HTMLElement;
 
   private readonly btnPrev: HTMLElement;
@@ -45,17 +43,16 @@ class Garage {
     this.mainElement = new Main().render();
     this.pageGarage = new Component('div', ['page__garage']).render();
     this.pageHeading = new Component('h2', ['page__garage__heading']).render();
-    this.pageHeading.innerText = 'Garage';
+    this.pageHeading.innerText = 'Garage(0)';
 
     this.carMgMt = new CarMgmt().render();
-    this.garageWrapper = new Component('div', ['garage__wrapper']).render();
-    this.carAmount = new Component('span', ['garage__amount']).render();
-    this.carAmount.innerText = 'Cars: 6';
 
     this.btnWrapper = new Component('div', ['garage__btn__wrapper']).render();
     this.btnPrev = new Button('garage__btn__prev', 'Prev page').render();
     this.btnNext = new Button('garage__btn__next', 'Next page').render();
     this.pageNumElement = new Component('span', ['garage__page-num']).render();
+
+    this.garageWrapper = new Component('div', ['garage__wrapper']).render();
 
     this.btnWrapper.addEventListener('click', (e) => {
       if (e.target === this.btnPrev) {
@@ -121,7 +118,7 @@ class Garage {
     getCars(page)
       .then((response) => {
         const carsCount = response.headers.get('X-Total-Count');
-        this.carAmount.innerText = `Cars: ${carsCount}`;
+        this.pageHeading.innerText = `Cars(${carsCount})`;
 
         if (carsCount) {
           this.pagesAmount = Math.ceil(parseInt(carsCount, 10) / 7);
@@ -212,19 +209,18 @@ class Garage {
     this.getCarsFromServer(this.page);
 
     [
-      this.pageHeading,
-      this.carMgMt,
-      this.carAmount,
-      this.garageWrapper,
-    ].forEach((elem) => this.pageGarage.appendChild(elem));
-
-    [
       this.btnPrev,
       this.pageNumElement,
       this.btnNext,
     ].forEach((btn) => this.btnWrapper.appendChild(btn));
 
-    this.pageGarage.appendChild(this.btnWrapper);
+    [
+      this.pageHeading,
+      this.carMgMt,
+      this.btnWrapper,
+      this.garageWrapper,
+    ].forEach((elem) => this.pageGarage.appendChild(elem));
+
     this.mainElement.appendChild(this.pageGarage);
 
     return this.mainElement;

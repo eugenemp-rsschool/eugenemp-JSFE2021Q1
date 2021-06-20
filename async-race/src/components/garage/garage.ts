@@ -11,7 +11,6 @@ import {
   deleteCar,
   updateCar,
   deleteWinner,
-  carSwitchEngine,
 } from '../shared/api';
 import generateCars from '../generate-cars/generate-cars';
 import './garage.scss';
@@ -139,7 +138,6 @@ class Garage {
       })
       .then((cars) => cars.forEach((car: CarObj) => {
         const carElem = new Car(car.name, car.color, car.id).render();
-        const carID = carElem.id;
 
         carElem.addEventListener('click', (e) => {
           if ((e.target as HTMLElement).classList.contains('btn__select')) {
@@ -152,17 +150,6 @@ class Garage {
                 (updateInputName as HTMLInputElement).value = carInfo.name;
                 (updateInputColor as HTMLInputElement).value = carInfo.color;
               });
-          }
-
-          if ((e.target as HTMLElement).classList.contains('btn__start')) {
-            const carTarget = carElem.querySelector('.car');
-
-            carSwitchEngine(parseInt(carID, 10), 'started')
-              .then();
-          }
-
-          if ((e.target as HTMLElement).classList.contains('btn__stop')) {
-            const carTarget = carElem.querySelector('.car');
           }
         });
         this.garageWrapper.appendChild(carElem);

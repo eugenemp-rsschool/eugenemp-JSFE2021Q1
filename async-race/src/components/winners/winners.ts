@@ -97,7 +97,8 @@ class Winners {
         if (winnersCount) {
           this.pagesAmount = Math.ceil(parseInt(winnersCount, 10) / 10);
 
-          if (this.pagesAmount === this.page) {
+          if (this.pagesAmount === this.page
+           || this.pagesAmount === 0) {
             this.btnNext.classList.add('garage__btn__next_inactive');
           } else this.btnNext.classList.remove('garage__btn__next_inactive');
 

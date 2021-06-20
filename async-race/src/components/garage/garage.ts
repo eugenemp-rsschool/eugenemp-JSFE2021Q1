@@ -94,6 +94,7 @@ class Garage {
         );
         (updateForm as HTMLFormElement).reset();
         this.selectedCar = -1;
+        this.switchUpdateFormState();
       }
     });
 
@@ -146,6 +147,7 @@ class Garage {
           if ((e.target as HTMLElement).classList.contains('btn__select')) {
             getCar(parseInt(carElem.id, 10))
               .then((carInfo) => {
+                this.switchUpdateFormState();
                 this.selectedCar = parseInt(carElem.id, 10);
                 const updateInputName = this.carMgMt.querySelector('.car-mgmt__update__input-name');
                 const updateInputColor = this.carMgMt.querySelector('.car-mgmt__update__input-color');
@@ -170,9 +172,8 @@ class Garage {
   // Add new car to server's database
   addCarToServer(carName: string, carColor: string): void {
     createCar(carName, carColor)
-      .then((car) => {
+      .then(() => {
         this.getCarsFromServer(this.page);
-        console.log(car);
       });
   }
 
@@ -181,17 +182,30 @@ class Garage {
     deleteCar(id)
       .then(() => {
         this.getCarsFromServer(this.page);
-        console.log('Car deleted!');
       });
   }
 
   // Update specified car in server's database
   updateCarOnServer(id: number, carName: string, carColor: string): void {
     updateCar(id, carName, carColor)
-      .then((car) => {
+      .then(() => {
         this.getCarsFromServer(this.page);
-        console.log(car);
       });
+  }
+
+  switchUpdateFormState(): void {
+    const updateInputName = this.carMgMt.querySelector('.car-mgmt__update__input-name');
+    const updateInputColor = this.carMgMt.querySelector('.car-mgmt__update__input-color');
+    const updateBtnSubmit = this.carMgMt.querySelector('.car-mgmt__update__btn__submit');
+    updateInputName?.classList.toggle('car-mgmt__update__input-name_inactive');
+    updateInputColor?.classList.toggle('car-mgmt__update__input-color_inactive');
+    updateBtnSubmit?.classList.toggle('car-mgmt__update__btn__submit_inactive');
+    if (updateInputName?.getAttribute('disabled') === 'disabled') {
+      updateInputName?.removeAttribute('disabled');
+    } else updateInputName?.setAttribute('disabled', 'disabled');
+    if (updateInputColor?.getAttribute('disabled') === 'disabled') {
+      updateInputColor?.removeAttribute('disabled');
+    } else updateInputColor?.setAttribute('disabled', 'disabled');
   }
 
   render():HTMLElement {

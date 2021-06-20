@@ -11,6 +11,7 @@ import {
   deleteCar,
   updateCar,
 } from '../shared/api';
+import generateCars from '../generate-cars/generate-cars';
 import './garage.scss';
 
 class Garage {
@@ -93,6 +94,21 @@ class Garage {
         );
         (updateForm as HTMLFormElement).reset();
         this.selectedCar = -1;
+      }
+    });
+
+    this.carMgMt.addEventListener('click', (e) => {
+      const btnGenerate = this.carMgMt.querySelector('.car-mgmt__btn__generate');
+
+      if (e.target === btnGenerate) {
+        const cars = generateCars(100);
+
+        cars.forEach((car, index) => {
+          createCar(car.name, car.color)
+            .then(() => {
+              if (index === cars.length - 1) this.getCarsFromServer(this.page);
+            });
+        });
       }
     });
   }

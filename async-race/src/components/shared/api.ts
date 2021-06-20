@@ -147,15 +147,15 @@ export async function getWinnersCount(limit = 7): Promise<string | null> {
 // Car methods======================================================================================
 
 export async function carSwitchEngine(id: number, status: string): Promise<EngineObj> {
-  const path = `/engine/${id}?status=${status}`;
+  const path = `/engine/?id=${id}&status=${status}`;
   const response = await fetch(url + path);
 
   return response.json();
 }
 
-export async function carSwitchDrive(id: number, status: string): Promise<DriveObj> {
-  const path = `/engine/${id}?status=${status}`;
+export async function carSwitchToDrive(id: number): Promise<Response> {
+  const path = `/engine/?id=${id}&status=drive`;
   const response = fetch(url + path);
 
-  return (await response).json();
+  return response;
 }

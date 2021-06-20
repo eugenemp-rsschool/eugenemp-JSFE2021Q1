@@ -94,7 +94,7 @@ class Winners {
   }
 
   // Get all winners from server
-  getWinnersFromServer(page: number, limit = 10, sort = 'id', order = 'ASC'): void {
+  getWinnersFromServer(page = this.page, limit = 10, sort = 'id', order = 'ASC'): void {
     const elems = this.winnersTable.querySelectorAll('.winner__table__row');
     elems.forEach((elem) => {
       elem.remove();

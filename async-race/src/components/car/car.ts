@@ -8,6 +8,8 @@ class Car {
 
   private readonly carHeader: HTMLElement;
 
+  private readonly carFooter: HTMLElement;
+
   private readonly carTrack: HTMLElement;
 
   private readonly btnSelect: HTMLElement;
@@ -31,6 +33,7 @@ class Car {
   constructor(maker: string, color: string, id: number, model = '') {
     this.carWrapper = new Component('div', ['car__wrapper']).render();
     this.carHeader = new Component('div', ['car__header']).render();
+    this.carFooter = new Component('div', ['car__footer']).render();
     this.carTrack = new Component('div', ['car__track']).render();
     this.carMaker = new Component('span', ['car__maker']).render();
     this.carModel = new Component('span', ['car__model']).render();
@@ -60,15 +63,21 @@ class Car {
       this.carMaker,
       this.carModel,
     ].forEach((btn) => this.carHeader.appendChild(btn));
+
     [
-      this.btnStart,
-      this.btnStop,
       this.car,
       this.finish,
     ].forEach((elem) => this.carTrack.appendChild(elem));
+
+    [
+      this.btnStart,
+      this.btnStop,
+      this.carTrack,
+    ].forEach((elem) => this.carFooter.appendChild(elem));
+
     [
       this.carHeader,
-      this.carTrack,
+      this.carFooter,
     ].forEach((elem) => this.carWrapper.appendChild(elem));
 
     return this.carWrapper;

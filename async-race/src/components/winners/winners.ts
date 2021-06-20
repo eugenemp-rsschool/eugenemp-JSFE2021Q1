@@ -44,6 +44,8 @@ class Winners {
 
   private readonly pageNum: HTMLElement;
 
+  private sortOrder = 'ASC';
+
   private page = 1;
 
   private pagesAmount = 1;
@@ -75,9 +77,17 @@ class Winners {
     this.winnersTime.innerText = 'Best time (seconds)';
 
     this.pageWinners.addEventListener('click', (e) => {
-      if (e.target === this.winnersNumber) this.getWinnersFromServer(this.page, 10, 'id', 'ASC');
-      if (e.target === this.winnersWins) this.getWinnersFromServer(this.page, 10, 'wins', 'ASC');
-      if (e.target === this.winnersTime) this.getWinnersFromServer(this.page, 10, 'time', 'ASC');
+      if (e.target === this.winnersNumber
+       || e.target === this.winnersWins
+       || e.target === this.winnersTime) {
+        if (this.sortOrder === 'ASC') {
+          this.sortOrder = 'DESC';
+        } else this.sortOrder = 'ASC';
+      }
+
+      if (e.target === this.winnersNumber) this.getWinnersFromServer(this.page, 10, 'id', this.sortOrder);
+      if (e.target === this.winnersWins) this.getWinnersFromServer(this.page, 10, 'wins', this.sortOrder);
+      if (e.target === this.winnersTime) this.getWinnersFromServer(this.page, 10, 'time', this.sortOrder);
       if (e.target === this.btnPrev) this.getWinnersFromServer(this.page -= 1);
       if (e.target === this.btnNext) this.getWinnersFromServer(this.page += 1);
     });
@@ -85,8 +95,9 @@ class Winners {
 
   // Get all winners from server
   getWinnersFromServer(page: number, limit = 10, sort = 'id', order = 'ASC'): void {
-    this.winnersTable.childNodes.forEach((node) => {
-      if ((node as HTMLElement).classList.contains('winner__table__row')) node.remove();
+    const elems = this.winnersTable.querySelectorAll('.winner__table__row');
+    elems.forEach((elem) => {
+      elem.remove();
     });
 
     getWinners(page, limit, sort, order)

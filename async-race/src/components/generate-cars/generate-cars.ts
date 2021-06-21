@@ -1,4 +1,4 @@
-const carBrands = ['Ford', 'BMW', 'Chrysler', 'Volkswagen', 'Open', 'Renault', 'Citroen', 'Tesla', 'Dodge', 'Honda'];
+const carBrands = ['Ford', 'BMW', 'Chrysler', 'Volkswagen', 'Opel', 'Renault', 'Citroen', 'Tesla', 'Dodge', 'Honda'];
 const CarModels = ['Fusiom', '7-series', '300C', 'Phaeton', 'Insignia', 'Megane', 'C4', 'Model X', 'Magnum', 'Civic'];
 
 function generateName(): string {

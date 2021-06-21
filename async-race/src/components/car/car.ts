@@ -48,6 +48,8 @@ class Car {
     this.btnStart = new Button('btn__start', 'Start').render();
     this.btnStop = new Button('btn__stop', 'Stop').render();
 
+    this.btnStop.classList.add('btn__stop_inactive');
+
     this.car.innerHTML = createCarSVG(color);
 
     this.carMaker.innerText = maker;

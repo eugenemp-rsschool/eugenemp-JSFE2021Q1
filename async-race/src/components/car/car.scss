@@ -112,9 +112,25 @@ $finish-height: 30px;
     background-color: #218139;
     border: 1px solid #218139;
   }
+  &__start_inactive {
+    pointer-events: none;
+    background-color: #4d7758;
+    border: 1px solid #1a642c;
+    box-shadow: 0 2px 6px #232323;
+    color: #9b9b9b;
+  }
+
   &__stop {
     background-color: #812121;
     border: 1px solid #812121;
+  }
+
+  &__stop_inactive {
+    pointer-events: none;
+    background-color: #886b6b;
+    border: 1px solid #571717;
+    box-shadow: 0 2px 6px #232323;
+    color: #9b9b9b;
   }
 
   &__start:hover {

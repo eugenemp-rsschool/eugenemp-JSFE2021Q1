@@ -28,6 +28,8 @@ class App {
 
   private readonly pageGarage: HTMLElement;
 
+  private readonly results: number[] = [];
+
   constructor() {
     this.winners = new Winners();
     this.garage = new Garage();
@@ -51,25 +53,26 @@ class App {
 
       if ((e.target as HTMLElement).classList.contains('btn__start')) {
         const carWrapper = (e.target as HTMLElement).closest('.car__wrapper');
-        this.startStopCar(carWrapper as HTMLElement, 'started');
+        this.startStopCar(carWrapper as HTMLElement, 'started', false);
       }
 
       if ((e.target as HTMLElement).classList.contains('btn__stop')) {
         const carWrapper = (e.target as HTMLElement).closest('.car__wrapper');
-        this.startStopCar(carWrapper as HTMLElement, 'stop');
+        this.startStopCar(carWrapper as HTMLElement, 'stop', false);
       }
 
       if ((e.target as HTMLElement).classList.contains('car-mgmt__btn__race')) {
         this.startRace();
+        console.log('1');
       }
 
       if ((e.target as HTMLElement).classList.contains('car-mgmt__btn__reset')) {
-        this.resetCar();
+        this.resetCars();
       }
     });
   }
 
-  startStopCar(carWrap: HTMLElement, mode: string): void {
+  startStopCar(carWrap: HTMLElement, mode: string, raceFlag: boolean): void {
     const carID = carWrap?.id;
     const carTrack = carWrap?.querySelector('.car__track');
     const carElement = carWrap?.querySelector('.car');
@@ -87,8 +90,6 @@ class App {
           );
           const computedSpeed = Math.round(time / 100);
           const distanceStep = computedDistance / 100;
-
-          console.log(time, computedDistance);
 
           let passedDist = distanceStep;
           let steps = 0;
@@ -112,27 +113,57 @@ class App {
             btnStop?.classList.add('btn__stop_inactive');
           });
 
+          this.results.push(time);
+          if (this.results.length === this.pageGarage.querySelector('.garage__wrapper')?.children.length) {
+            this.results.sort();
+            setTimeout(() => alert(`Best time: ${(this.results[0] / 1000).toFixed(2)}`), this.results[0]);
+          }
+
           carSwitchToDrive(parseInt(carID, 10))
             .then((response) => {
               console.log(response.status);
               if (response.status === 500) {
                 clearInterval(move);
               }
-
-              if (response.status === 200) {
-                // clearInterval(move);
-              }
             });
         });
+    }
+
+    if (carID && mode === 'stopped') {
+      carSwitchEngine(parseInt(carID, 10), 'stopped')
+        .then((data) => data);
     }
   }
 
   startRace(): void {
+    const btnRace = this.pageGarage.querySelector('.car-mgmt__btn__race');
+    const btnReset = this.pageGarage.querySelector('.car-mgmt__btn__reset');
     const carsWrapper = this.pageGarage.querySelector('.garage__wrapper');
+    const cars = carsWrapper?.querySelectorAll('.car__wrapper');
+
+    btnRace?.classList.add('car-mgmt__btn__race_inactive');
+    btnReset?.classList.remove('car-mgmt__btn__reset_inactive');
+
+    cars?.forEach((car) => {
+      this.startStopCar(car as HTMLElement, 'started', true);
+    });
   }
 
-  resetCar(): void {
+  resetCars(): void {
+    const btnRace = this.pageGarage.querySelector('.car-mgmt__btn__race');
+    const btnReset = this.pageGarage.querySelector('.car-mgmt__btn__reset');
     const carsWrapper = this.pageGarage.querySelector('.garage__wrapper');
+    const cars = carsWrapper?.querySelectorAll('.car__wrapper');
+
+    btnRace?.classList.remove('car-mgmt__btn__race_inactive');
+    btnReset?.classList.add('car-mgmt__btn__reset_inactive');
+
+    cars?.forEach((car) => {
+      this.startStopCar(car as HTMLElement, 'stopped', true);
+      const wrap = car.closest('.car__wrapper');
+      const btnStop = wrap?.querySelector('.btn__stop');
+      (btnStop as HTMLButtonElement).click();
+    });
   }
 
   switchPage(e: Event): void {

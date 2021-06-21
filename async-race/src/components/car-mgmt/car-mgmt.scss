@@ -93,6 +93,14 @@
       border: 1px solid #7c6e28;
     }
 
+    &__race_inactive,
+    &__reset_inactive {
+      pointer-events: none;
+      background-color: #484848;
+      border: 1px solid #585858;
+      color: #868686;
+    }
+
     &__generate {
       width: 150px;
     }

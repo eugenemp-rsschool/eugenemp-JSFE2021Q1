@@ -51,6 +51,8 @@ class CarMgmt {
     this.btnReset = new Button('car-mgmt__btn__reset', 'Reset').render();
     this.btnRace = new Button('car-mgmt__btn__race', 'Race').render();
 
+    this.btnReset.classList.add('car-mgmt__btn__reset_inactive');
+
     this.updateInputName.classList.add('car-mgmt__update__input-name_inactive');
     this.updateInputColor.classList.add('car-mgmt__update__input-color_inactive');
     this.updateBtnSubmit.classList.add('car-mgmt__update__btn__submit_inactive');

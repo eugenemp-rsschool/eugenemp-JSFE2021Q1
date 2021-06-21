@@ -73,15 +73,22 @@ class App {
     const carID = carWrap?.id;
     const carTrack = carWrap?.querySelector('.car__track');
     const carElement = carWrap?.querySelector('.car');
+    const btnStart = carWrap?.querySelector('.btn__start');
+    const btnStop = carWrap?.querySelector('.btn__stop');
 
     if (carID && mode === 'started') {
       carSwitchEngine(parseInt(carID, 10), 'started')
         .then((data) => {
-          const time = Math.round(data.distance / data.velocity);
           const timeReadable = parseInt((data.distance / data.velocity / 1000).toFixed(2), 10);
-          const distance = (carTrack as HTMLElement).getBoundingClientRect().width;
-          const timeStep = time / 100;
-          const distanceStep = distance / 100;
+
+          const time = Math.round(data.distance / data.velocity);
+          const computedDistance = Math.round(
+            (carTrack as HTMLElement).getBoundingClientRect().width - 100,
+          );
+          const computedSpeed = Math.round(time / 100);
+          const distanceStep = computedDistance / 100;
+
+          console.log(time, computedDistance);
 
           let passedDist = distanceStep;
           let steps = 0;
@@ -90,14 +97,30 @@ class App {
             (carElement as HTMLElement).style.left = `${passedDist}px`;
             passedDist += distanceStep;
             steps += 1;
-            if (steps === 90) clearInterval(move);
-          }, timeStep);
+
+            if (steps === 100) clearInterval(move);
+          }, computedSpeed);
+
+          btnStart?.classList.add('btn__start_inactive');
+          btnStop?.classList.remove('btn__stop_inactive');
+
+          btnStop?.addEventListener('click', () => {
+            if (move) clearInterval(move);
+
+            (carElement as HTMLElement).style.left = '0';
+            btnStart?.classList.remove('btn__start_inactive');
+            btnStop?.classList.add('btn__stop_inactive');
+          });
 
           carSwitchToDrive(parseInt(carID, 10))
             .then((response) => {
               console.log(response.status);
               if (response.status === 500) {
                 clearInterval(move);
+              }
+
+              if (response.status === 200) {
+                // clearInterval(move);
               }
             });
         });

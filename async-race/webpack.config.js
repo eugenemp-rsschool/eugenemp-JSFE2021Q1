@@ -75,7 +75,7 @@ module.exports = {
       }),
       new CopyPlugin({
         patterns: [
-          { context: './src/assets/', from: 'images/car-*', to: 'assets', noErrorOnMissing: true },
+          { context: './src/assets/', from: 'images/*', to: 'assets', noErrorOnMissing: true },
           { context: './src/assets/', from: 'icons/*', to: 'assets', noErrorOnMissing: true },
         ],
         options: {

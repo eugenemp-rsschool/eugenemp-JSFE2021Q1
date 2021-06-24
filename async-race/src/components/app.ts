@@ -3,13 +3,6 @@ import Header from './page/header';
 import Winners from './winners/winners';
 import Garage from './garage/garage';
 import {
-  CarObj,
-  getCars,
-  getCar,
-  createCar,
-  deleteCar,
-  updateCar,
-  deleteWinner,
   carSwitchEngine,
   carSwitchToDrive,
 } from './shared/api';
@@ -28,7 +21,7 @@ class App {
 
   private readonly pageGarage: HTMLElement;
 
-  private readonly results: number[] = [];
+  private readonly results: { id: number, time: number }[] = [];
 
   constructor() {
     this.winners = new Winners();
@@ -53,119 +46,148 @@ class App {
 
       if ((e.target as HTMLElement).classList.contains('btn__start')) {
         const carWrapper = (e.target as HTMLElement).closest('.car__wrapper');
-        this.startStopCar(carWrapper as HTMLElement, 'started', false);
-      }
-
-      if ((e.target as HTMLElement).classList.contains('btn__stop')) {
-        const carWrapper = (e.target as HTMLElement).closest('.car__wrapper');
-        this.startStopCar(carWrapper as HTMLElement, 'stop', false);
+        this.startStopCar(carWrapper as HTMLElement, false);
       }
 
       if ((e.target as HTMLElement).classList.contains('car-mgmt__btn__race')) {
-        this.startRace();
-        console.log('1');
+        this.raceControl('race');
       }
 
       if ((e.target as HTMLElement).classList.contains('car-mgmt__btn__reset')) {
-        this.resetCars();
+        this.raceControl('reset');
       }
     });
   }
 
-  startStopCar(carWrap: HTMLElement, mode: string, raceFlag: boolean): void {
+  startStopCar(carWrap: HTMLElement, raceFlag: boolean): void {
     const carID = carWrap?.id;
     const carTrack = carWrap?.querySelector('.car__track');
     const carElement = carWrap?.querySelector('.car');
     const btnStart = carWrap?.querySelector('.btn__start');
     const btnStop = carWrap?.querySelector('.btn__stop');
 
-    if (carID && mode === 'started') {
+    if (carID) {
       carSwitchEngine(parseInt(carID, 10), 'started')
         .then((data) => {
-          const timeReadable = parseInt((data.distance / data.velocity / 1000).toFixed(2), 10);
-
-          const time = Math.round(data.distance / data.velocity);
+          const raceTime = Math.round(data.distance / data.velocity);
           const computedDistance = Math.round(
             (carTrack as HTMLElement).getBoundingClientRect().width - 100,
           );
-          const computedSpeed = Math.round(time / 100);
-          const distanceStep = computedDistance / 100;
 
-          let passedDist = distanceStep;
-          let steps = 0;
+          // Animate car movement===================================================================
+          let isAnimEnded = false;
 
-          const move = setInterval(() => {
-            (carElement as HTMLElement).style.left = `${passedDist}px`;
-            passedDist += distanceStep;
-            steps += 1;
+          function animateCar(
+            { draw, duration }: {
+              draw: CallableFunction,
+              duration: number,
+            },
+          ): void {
+            const start = performance.now();
 
-            if (steps === 100) clearInterval(move);
-          }, computedSpeed);
+            const requestId = requestAnimationFrame(function animate(time) {
+              if (isAnimEnded === true) {
+                cancelAnimationFrame(requestId);
+                return;
+              }
 
+              let timeFraction = (time - start) / duration;
+
+              if (timeFraction > 1) timeFraction = 1;
+
+              const progress = timeFraction;
+
+              draw(progress);
+
+              if (timeFraction < 1) {
+                requestAnimationFrame(animate);
+              }
+            });
+          }
+
+          // Reset car==============================================================================
+          function resetCar(): void {
+            carSwitchEngine(parseInt(carID, 10), 'stopped')
+              .then(() => {
+                isAnimEnded = true;
+                (carElement as HTMLElement).style.left = '0';
+                btnStart?.classList.remove('btn__start_inactive');
+                btnStop?.classList.add('btn__stop_inactive');
+              });
+          }
+
+          animateCar({
+            duration: raceTime,
+            draw(progress: number): void {
+              (carElement as HTMLElement).style.left = `${progress * computedDistance}px`;
+            },
+          });
+
+          // Change start/stop button state=========================================================
           btnStart?.classList.add('btn__start_inactive');
           btnStop?.classList.remove('btn__stop_inactive');
 
+          // Listen if stop button is pressed...
           btnStop?.addEventListener('click', () => {
-            if (move) clearInterval(move);
-
-            (carElement as HTMLElement).style.left = '0';
-            btnStart?.classList.remove('btn__start_inactive');
-            btnStop?.classList.add('btn__stop_inactive');
+            resetCar();
           });
 
-          this.results.push(time);
-          if (this.results.length === this.pageGarage.querySelector('.garage__wrapper')?.children.length) {
-            this.results.sort();
-            setTimeout(() => alert(`Best time: ${(this.results[0] / 1000).toFixed(2)}`), this.results[0]);
+          // If race mode is active, collect each car time and add winner t oserver
+          if (raceFlag) {
+            this.results.push({
+              id: parseInt(carID, 10),
+              time: raceTime,
+            });
+
+            if (this.results.length === this.pageGarage.querySelector('.garage__wrapper')?.children.length) {
+              this.results.sort((a, b) => a.time - b.time);
+              this.winners.addWinnerToServer(
+                this.results[0].id,
+                1,
+                parseFloat((this.results[0].time / 1000).toFixed(2)),
+              );
+
+              setTimeout(() => console.log(`Best time: ${(this.results[0].time / 1000).toFixed(2)}`), this.results[0].time);
+            }
           }
 
+          // Request for drive mode, stop car inimation if status 500 received
           carSwitchToDrive(parseInt(carID, 10))
             .then((response) => {
-              console.log(response.status);
-              if (response.status === 500) {
-                clearInterval(move);
-              }
+              if (response.status === 500) isAnimEnded = true;
             });
         });
     }
+  }
 
-    if (carID && mode === 'stopped') {
-      carSwitchEngine(parseInt(carID, 10), 'stopped')
-        .then((data) => data);
+  // Handle race controls===========================================================================
+  raceControl(mode: string): void {
+    const btnRace = this.pageGarage.querySelector('.car-mgmt__btn__race');
+    const btnReset = this.pageGarage.querySelector('.car-mgmt__btn__reset');
+    const carsWrapper = this.pageGarage.querySelector('.garage__wrapper');
+    const cars = carsWrapper?.querySelectorAll('.car__wrapper');
+
+    if (mode === 'race') {
+      btnRace?.classList.add('car-mgmt__btn__race_inactive');
+      btnReset?.classList.remove('car-mgmt__btn__reset_inactive');
+
+      cars?.forEach((car) => {
+        this.startStopCar(car as HTMLElement, true);
+      });
+    }
+
+    if (mode === 'reset') {
+      btnRace?.classList.remove('car-mgmt__btn__race_inactive');
+      btnReset?.classList.add('car-mgmt__btn__reset_inactive');
+
+      cars?.forEach((car) => {
+        const btnStop = car.querySelector('.btn__stop');
+        (btnStop as HTMLButtonElement).click();
+      });
     }
   }
 
-  startRace(): void {
-    const btnRace = this.pageGarage.querySelector('.car-mgmt__btn__race');
-    const btnReset = this.pageGarage.querySelector('.car-mgmt__btn__reset');
-    const carsWrapper = this.pageGarage.querySelector('.garage__wrapper');
-    const cars = carsWrapper?.querySelectorAll('.car__wrapper');
-
-    btnRace?.classList.add('car-mgmt__btn__race_inactive');
-    btnReset?.classList.remove('car-mgmt__btn__reset_inactive');
-
-    cars?.forEach((car) => {
-      this.startStopCar(car as HTMLElement, 'started', true);
-    });
-  }
-
-  resetCars(): void {
-    const btnRace = this.pageGarage.querySelector('.car-mgmt__btn__race');
-    const btnReset = this.pageGarage.querySelector('.car-mgmt__btn__reset');
-    const carsWrapper = this.pageGarage.querySelector('.garage__wrapper');
-    const cars = carsWrapper?.querySelectorAll('.car__wrapper');
-
-    btnRace?.classList.remove('car-mgmt__btn__race_inactive');
-    btnReset?.classList.add('car-mgmt__btn__reset_inactive');
-
-    cars?.forEach((car) => {
-      this.startStopCar(car as HTMLElement, 'stopped', true);
-      const wrap = car.closest('.car__wrapper');
-      const btnStop = wrap?.querySelector('.btn__stop');
-      (btnStop as HTMLButtonElement).click();
-    });
-  }
-
+  // Switch app pages===============================================================================
   switchPage(e: Event): void {
     const btnGarage = this.headElement.querySelector('.btn__garage');
     const btnWinners = this.headElement.querySelector('.btn__winners');

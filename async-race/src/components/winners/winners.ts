@@ -16,6 +16,8 @@ import './winners.scss';
 class Winners {
   private readonly mainElement: HTMLElement;
 
+  private readonly bgImage: HTMLElement;
+
   private readonly pageWinners: HTMLElement;
 
   private readonly pageHeading: HTMLElement;
@@ -52,6 +54,9 @@ class Winners {
 
   constructor() {
     this.mainElement = new Main().render();
+    this.bgImage = new Component('img', ['page__bg']).render();
+    this.bgImage.setAttribute('src', 'assets/images/bg-winners-1920.jpg');
+
     this.pageWinners = new Component('div', ['page__winners']).render();
     this.pageHeading = new Component('h2', ['page__winners__heading']).render();
     this.pageHeading.innerText = 'Winners(0)';
@@ -193,7 +198,10 @@ class Winners {
       this.winnersTable,
     ].forEach((elem) => this.pageWinners.appendChild(elem));
 
-    this.mainElement.appendChild(this.pageWinners);
+    [
+      this.bgImage,
+      this.pageWinners,
+    ].forEach((elem) => this.mainElement.appendChild(elem));
 
     return this.mainElement;
   }

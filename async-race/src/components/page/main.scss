@@ -1,5 +1,6 @@
 .main {
   width: 100%;
   height: calc(100vh - 60px);
-  background: linear-gradient(#668b96, #35484e);
+  background: linear-gradient(rgba($color: #668b96, $alpha: 0.7),
+                              rgba($color: #35484e, $alpha: 0.9));
 }

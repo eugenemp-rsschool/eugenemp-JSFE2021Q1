@@ -18,6 +18,8 @@ import './garage.scss';
 class Garage {
   private readonly mainElement: HTMLElement;
 
+  private readonly bgImage: HTMLElement;
+
   private readonly pageGarage: HTMLElement;
 
   private readonly pageHeading: HTMLElement;
@@ -42,6 +44,8 @@ class Garage {
 
   constructor() {
     this.mainElement = new Main().render();
+    this.bgImage = new Component('img', ['page__bg']).render();
+    this.bgImage.setAttribute('src', 'assets/images/bg-garage-1920.jpg');
     this.pageGarage = new Component('div', ['page__garage']).render();
     this.pageHeading = new Component('h2', ['page__garage__heading']).render();
     this.pageHeading.innerText = 'Garage(0)';
@@ -231,7 +235,10 @@ class Garage {
       this.garageWrapper,
     ].forEach((elem) => this.pageGarage.appendChild(elem));
 
-    this.mainElement.appendChild(this.pageGarage);
+    [
+      this.bgImage,
+      this.pageGarage,
+    ].forEach((elem) => this.mainElement.appendChild(elem));
 
     return this.mainElement;
   }

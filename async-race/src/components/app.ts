@@ -7,6 +7,7 @@ import {
   carSwitchToDrive,
 } from './shared/api';
 import './app.scss';
+import Modal from './modal/modal';
 
 class App {
   private readonly appElement: HTMLElement;
@@ -59,6 +60,7 @@ class App {
     });
   }
 
+  // Start/stop car=================================================================================
   startStopCar(carWrap: HTMLElement, raceFlag: boolean): void {
     const carID = carWrap?.id;
     const carTrack = carWrap?.querySelector('.car__track');
@@ -74,7 +76,7 @@ class App {
             (carTrack as HTMLElement).getBoundingClientRect().width - 100,
           );
 
-          // Animate car movement===================================================================
+          // Animate car movement
           let isAnimEnded = false;
 
           function animateCar(
@@ -105,7 +107,7 @@ class App {
             });
           }
 
-          // Reset car==============================================================================
+          // Reset car
           function resetCar(): void {
             carSwitchEngine(parseInt(carID, 10), 'stopped')
               .then(() => {
@@ -147,7 +149,11 @@ class App {
                 parseFloat((this.results[0].time / 1000).toFixed(2)),
               );
 
-              setTimeout(() => console.log(`Best time: ${(this.results[0].time / 1000).toFixed(2)}`), this.results[0].time);
+              // Spawn winner modal window
+              setTimeout(() => {
+                const modal = new Modal('car', (this.results[0].time / 1000).toFixed(2)).render();
+                this.appElement.append(modal);
+              }, this.results[0].time);
             }
           }
 

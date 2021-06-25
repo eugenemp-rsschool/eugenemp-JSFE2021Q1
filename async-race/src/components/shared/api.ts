@@ -23,12 +23,12 @@ export type DriveObj = {
 const url = 'http://localhost:3000';
 
 // Garage methods===================================================================================
-export async function getCars(page: number, limit = 7): Promise<Response> {
+export async function getCars(page: number, limit = 7): Promise<CarObj[]> {
   const path = '/garage';
   const params = `?_limit=${limit}&_page=${page}`;
   const response = await fetch(url + path + params);
 
-  return response;
+  return response.json();
 }
 
 export async function getCar(id: number): Promise<CarObj> {

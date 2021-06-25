@@ -28,8 +28,6 @@ class Car {
 
   private readonly finish: HTMLElement;
 
-  private readonly carID: number;
-
   constructor(maker: string, color: string, id: number, model = '') {
     this.carWrapper = new Component('div', ['car__wrapper']).render();
     this.carHeader = new Component('div', ['car__header']).render();
@@ -41,7 +39,6 @@ class Car {
     this.car = new Component('div', ['car']).render();
 
     this.carWrapper.id = id.toString();
-    this.carID = id;
 
     this.btnSelect = new Button('btn__select', 'Select').render();
     this.btnRemove = new Button('btn__remove', 'Remove').render();

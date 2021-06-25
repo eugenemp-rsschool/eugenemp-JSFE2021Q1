@@ -10,6 +10,8 @@ import {
   deleteWinner,
   updateWinner,
   getCar,
+  getWinnersCount,
+  getAllWinners,
 } from '../shared/api';
 import './winners.scss';
 
@@ -98,65 +100,73 @@ class Winners {
     });
   }
 
-  // Get all winners from server
+  // Get all winners from server====================================================================
   getWinnersFromServer(page = this.page, limit = 10, sort = 'id', order = 'ASC'): void {
     const elems = this.winnersTable.querySelectorAll('.winner__table__row');
     elems.forEach((elem) => {
       elem.remove();
     });
-
-    getWinners(page, limit, sort, order)
-      .then((response) => {
-        const winnersCount = response.headers.get('X-Total-Count');
+    // Get winners amount
+    getWinnersCount()
+      .then((count) => {
+        const winnersCount = count;
         this.pageHeading.innerText = `Winners(${winnersCount})`;
 
         if (winnersCount) {
           this.pagesAmount = Math.ceil(parseInt(winnersCount, 10) / 10);
-
           if (this.pagesAmount === this.page
            || this.pagesAmount === 0) {
             this.btnNext.classList.add('garage__btn__next_inactive');
           } else this.btnNext.classList.remove('garage__btn__next_inactive');
-
           if (this.page === 1) {
             this.btnPrev.classList.add('garage__btn__prev_inactive');
           } else this.btnPrev.classList.remove('garage__btn__prev_inactive');
         }
-
-        return response.json();
-      })
-      .then((winners) => winners.forEach((winner: WinnerObj) => {
-        getCar(winner.id)
-          .then((car) => {
-            this.winnersTable.appendChild(new Winner(
-              car.id,
-              car.name,
-              winner.wins,
-              winner.time,
-              car.color,
-            ).render());
-          });
-      }));
+      });
+    // Assemble winner table element
+    getAllWinners()
+      .then((allWinners) => {
+        getWinners(page, limit, sort, order)
+          .then((winners) => winners.forEach((winner: WinnerObj) => {
+            getCar(winner.id)
+              .then((car) => {
+                this.winnersTable.appendChild(new Winner(
+                  allWinners.findIndex((elem) => elem.id === winner.id) + 1,
+                  car.name,
+                  winner.wins,
+                  winner.time,
+                  car.color,
+                ).render());
+              });
+          }));
+      });
 
     this.page = page;
     this.pageNum.innerText = `Page: ${this.page}`;
   }
 
-  // Get spicified winner from server
-  getWinnerFromServer(id: number): void {
-    getWinner(id)
-      .then((car) => car);
-  }
-
-  // Add new winner to server's database
+  // Add new winner to server's database============================================================
   addWinnerToServer(carID: number, carWins: number, carTime: number): void {
-    createWinner(carID, carWins, carTime)
-      .then(() => {
-        this.getWinnersFromServer(this.page);
+    getWinner(carID)
+      .then((winner) => {
+        // If winner exist on server - update it...
+        if (winner.id) {
+          updateWinner(carID, winner.wins + carWins, carTime)
+            .then(() => {
+              this.getWinnersFromServer(this.page);
+            });
+        }
+        // ...if not - create new one
+        if (!winner.id) {
+          createWinner(carID, carWins, carTime)
+            .then(() => {
+              this.getWinnersFromServer(this.page);
+            });
+        }
       });
   }
 
-  // Detele specified winner from server's database
+  // Detele specified winner from server's database=================================================
   deleteWinnerFromServer(id: number): void {
     deleteWinner(id)
       .then(() => {
@@ -164,14 +174,7 @@ class Winners {
       });
   }
 
-  // Update specified winner in server's database
-  updateWinnerOnServer(id: number, carWins: number, carTime: number): void {
-    updateWinner(id, carWins, carTime)
-      .then(() => {
-        this.getWinnersFromServer(this.page);
-      });
-  }
-
+  // Render page====================================================================================
   render():HTMLElement {
     this.getWinnersFromServer(this.page);
 

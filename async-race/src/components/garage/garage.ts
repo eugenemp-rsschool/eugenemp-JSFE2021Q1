@@ -11,6 +11,7 @@ import {
   deleteCar,
   updateCar,
   deleteWinner,
+  getCarsCount,
 } from '../shared/api';
 import generateCars from '../generate-cars/generate-cars';
 import './garage.scss';
@@ -116,13 +117,13 @@ class Garage {
     });
   }
 
-  // Gat all cars from server
+  // Gat all cars from server=======================================================================
   getCarsFromServer(page: number): void {
     this.garageWrapper.innerHTML = '';
 
-    getCars(page)
-      .then((response) => {
-        const carsCount = response.headers.get('X-Total-Count');
+    getCarsCount()
+      .then((count) => {
+        const carsCount = count;
         this.pageHeading.innerText = `Cars(${carsCount})`;
 
         if (carsCount) {
@@ -137,9 +138,9 @@ class Garage {
             this.btnPrev.classList.add('garage__btn__prev_inactive');
           } else this.btnPrev.classList.remove('garage__btn__prev_inactive');
         }
+      });
 
-        return response.json();
-      })
+    getCars(page)
       .then((cars) => cars.forEach((car: CarObj) => {
         const carElem = new Car(car.name, car.color, car.id).render();
 
@@ -163,13 +164,7 @@ class Garage {
     this.pageNumElement.innerText = `Page: ${this.page}`;
   }
 
-  // Get specified car from server
-  getCarFromServer(id: number): void {
-    getCar(id)
-      .then((car) => car);
-  }
-
-  // Add new car to server's database
+  // Add new car to server's database===============================================================
   addCarToServer(carName: string, carColor: string): void {
     createCar(carName, carColor)
       .then(() => {
@@ -177,7 +172,7 @@ class Garage {
       });
   }
 
-  // Delete specified car from server
+  // Delete specified car from server===============================================================
   deleteCarFromServer(id: number): void {
     deleteCar(id)
       .then(() => {
@@ -185,7 +180,7 @@ class Garage {
       });
   }
 
-  // Update specified car in server's database
+  // Update specified car in server's database======================================================
   updateCarOnServer(id: number, carName: string, carColor: string): void {
     updateCar(id, carName, carColor)
       .then(() => {
@@ -193,7 +188,7 @@ class Garage {
       });
   }
 
-  // Detele specified winner from server's database
+  // Detele specified winner from server's database=================================================
   deleteWinnerFromServer(id: number): void {
     deleteWinner(id)
       .then(() => {
@@ -204,6 +199,7 @@ class Garage {
       });
   }
 
+  // Change the state of update form's inputs and button============================================
   switchUpdateFormState(): void {
     const updateInputName = this.carMgMt.querySelector('.car-mgmt__update__input-name');
     const updateInputColor = this.carMgMt.querySelector('.car-mgmt__update__input-color');
@@ -219,6 +215,7 @@ class Garage {
     } else updateInputColor?.setAttribute('disabled', 'disabled');
   }
 
+  // Render page====================================================================================
   render():HTMLElement {
     this.getCarsFromServer(this.page);
 

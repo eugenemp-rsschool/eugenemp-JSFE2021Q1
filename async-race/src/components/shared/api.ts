@@ -1,3 +1,4 @@
+// Type aliases=====================================================================================
 export type CarObj = {
   'name': string,
   'color': string,
@@ -22,7 +23,6 @@ export type DriveObj = {
 const url = 'http://localhost:3000';
 
 // Garage methods===================================================================================
-
 export async function getCars(page: number, limit = 7): Promise<Response> {
   const path = '/garage';
   const params = `?_limit=${limit}&_page=${page}`;
@@ -80,16 +80,21 @@ export async function getCarsCount(limit = 7): Promise<string | null> {
 }
 
 // Winners methods==================================================================================
+export async function getAllWinners(): Promise<WinnerObj[]> {
+  const path = '/winners';
+  const response = await fetch(url + path);
+
+  return response.json();
+}
 
 export async function getWinners(
   page: number, limit = 7, sort: string, order: string,
-): Promise<Response> {
+): Promise<WinnerObj[]> {
   const path = '/winners';
   const params = `?_limit=${limit}&_page=${page}&_sort=${sort}&_order=${order}`;
-
   const response = await fetch(url + path + params);
 
-  return response;
+  return response.json();
 }
 
 export async function getWinner(id: number): Promise<WinnerObj> {
@@ -126,7 +131,7 @@ export async function updateWinner(
 ): Promise<Response> {
   const path = `/winners/${id}`;
   const reqHeaders = { 'Content-Type': 'application/json' };
-  const reqBody = { name: carWins, color: carTime };
+  const reqBody = { wins: carWins, time: carTime };
   const response = await fetch(url + path, {
     method: 'PUT',
     headers: reqHeaders,
@@ -145,7 +150,6 @@ export async function getWinnersCount(limit = 7): Promise<string | null> {
 }
 
 // Car methods======================================================================================
-
 export async function carSwitchEngine(id: number, status: string): Promise<EngineObj> {
   const path = `/engine/?id=${id}&status=${status}`;
   const response = await fetch(url + path);

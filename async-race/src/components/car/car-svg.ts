@@ -1,4 +1,4 @@
-export default function createCarSVG(color: string) {
+export default function createCarSVG(color: string): string {
   return `
   <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100" height="50" viewBox="0 0 100 50" version="1.1">
   <g id="surface1">

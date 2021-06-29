@@ -22,7 +22,9 @@ class App {
 
   private readonly pageGarage: HTMLElement;
 
-  private readonly results: { id: number, time: number }[] = [];
+  private winResult: { id: number, time: number } | null = null;
+
+  private winExist = false;
 
   constructor() {
     this.winners = new Winners();
@@ -76,6 +78,8 @@ class App {
             (carTrack as HTMLElement).getBoundingClientRect().width - 100,
           );
 
+          this.winExist = false;
+
           // Animate car movement
           let isAnimEnded = false;
 
@@ -86,7 +90,6 @@ class App {
             },
           ): void {
             const start = performance.now();
-
             const requestId = requestAnimationFrame(function animate(time) {
               if (isAnimEnded === true) {
                 cancelAnimationFrame(requestId);
@@ -115,6 +118,7 @@ class App {
                 (carElement as HTMLElement).style.left = '0';
                 btnStart?.classList.remove('btn__start_inactive');
                 btnStop?.classList.add('btn__stop_inactive');
+                btnStop?.removeEventListener('click', () => resetCar());
               });
           }
 
@@ -125,42 +129,41 @@ class App {
             },
           });
 
-          // Change start/stop button state=========================================================
+          // Change start/stop button state
           btnStart?.classList.add('btn__start_inactive');
           btnStop?.classList.remove('btn__stop_inactive');
 
           // Listen if stop button is pressed...
-          btnStop?.addEventListener('click', () => {
-            resetCar();
-          });
+          btnStop?.addEventListener('click', () => resetCar());
 
-          // If race mode is active, collect each car time and add winner t oserver
-          if (raceFlag) {
-            this.results.push({
-              id: parseInt(carID, 10),
-              time: raceTime,
-            });
-
-            if (this.results.length === this.pageGarage.querySelector('.garage__wrapper')?.children.length) {
-              this.results.sort((a, b) => a.time - b.time);
-              this.winners.addWinnerToServer(
-                this.results[0].id,
-                1,
-                parseFloat((this.results[0].time / 1000).toFixed(2)),
-              );
-
-              // Spawn winner modal window
-              setTimeout(() => {
-                const modal = new Modal('car', (this.results[0].time / 1000).toFixed(2)).render();
-                this.appElement.append(modal);
-              }, this.results[0].time);
-            }
-          }
-
-          // Request for drive mode, stop car inimation if status 500 received
+          // Request for drive mode
           carSwitchToDrive(parseInt(carID, 10))
             .then((response) => {
+              // Stop car animation if status 500 is received
               if (response.status === 500) isAnimEnded = true;
+
+              // Spawn winner modal window
+              if (response.status === 200) {
+                // If race mode is active, add winner to server and spawn modal window
+                if (raceFlag && !this.winExist) {
+                  this.winExist = true;
+
+                  // Collerct winner info
+                  this.winResult = {
+                    id: parseInt(carID, 10),
+                    time: parseFloat((raceTime / 1000).toFixed(2)),
+                  };
+                  // Add winner to server
+                  this.winners.addWinnerToServer(
+                    this.winResult.id,
+                    1,
+                    this.winResult.time,
+                  );
+                  // Spawn modal window
+                  const modal = new Modal('car', this.winResult.time.toString()).render();
+                  this.appElement.append(modal);
+                }
+              }
             });
         });
     }
@@ -185,7 +188,8 @@ class App {
     if (mode === 'reset') {
       btnRace?.classList.remove('car-mgmt__btn__race_inactive');
       btnReset?.classList.add('car-mgmt__btn__reset_inactive');
-
+      this.winResult = null;
+      this.winExist = true;
       cars?.forEach((car) => {
         const btnStop = car.querySelector('.btn__stop');
         (btnStop as HTMLButtonElement).click();
@@ -208,6 +212,7 @@ class App {
     }
   }
 
+  // Render application root========================================================================
   render(): HTMLElement {
     [
       this.headElement,

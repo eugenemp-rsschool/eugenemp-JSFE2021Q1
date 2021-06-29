@@ -62,14 +62,14 @@ $modal-height: 200px;
    width: 60px;
    height: 42px;
    background-color: #525252;
-   border: 1px solid #528288;
+   border: 1px solid #787878;
    border-radius: 4px;
    filter: drop-shadow(0 2px 4px #232323);
    transition: 0.2s ease-in-out;
    transition-property: filter, background-color;
 
    &:hover {
-    background-color: #626262;
+    background-color: #a5a5a5;
     filter: drop-shadow(0 3px 6px #232323);
    }
  }

@@ -80,9 +80,10 @@ export async function getCarsCount(limit = 7): Promise<string | null> {
 }
 
 // Winners methods==================================================================================
-export async function getAllWinners(): Promise<WinnerObj[]> {
+export async function getAllWinners(sort = 'id'): Promise<WinnerObj[]> {
   const path = '/winners';
-  const response = await fetch(url + path);
+  const params = `?_sort=${sort}`;
+  const response = await fetch(url + path + params);
 
   return response.json();
 }

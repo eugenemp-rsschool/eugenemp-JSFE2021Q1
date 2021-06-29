@@ -6,6 +6,7 @@ import {
   carSwitchEngine,
   carSwitchToDrive,
   deleteWinner,
+  getCar,
 } from './shared/api';
 import './app.scss';
 import Modal from './modal/modal';
@@ -123,6 +124,7 @@ class App {
               });
           }
 
+          // Start car movement
           animateCar({
             duration: raceTime,
             draw(progress: number): void {
@@ -161,8 +163,13 @@ class App {
                     this.winResult.time,
                   );
                   // Spawn modal window
-                  const modal = new Modal('car', this.winResult.time.toString()).render();
-                  this.appElement.append(modal);
+                  getCar(this.winResult.id)
+                    .then((car) => {
+                      if (this.winResult) {
+                        const modal = new Modal(`${car.name}`, this.winResult.time.toString()).render();
+                        this.appElement.append(modal);
+                      }
+                    });
                 }
               }
             });

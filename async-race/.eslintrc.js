@@ -19,8 +19,6 @@ module.exports = {
         "@typescript-eslint"
     ],
     "rules": {
-        "class-methods-use-this": "off",
         "linebreak-style": ["error", "windows"],
-        "no-console": "off"
     }
 };

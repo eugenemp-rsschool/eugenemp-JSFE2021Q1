@@ -10,7 +10,6 @@ import {
   createCar,
   deleteCar,
   updateCar,
-  deleteWinner,
   getCarsCount,
 } from '../shared/api';
 import generateCars from '../generate-cars/generate-cars';
@@ -185,17 +184,6 @@ class Garage {
     updateCar(id, carName, carColor)
       .then(() => {
         this.getCarsFromServer(this.page);
-      });
-  }
-
-  // Detele specified winner from server's database=================================================
-  deleteWinnerFromServer(id: number): void {
-    deleteWinner(id)
-      .then(() => {
-        console.log('Winner deleted');
-      })
-      .catch((e) => {
-        console.log(e);
       });
   }
 

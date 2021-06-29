@@ -5,6 +5,7 @@ import Garage from './garage/garage';
 import {
   carSwitchEngine,
   carSwitchToDrive,
+  deleteWinner,
 } from './shared/api';
 import './app.scss';
 import Modal from './modal/modal';
@@ -42,8 +43,8 @@ class App {
 
         if (carID) {
           this.garage.deleteCarFromServer(parseInt(carID, 10));
-          this.garage.deleteWinnerFromServer(parseInt(carID, 10));
-          this.winners.getWinnersFromServer();
+          deleteWinner(parseInt(carID, 10))
+            .then(() => this.winners.getWinnersFromServer());
         }
       }
 

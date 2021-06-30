@@ -7,9 +7,9 @@ import {
   carSwitchToDrive,
   deleteWinner,
   getCar,
+  spawnModalWindow,
 } from './shared/api';
 import './app.scss';
-import Modal from './modal/modal';
 
 class App {
   private readonly appElement: HTMLElement;
@@ -166,8 +166,10 @@ class App {
                   getCar(this.winResult.id)
                     .then((car) => {
                       if (this.winResult) {
-                        const modal = new Modal(`${car.name}`, this.winResult.time.toString()).render();
-                        this.appElement.append(modal);
+                        spawnModalWindow(
+                          'Race over!',
+                          `${car.name} wins with time: ${this.winResult.time}s!`,
+                        );
                       }
                     });
                 }

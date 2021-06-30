@@ -1,3 +1,5 @@
+import Modal from '../modal/modal';
+
 // Type aliases=====================================================================================
 export type CarObj = {
   'name': string,
@@ -163,4 +165,11 @@ export async function carSwitchToDrive(id: number): Promise<Response> {
   const response = fetch(url + path);
 
   return response;
+}
+
+// Spawn modal window===============================================================================
+export function spawnModalWindow(header: string, text: string, btn = true): void {
+  const appElement = document.querySelector('.app');
+  const modal = new Modal(header, text, btn).render();
+  appElement?.append(modal);
 }

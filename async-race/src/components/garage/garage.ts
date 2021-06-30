@@ -11,6 +11,7 @@ import {
   deleteCar,
   updateCar,
   getCarsCount,
+  spawnModalWindow,
 } from '../shared/api';
 import generateCars from '../generate-cars/generate-cars';
 import './garage.scss';
@@ -42,6 +43,8 @@ class Garage {
 
   private selectedCar = -1;
 
+  private carsPerPage = 7;
+
   constructor() {
     this.mainElement = new Main().render();
     this.bgImage = new Component('img', ['page__bg']).render();
@@ -55,6 +58,8 @@ class Garage {
     this.btnWrapper = new Component('div', ['garage__btn__wrapper']).render();
     this.btnPrev = new Button('garage__btn__prev', 'Prev page').render();
     this.btnNext = new Button('garage__btn__next', 'Next page').render();
+    this.btnPrev.classList.add('garage__btn__prev_inactive');
+    this.btnNext.classList.add('garage__btn__next_inactive');
     this.pageNumElement = new Component('span', ['garage__page-num']).render();
 
     this.garageWrapper = new Component('div', ['garage__wrapper']).render();
@@ -126,10 +131,9 @@ class Garage {
         this.pageHeading.innerText = `Cars(${carsCount})`;
 
         if (carsCount) {
-          this.pagesAmount = Math.ceil(parseInt(carsCount, 10) / 7);
+          this.pagesAmount = Math.ceil(parseInt(carsCount, 10) / this.carsPerPage);
 
-          if (this.pagesAmount === this.page
-           || this.pagesAmount === 0) {
+          if (this.pagesAmount === this.page) {
             this.btnNext.classList.add('garage__btn__next_inactive');
           } else this.btnNext.classList.remove('garage__btn__next_inactive');
 
@@ -137,6 +141,13 @@ class Garage {
             this.btnPrev.classList.add('garage__btn__prev_inactive');
           } else this.btnPrev.classList.remove('garage__btn__prev_inactive');
         }
+      })
+      .catch(() => {
+        spawnModalWindow(
+          'Server error',
+          'Error connecting to server! Pleae, start game server locally and reload this page.',
+          false,
+        );
       });
 
     getCars(page)

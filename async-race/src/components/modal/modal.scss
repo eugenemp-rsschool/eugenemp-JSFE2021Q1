@@ -1,5 +1,6 @@
 $modal-width: 250px;
 $modal-height: 200px;
+$header-height: 30px;
 
 .modal {
   &__bg {
@@ -44,7 +45,7 @@ $modal-height: 200px;
    flex-direction: column;
    justify-content: space-around;
    align-items: center;
-   height: 100%;
+   height: calc(100% - #{$header-height});
    width: 100%;
    text-align: center;
  }

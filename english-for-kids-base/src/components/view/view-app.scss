@@ -1,0 +1,18 @@
+/*Background gradient========================================================*/
+$bg-train: linear-gradient(#5b5b5b, #3b6161);
+$bg-play: linear-gradient(#5b5b5b, #5a4922);
+
+/*Basic rules================================================================*/
+.app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  background: $bg-train;
+
+  &_play {
+    background: $bg-play;
+  }
+}

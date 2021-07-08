@@ -1,0 +1,146 @@
+/*Screen sizes for media queries*/
+$breakpoint-mobile: 320px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+$breakpoint-desktop-hdready: 1280px;
+$breakpoint-desktop-fullhd: 1920px;
+
+.card-main {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: hidden;
+  border: 1px solid #727272;
+  background-color: #6f807d;
+  filter: drop-shadow(0 5px 10px #383838);
+  transition: 0.3s ease-in-out;
+  transition-property: transform, filter;
+  will-change: transform, filter;
+
+  &__picture {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    filter: drop-shadow(0 0 5px #1e4d46);
+  }
+
+  &:hover {
+    filter: drop-shadow(0 10px 20px #383838);
+  }
+
+  &__name {
+    font-family: 'Roboto', sans-serif;
+    color: #dfdfdf;
+  }
+}
+
+/*from 320 to 767*/
+@media screen and (min-width: $breakpoint-mobile) {
+
+  .card-main {
+    width: 120px;
+    height: 120px;
+
+    &:hover {
+      transform: scale3d(1.1, 1.1, 1.1);
+    }
+
+    &__picture {
+      width: 120px;
+      height: 100px;
+    }
+
+    &__name {
+      font-size: 12px;
+    }
+  }
+}
+
+/*from 768 to 1023*/
+@media screen and (min-width: $breakpoint-tablet) {
+
+  .card-main {
+    width: 180px;
+    height: 180px;
+
+    &:hover {
+      transform: scale3d(1.1, 1.1, 1.1);
+    }
+
+    &__picture {
+      width: 180px;
+      height: 150px;
+    }
+    &__name {
+      font-size: 16px;
+    }
+  }
+}
+
+/*from 1024 to 1279*/
+@media screen and (min-width: $breakpoint-desktop) {
+
+  .card-main {
+    width: 220px;
+    height: 220px;
+
+    &:hover {
+      transform: scale3d(1.1, 1.1, 1.1);
+    }
+
+    &__picture {
+      width: 220px;
+      height: 200px;
+    }
+
+    &__name {
+      font-size: 18px;
+    }
+  }
+}
+
+/*from 1280 to 1919*/
+@media screen and (min-width: $breakpoint-desktop-hdready) {
+
+  .card-main {
+    width: 220px;
+    height: 220px;
+
+    &:hover {
+      transform: scale3d(1.1, 1.1, 1.1);
+    }
+
+    &__picture {
+      width: 220px;
+      height: 200px;
+    }
+
+    &__name {
+      font-size: 20px;
+    }
+  }
+}
+
+/*from 1920 and up*/
+@media screen and (min-width: $breakpoint-desktop-fullhd) {
+
+  .card-main {
+    width: 260px;
+    height: 260px;
+
+    &:hover {
+      transform: scale3d(1.1, 1.1, 1.1);
+    }
+
+    &__picture {
+      width: 260px;
+      height: 220px;
+    }
+
+    &__name {
+      font-size: 22px;
+    }
+  }
+}

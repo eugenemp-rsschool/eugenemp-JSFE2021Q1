@@ -19,5 +19,10 @@ module.exports = {
     ],
     "rules": {
         "linebreak-style": ["error", "windows"],
+        "@typescript-eslint/lines-between-class-members": [
+            "error",
+            "always",
+            { "exceptAfterSingleLine": true }
+        ]
     }
 };

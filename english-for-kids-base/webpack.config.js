@@ -35,7 +35,7 @@ const config = {
         }),
       
         new CleanWebpackPlugin({
-        cleanStaleWebpackAssets: false,
+        cleanStaleWebpackAssets: true,
         }),
     
         new ESLintPlugin({
@@ -43,8 +43,8 @@ const config = {
         }),
         new CopyPlugin({
         patterns: [
-            { context: './src/assets/', from: 'images/*', to: 'assets', noErrorOnMissing: true },
-            { context: './src/assets/', from: 'icons/*', to: 'assets', noErrorOnMissing: true },
+            { context: './src/assets/', from: 'images/**', to: 'assets', noErrorOnMissing: false },
+            { context: './src/assets/', from: 'audio/**', to: 'assets', noErrorOnMissing: false },
         ],
         options: {
             concurrency: 100,

@@ -22,6 +22,10 @@ function switchMenu(btn: HTMLElement, menu: HTMLElement): void {
 
 // Assemble side menu==========================================================
 function assembleMenu(menu: HTMLElement): void {
+  const mainItem = new MenuItem('Main Page').render();
+  mainItem.classList.add('menu__item__main');
+  menu.appendChild(mainItem);
+
   words.getCategories().forEach((name) => {
     menu.appendChild(new MenuItem(name).render());
   });
@@ -33,6 +37,7 @@ function assembleMainPage(elem: HTMLElement): void {
     const pic = words.getCategory(cat)[0].picture;
 
     elem.appendChild(new CardMain(cat, pic).render());
+    elem.classList.remove('category_transition');
   });
 }
 
@@ -43,6 +48,7 @@ function assemblePlayMode(elem: HTMLElement, cat: string): void {
   cards.forEach((word) => {
     const card = new CardPlay(word.word, word.picture);
     elem.appendChild(card.render());
+    elem.classList.remove('category_transition');
   });
 }
 
@@ -53,14 +59,15 @@ function assembleTrainMode(elem: HTMLElement, cat: string): void {
   cards.forEach((word) => {
     const card = new CardTrain(word.word, word.translate, word.picture);
     elem.appendChild(card.render());
+    elem.classList.remove('category_transition');
   });
 }
 
 // Switch game mode============================================================
-/* function switchGameMode(): void {
-
+function switchGameMode(app: HTMLElement, mode: boolean): void {
+  if (mode) app.classList.add('app_play');
+  if (!mode) app.classList.remove('app_play');
 }
- */
 
 export {
   switchMenu,
@@ -68,4 +75,5 @@ export {
   assembleMainPage,
   assemblePlayMode,
   assembleTrainMode,
+  switchGameMode,
 };

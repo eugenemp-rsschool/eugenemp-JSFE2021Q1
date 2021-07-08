@@ -1,5 +1,4 @@
 import AppComponent from './view/view-app';
-import MainPage from './view/main-page';
 import Menu from './view/side-menu';
 import Header from './view/header';
 import Footer from './view/footer';
@@ -10,6 +9,8 @@ import {
   assembleMenu,
   assembleMainPage,
   assemblePlayMode,
+  assembleTrainMode,
+  switchGameMode,
 } from './view/view-logic';
 
 export default class App {
@@ -39,16 +40,14 @@ export default class App {
     const header = this.headerElement.render();
     const footer = this.footerElement.render();
     const cardsWrapper = new Category().render();
-    const mainPage = new MainPage().render();
 
     // Assemble initial view======================
     assembleMenu(menu);
-    assembleMainPage(mainPage);
-    assemblePlayMode(cardsWrapper, 'Action (set A)');
+    assembleMainPage(cardsWrapper);
 
     app.appendChild(menu);
     app.appendChild(header);
-    app.appendChild(mainPage);
+    app.appendChild(cardsWrapper);
     app.appendChild(footer);
     this.rootElement?.appendChild(app);
 
@@ -57,9 +56,43 @@ export default class App {
       if ((e.target as HTMLElement).classList.contains('header__btn__menu')) {
         switchMenu(e.target as HTMLElement, menu);
       }
-      /* if ((e.target as HTMLElement).classList.contains('header__btn__mode')) {
-        console.log('Mode switched');
-      } */
+    });
+
+    header.addEventListener('change', (e) => {
+      if ((e.target as HTMLElement).classList.contains('header__switch__mode__input')) {
+        const span = header.querySelector('.header__switch__mode__slider');
+
+        if ((e.target as HTMLInputElement).checked) {
+          this.playMode = true;
+          (span as HTMLSpanElement).innerText = 'Play';
+        } else {
+          this.playMode = false;
+          (span as HTMLSpanElement).innerText = 'Train';
+        }
+        switchGameMode(app, this.playMode);
+      }
+    });
+
+    menu.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).classList.contains('menu__item__main')) {
+        cardsWrapper.classList.add('category_transition');
+
+        setTimeout(() => {
+          cardsWrapper.innerHTML = '';
+          assembleMainPage(cardsWrapper);
+        }, 300);
+        return;
+      }
+
+      if ((e.target as HTMLElement).classList.contains('menu__item')) {
+        cardsWrapper.classList.add('category_transition');
+
+        setTimeout(() => {
+          cardsWrapper.innerHTML = '';
+          if (this.playMode) assemblePlayMode(cardsWrapper, (e.target as HTMLElement).innerText);
+          if (!this.playMode) assembleTrainMode(cardsWrapper, (e.target as HTMLElement).innerText);
+        }, 300);
+      }
     });
   }
 }

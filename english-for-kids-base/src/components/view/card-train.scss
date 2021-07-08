@@ -1,0 +1,92 @@
+/*Screen sizes for media queries*/
+$breakpoint-mobile: 320px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+$breakpoint-desktop-hdready: 1280px;
+$breakpoint-desktop-fullhd: 1920px;
+
+.card-train {
+  cursor: pointer;
+  overflow: hidden;
+  border: 1px solid #727272;
+  background-color: grey;
+  filter: drop-shadow(0 5px 10px #383838);
+  transition: 0.3s ease-in-out;
+  transition-property: transform, filter;
+  will-change: transform, filter;
+
+  &__picture {
+    display: block;
+    width: auto;
+    height: 100%;
+  }
+
+  &:hover {
+    filter: drop-shadow(0 10px 20px #383838);
+  }
+}
+
+/*from 320 to 767*/
+@media screen and (min-width: $breakpoint-mobile) {
+
+  .card-train {
+    width: 120px;
+    height: 120px;
+
+    &:hover {
+      transform: scale3d(1.1, 1.1, 1.1);
+    }
+  }
+}
+
+/*from 768 to 1023*/
+@media screen and (min-width: $breakpoint-tablet) {
+
+  .card-train {
+    width: 180px;
+    height: 180px;
+
+    &:hover {
+      transform: scale3d(1.1, 1.1, 1.1);
+    }
+  }
+}
+
+/*from 1024 to 1279*/
+@media screen and (min-width: $breakpoint-desktop) {
+
+  .card-train {
+    width: 220px;
+    height: 220px;
+
+    &:hover {
+      transform: scale3d(1.1, 1.1, 1.1);
+    }
+  }
+}
+
+/*from 1280 to 1919*/
+@media screen and (min-width: $breakpoint-desktop-hdready) {
+
+  .card-train {
+    width: 220px;
+    height: 220px;
+
+    &:hover {
+      transform: scale3d(1.1, 1.1, 1.1);
+    }
+  }
+}
+
+/*from 1920 and up*/
+@media screen and (min-width: $breakpoint-desktop-fullhd) {
+
+  .card-train {
+    width: 260px;
+    height: 260px;
+
+    &:hover {
+      transform: scale3d(1.1, 1.1, 1.1);
+    }
+  }
+}

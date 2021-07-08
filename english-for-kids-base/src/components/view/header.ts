@@ -9,9 +9,10 @@ export default class Header {
   constructor() {
     this.headerElement = new Component('header', 'header').render();
     this.headerBtnMenu = new Component('button', 'header__btn__menu').render();
-    this.headerBtnMode = new Component('input', 'header__btn__mode').render();
+    this.headerBtnMode = new Component('label', 'header__switch__mode').render();
 
-    this.headerBtnMode.setAttribute('type', 'checkbox');
+    this.headerBtnMode.innerHTML = `<input class="header__switch__mode__input" type="checkbox">
+                                    <span class="header__switch__mode__slider">Train</span>`;
   }
 
   render(): HTMLElement {

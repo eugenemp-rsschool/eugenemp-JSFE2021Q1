@@ -5,7 +5,7 @@ export default class Category {
   private readonly wrapperElement: HTMLElement;
 
   constructor() {
-    this.wrapperElement = new Component('div', 'category').render();
+    this.wrapperElement = new Component('main', 'category').render();
   }
 
   render(): HTMLElement {

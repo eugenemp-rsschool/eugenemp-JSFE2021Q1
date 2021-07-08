@@ -1,0 +1,238 @@
+$breakpoint-mobile: 320px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+$breakpoint-desktop-hdready: 1280px;
+$breakpoint-desktop-fullhd: 1920px;
+
+/*Base styles*/
+.footer {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background: linear-gradient(rgba($color: #202020, $alpha: 0),
+                              rgba($color: #202020, $alpha: 0.8));
+
+  &__rs {
+    display: block;
+    width: 100px;
+    height: 50px;
+    background-image: url(../../assets/icons/logo-rs.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    filter: drop-shadow(0 0 1px #555555);
+    transition: filter 0.2s ease-in-out;
+    will-change: filter;
+
+    &:hover {
+      filter: drop-shadow(0 0 5px #dfdfdf);
+    }
+  }
+
+  &__gh {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &__logo {
+      background-image: url(../../assets/icons/logo-gh-light.png);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      transition: filter 0.2s ease-in-out;
+      will-change: filter;
+    }
+
+    &__text {
+      font-family: 'Roboto', sans-serif;
+      font-size: 16px;
+      color: #dfdfdf;
+      transition: filter 0.2s ease-in-out;
+      will-change: filter;
+    }
+
+    &:hover &__logo,
+    &:hover &__text {
+      filter: drop-shadow(0 0 5px #dfdfdf);
+    }
+  }
+
+  &__cr__text {
+      font-family: 'Roboto', sans-serif;
+      color: #dfdfdf;
+  }
+}
+
+/*from 320 to 767*/
+@media screen and (min-width: $breakpoint-mobile) {
+  .footer {
+    height: 42px;
+    padding: 0 10px;
+  
+    &__rs {
+      width: 80px;
+      height: 40px;
+    }
+
+    &__gh {
+      width: 95px;
+      height: 32px;
+
+      &__logo {
+        width: 32px;
+        height: 32px;
+      }
+
+      &__text {
+        font-size: 12px;
+      }
+    }
+  
+    &__cr {
+        display: none;
+    }
+  }
+}
+
+/*from 768 to 1023*/
+@media screen and (min-width: $breakpoint-tablet) {
+  .footer {
+    height: 62px;
+    padding: 0 20px;
+  
+    &__rs {
+      width: 100px;
+      height: 50px;
+    }
+
+    &__gh {
+      width: 120px;
+      height: 42px;
+
+      &__logo {
+        width: 32px;
+        height: 32px;
+      }
+
+      &__text {
+        font-size: 16px;
+      }
+    }
+
+    &__cr {
+      display: block;
+    }
+  
+    &__cr__text {
+        font-size: 12px;
+    }
+  }
+}
+
+/*from 1024 to 1279*/
+@media screen and (min-width: $breakpoint-desktop) {
+  .footer {
+    height: 62px;
+    padding: 0 20px;
+  
+    &__rs {
+      width: 100px;
+      height: 50px;
+    }
+
+    &__gh {
+      width: 120px;
+      height: 42px;
+
+      &__logo {
+        width: 32px;
+        height: 32px;
+      }
+
+      &__text {
+        font-size: 16px;
+      }
+    }
+
+    &__cr {
+      display: block;
+    }
+  
+    &__cr__text {
+        font-size: 12px;
+    }
+  }
+}
+
+/*from 1024 to 1279*/
+@media screen and (min-width: $breakpoint-desktop-hdready) {
+  .footer {
+    height: 62px;
+    padding: 0 20px;
+  
+    &__rs {
+      width: 100px;
+      height: 50px;
+    }
+
+    &__gh {
+      width: 120px;
+      height: 42px;
+
+      &__logo {
+        width: 32px;
+        height: 32px;
+      }
+
+      &__text {
+        font-size: 16px;
+      }
+    }
+
+    &__cr {
+      display: block;
+    }
+  
+    &__cr__text {
+        font-size: 12px;
+    }
+  }
+}
+
+/*from 1024 to 1279*/
+@media screen and (min-width: $breakpoint-desktop-fullhd) {
+  .footer {
+    height: 62px;
+    padding: 0 20px;
+  
+    &__rs {
+      width: 100px;
+      height: 50px;
+    }
+
+    &__gh {
+      width: 120px;
+      height: 42px;
+
+      &__logo {
+        width: 32px;
+        height: 32px;
+      }
+
+      &__text {
+        font-size: 16px;
+      }
+    }
+
+    &__cr {
+      display: block;
+    }
+  
+    &__cr__text {
+        font-size: 12px;
+    }
+  }
+}

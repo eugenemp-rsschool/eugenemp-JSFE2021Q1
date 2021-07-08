@@ -1,0 +1,109 @@
+/*Screen sizes for media queries=============================================*/
+$breakpoint-mobile: 320px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+$breakpoint-desktop-hdready: 1280px;
+$breakpoint-desktop-fullhd: 1920px;
+
+
+/*Basic rules================================================================*/
+.category {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+
+/*Mobile=====================================================================*/
+
+/*from 320 to 767*/
+@media screen and (min-width: $breakpoint-mobile)
+              and (orientation: portrait) {
+  $width: 280px;
+  $height: 560px;
+
+  .category {
+    top: calc(50% - #{$height / 2});
+    left: calc(50% - #{$width / 2});
+    width: $width;
+    height: $height;
+  }
+}
+
+/*from 320 to 767*/
+@media screen and (min-width: $breakpoint-mobile)
+              and (orientation: landscape) {
+  $width: 560px;
+  $height: 280px;
+
+  .category {
+    top: calc(50% - #{$height / 2});
+    left: calc(50% - #{$width / 2});
+    width: $width;
+    height: $height;
+  }
+}
+
+
+/*Tablet=====================================================================*/
+
+/*from 768 to 1023*/
+@media screen and (min-width: $breakpoint-tablet) {
+  $width: 440px;
+  $height: 880px;
+
+  .category {
+    top: calc(50% - #{$height / 2});
+    left: calc(50% - #{$width / 2});
+    width: $width;
+    height: $height;
+  }
+}
+
+
+/*Desktop====================================================================*/
+
+/*from 1024 to 1279*/
+@media screen and (min-width: $breakpoint-desktop) {
+  $width: 1000px;
+  $height: 500px;
+
+  .category {
+    top: calc(50% - #{$height / 2});
+    left: calc(50% - #{$width / 2});
+    width: $width;
+    height: $height;
+  }
+}
+
+
+/*HD Ready===================================================================*/
+
+/*from 1280 to 1919*/
+@media screen and (min-width: $breakpoint-desktop-hdready) {
+  $width: 1000px;
+  $height: 500px;
+
+  .category {
+    top: calc(50% - #{$height / 2});
+    left: calc(50% - #{$width / 2});
+    width: $width;
+    height: $height;
+  }
+}
+
+/*Tablet=====================================================================*/
+
+/*from 1920 and up*/
+@media screen and (min-width: $breakpoint-desktop-fullhd) {
+  $width: 1200px;
+  $height: 600px;
+
+  .category {
+    top: calc(50% - #{$height / 2});
+    left: calc(50% - #{$width / 2});
+    width: $width;
+    height: $height;
+  }
+}

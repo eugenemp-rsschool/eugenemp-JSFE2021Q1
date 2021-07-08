@@ -45,8 +45,6 @@ $breakpoint-desktop-fullhd: 1920px;
   &__switch__mode {
     position: relative;
     display: block;
-    width: 120px;
-    height: 32px;
 
     &__input {
       opacity: 0;
@@ -55,9 +53,6 @@ $breakpoint-desktop-fullhd: 1920px;
     }
 
     &__slider {
-      display: flex;
-      justify-content: right;
-      align-items: center;
       position: absolute;
       cursor: pointer;
       top: 0;
@@ -65,39 +60,59 @@ $breakpoint-desktop-fullhd: 1920px;
       right: 0;
       bottom: 0;
       padding: 0 5px;
-      background-color: #537a86;
       border-radius: 16px;
-      transition: background-color 0.3s ease-in-out;
+      background-color: #54899e;
+      filter: drop-shadow(0 0 2px #54899e);
       font-family: 'Roboto', sans-serif;
-      font-size: 18px;
       color: white;
+      transition: 0.3s ease-in-out;
+      transition-property: background-color, filter;
+      will-change: background-color, filter;
 
       &::before {
         position: absolute;
-        content: "";
-        height: 28px;
-        width: 28px;
-        left: 2px;
-        bottom: 2px;
-        background-color: white;
-        border-radius: 50%;
-        transition: transform 0.3s ease-in-out;
+        opacity: 1;
+        content: "Train";
+        top: 4px;
+        left: 6px;
+        transition: opacity 0.3s ease-in-out;
       }
+
+      &::after {
+        position: absolute;
+        opacity: 0;
+        content: "Play";
+        top: 4px;
+        right: 6px;
+        transition: opacity 0.3s ease-in-out;
+      }
+    }
+
+    &__handle {
+      position: absolute;
+      content: "";
+      background-color: #dfdfdf;
+      border-radius: 50%;
+      filter: drop-shadow(0 0 2px #535353);
+      transition: transform 0.3s ease-in-out;
     }
 
     &__input:checked + &__slider {
       background-color: #9e9154;
-      justify-content: left;
+      filter: drop-shadow(0 0 2px #9e9154);
     }
-
     &__input:checked + &__slider::before {
-      transform: translateX(88px);
+      opacity: 0;
+    }
+    &__input:checked + &__slider::after {
+      opacity: 1;
     }
   }
 }
 
 /*from 320 to 767*/
-@media screen and (min-width: $breakpoint-mobile) {
+@media screen and (min-width: $breakpoint-mobile)
+              and (orientation: portrait) {
   .header {
     height: 42px;
     padding: 0 50px;
@@ -107,10 +122,70 @@ $breakpoint-desktop-fullhd: 1920px;
       height: 32px;
     }
 
-    &__btn__mode {
-      width: 84px;
+    &__switch__mode {
+      width: 80px;
+      height: 26px;
+      border-radius: 13px;
+
+      &__slider {
+        font-size: 18px;
+
+        &::before {
+          top: 2px;
+          left: 6px;
+        }
+  
+        &::after {
+          top: 2px;
+          right: 6px;
+        }
+      }
+
+      &__handle {
+        height: 24px;
+        width: 24px;
+        left: 54px;
+        bottom: 1px;
+      }
+
+      &__input:checked ~ &__handle {
+        transform: translateX(-52px);
+      }
+    }
+  }
+}
+
+/*from 320 to 767*/
+@media screen and (min-width: $breakpoint-mobile)
+              and (orientation: landscape) {
+  .header {
+    height: 42px;
+    padding: 0 50px;
+
+    &__btn__menu {
+      width: 32px;
       height: 32px;
-      border-radius: 16px;
+    }
+
+    &__switch__mode {
+      width: 80px;
+      height: 26px;
+      border-radius: 13px;
+
+      &__slider {
+        font-size: 18px;
+      }
+
+      &__handle {
+        height: 24px;
+        width: 24px;
+        left: 48px;
+        bottom: 1px;
+      }
+
+      &__input:checked ~ &__handle {
+        transform: translateX(-48px);
+      }
     }
   }
 }
@@ -126,10 +201,25 @@ $breakpoint-desktop-fullhd: 1920px;
       height: 42px;
     }
 
-    &__btn__mode {
-      width: 84px;
+    &__switch__mode {
+      width: 80px;
       height: 32px;
       border-radius: 16px;
+
+      &__slider {
+        font-size: 18px;
+      }
+
+      &__handle {
+        height: 28px;
+        width: 28px;
+        left: 48px;
+        bottom: 2px;
+      }
+
+      &__input:checked ~ &__handle {
+        transform: translateX(-48px);
+      }
     }
   }
 }
@@ -145,10 +235,25 @@ $breakpoint-desktop-fullhd: 1920px;
       height: 42px;
     }
 
-    &__btn__mode {
-      width: 84px;
+    &__switch__mode {
+      width: 80px;
       height: 32px;
       border-radius: 16px;
+
+      &__slider {
+        font-size: 18px;
+      }
+
+      &__handle {
+        height: 28px;
+        width: 28px;
+        left: 48px;
+        bottom: 2px;
+      }
+
+      &__input:checked ~ &__handle {
+        transform: translateX(-48px);
+      }
     }
   }
 }
@@ -164,10 +269,25 @@ $breakpoint-desktop-fullhd: 1920px;
       height: 42px;
     }
 
-    &__btn__mode {
-      width: 84px;
+    &__switch__mode {
+      width: 80px;
       height: 32px;
       border-radius: 16px;
+
+      &__slider {
+        font-size: 18px;
+      }
+
+      &__handle {
+        height: 28px;
+        width: 28px;
+        left: 48px;
+        bottom: 2px;
+      }
+
+      &__input:checked ~ &__handle {
+        transform: translateX(-48px);
+      }
     }
   }
 }
@@ -183,10 +303,25 @@ $breakpoint-desktop-fullhd: 1920px;
       height: 42px;
     }
 
-    &__btn__mode {
-      width: 84px;
+    &__switch__mode {
+      width: 80px;
       height: 32px;
       border-radius: 16px;
+
+      &__slider {
+        font-size: 18px;
+      }
+
+      &__handle {
+        height: 28px;
+        width: 28px;
+        left: 48px;
+        bottom: 2px;
+      }
+
+      &__input:checked ~ &__handle {
+        transform: translateX(-48px);
+      }
     }
   }
 }

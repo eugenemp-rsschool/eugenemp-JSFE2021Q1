@@ -12,7 +12,8 @@ export default class Header {
     this.headerBtnMode = new Component('label', 'header__switch__mode').render();
 
     this.headerBtnMode.innerHTML = `<input class="header__switch__mode__input" type="checkbox">
-                                    <span class="header__switch__mode__slider">Train</span>`;
+                                    <span class="header__switch__mode__slider"></span>
+                                    <span class="header__switch__mode__handle"></span>`;
   }
 
   render(): HTMLElement {

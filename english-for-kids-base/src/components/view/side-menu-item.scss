@@ -1,0 +1,78 @@
+/*Screen sizes for media queries=============================================*/
+$breakpoint-mobile: 320px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+$breakpoint-desktop-hdready: 1280px;
+$breakpoint-desktop-fullhd: 1920px;
+
+/*Basic rules================================================================*/
+.menu__item {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid #afafaf;
+  font-family: 'Robot', sans-serif;
+  color: #afafaf;
+  text-align: center;
+  text-shadow: 0 0 1px #232323;
+  transition: background-color 0.2s ease-in-out;
+  transition-property: background-color, color;
+  will-change: background-color, color;
+
+  &:hover {
+    background-color: rgba($color: #afafaf, $alpha: 0.8);
+    color: #232323;
+  }
+}
+
+/*from 320 to 767*/
+@media screen and (min-width: $breakpoint-mobile)
+              and (orientation: portrait) {
+  .menu__item {
+    height: 62px;
+    font-size: 20px;
+  }
+}
+
+/*from 320 to 767*/
+@media screen and (min-width: $breakpoint-mobile)
+              and (orientation: landscape) {
+  .menu__item {
+    height: 42px;
+    font-size: 14px;
+  }
+}
+
+/*from 768 to 1023*/
+@media screen and (min-width: $breakpoint-tablet) {
+  .menu__item {
+    height: 32px;
+    font-size: 18px;
+  }
+}
+
+/*from 1024 to 1279*/
+@media screen and (min-width: $breakpoint-desktop) {
+  .menu__item {
+    height: 42px;
+    font-size: 20px;
+  }
+}
+
+/*from 1280 to 1919*/
+@media screen and (min-width: $breakpoint-desktop-hdready) {
+  .menu__item {
+    height: 52px;
+    font-size: 22px;
+  }
+}
+
+/*from 1920 and up*/
+@media screen and (min-width: $breakpoint-desktop-fullhd) {
+  .menu__item {
+    height: 62px;
+    font-size: 24px;
+  }
+}

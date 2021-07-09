@@ -42,6 +42,21 @@ $breakpoint-desktop-fullhd: 1920px;
     }
   }
 
+  &__stars-box {
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    opacity: 0;
+    height: 100%;
+    transition: opacity 0.3s ease-in-out;
+    will-change: opacity;
+
+    &_enabled {
+      display: flex;
+      opacity: 1;
+    }
+  }
+
   &__switch__mode {
     position: relative;
     display: block;
@@ -73,8 +88,6 @@ $breakpoint-desktop-fullhd: 1920px;
         position: absolute;
         opacity: 1;
         content: "Train";
-        top: 4px;
-        left: 6px;
         transition: opacity 0.3s ease-in-out;
       }
 
@@ -82,8 +95,6 @@ $breakpoint-desktop-fullhd: 1920px;
         position: absolute;
         opacity: 0;
         content: "Play";
-        top: 4px;
-        right: 6px;
         transition: opacity 0.3s ease-in-out;
       }
     }
@@ -115,7 +126,7 @@ $breakpoint-desktop-fullhd: 1920px;
               and (orientation: portrait) {
   .header {
     height: 42px;
-    padding: 0 50px;
+    padding: 0 10px;
 
     &__btn__menu {
       width: 32px;
@@ -132,12 +143,12 @@ $breakpoint-desktop-fullhd: 1920px;
 
         &::before {
           top: 2px;
-          left: 6px;
+          left: 8px;
         }
   
         &::after {
           top: 2px;
-          right: 6px;
+          right: 8px;
         }
       }
 
@@ -174,17 +185,27 @@ $breakpoint-desktop-fullhd: 1920px;
 
       &__slider {
         font-size: 18px;
+
+        &::before {
+          top: 2px;
+          left: 8px;
+        }
+  
+        &::after {
+          top: 2px;
+          right: 8px;
+        }
       }
 
       &__handle {
         height: 24px;
         width: 24px;
-        left: 48px;
+        left: 54px;
         bottom: 1px;
       }
 
       &__input:checked ~ &__handle {
-        transform: translateX(-48px);
+        transform: translateX(-52px);
       }
     }
   }
@@ -208,6 +229,16 @@ $breakpoint-desktop-fullhd: 1920px;
 
       &__slider {
         font-size: 18px;
+
+        &::before {
+          top: 4px;
+          left: 6px;
+        }
+  
+        &::after {
+          top: 4px;
+          right: 6px;
+        }
       }
 
       &__handle {
@@ -242,6 +273,15 @@ $breakpoint-desktop-fullhd: 1920px;
 
       &__slider {
         font-size: 18px;
+        &::before {
+          top: 4px;
+          left: 6px;
+        }
+  
+        &::after {
+          top: 4px;
+          right: 6px;
+        }
       }
 
       &__handle {
@@ -276,6 +316,16 @@ $breakpoint-desktop-fullhd: 1920px;
 
       &__slider {
         font-size: 18px;
+
+        &::before {
+          top: 4px;
+          left: 6px;
+        }
+  
+        &::after {
+          top: 4px;
+          right: 6px;
+        }
       }
 
       &__handle {
@@ -310,6 +360,16 @@ $breakpoint-desktop-fullhd: 1920px;
 
       &__slider {
         font-size: 18px;
+
+        &::before {
+          top: 4px;
+          left: 6px;
+        }
+  
+        &::after {
+          top: 4px;
+          right: 6px;
+        }
       }
 
       &__handle {

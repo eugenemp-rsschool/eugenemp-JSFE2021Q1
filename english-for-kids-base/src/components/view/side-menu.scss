@@ -13,12 +13,16 @@ $breakpoint-desktop-fullhd: 1920px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  height: 100%;
+  height: 100vh;
   padding: 10% 2%;
-  background-color: rgba($color: #202020, $alpha: 0.8);
-  transition: 0.3s ease-out;
-  transition-property: transform, opacity;
+  background-color: #202020;
+  transition: opacity 0.2s ease-in-out,
+              transform 0.4s ease-in-out;
   will-change: transform, opacity;
+
+  &_enabled {
+    opacity: 0.8;
+  }
 
   &__item {
     width: 100%;
@@ -34,11 +38,9 @@ $breakpoint-desktop-fullhd: 1920px;
     left: -$width;
     width: $width;
     gap: 10px;
-    padding: 20% 2%;
 
     &_enabled {
-      transform: translateX($width);
-      opacity: 1;
+      transform: translate3d($width, 0, 0);
     }
   }
 }
@@ -52,11 +54,9 @@ $breakpoint-desktop-fullhd: 1920px;
     left: -$width;
     width: $width;
     gap: 10px;
-    padding: 10% 2%;
 
     &_enabled {
-      transform: translateX($width);
-      opacity: 1;
+      transform: translate3d($width, 0, 0);
     }
   }
 }
@@ -72,7 +72,6 @@ $breakpoint-desktop-fullhd: 1920px;
 
     &_enabled {
       transform: translate3d($width, 0, 0);
-      opacity: 1;
     }
   }
 }
@@ -88,7 +87,6 @@ $breakpoint-desktop-fullhd: 1920px;
 
     &_enabled {
       transform: translate3d($width, 0, 0);
-      opacity: 1;
     }
   }
 }
@@ -104,7 +102,6 @@ $breakpoint-desktop-fullhd: 1920px;
 
     &_enabled {
       transform: translate3d($width, 0, 0);
-      opacity: 1;
     }
   }
 }
@@ -120,7 +117,6 @@ $breakpoint-desktop-fullhd: 1920px;
 
     &_enabled {
       transform: translate3d($width, 0, 0);
-      opacity: 1;
     }
   }
 }

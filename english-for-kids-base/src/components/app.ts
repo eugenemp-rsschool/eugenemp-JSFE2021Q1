@@ -11,6 +11,7 @@ import {
   assemblePlayMode,
   assembleTrainMode,
   switchGameMode,
+  spawnModal,
 } from './view/view-logic';
 
 export default class App {
@@ -40,8 +41,9 @@ export default class App {
     const header = this.headerElement.render();
     const footer = this.footerElement.render();
     const cardsWrapper = new Category().render();
+    const btnMenu = header.querySelector('.header__btn__menu');
 
-    // Assemble initial view======================
+    // Assemble initial view===================================================
     assembleMenu(menu);
     assembleMainPage(cardsWrapper);
 
@@ -51,28 +53,24 @@ export default class App {
     app.appendChild(footer);
     this.rootElement?.appendChild(app);
 
-    // Add listeners==============================
-    header.addEventListener('click', (e) => {
-      if ((e.target as HTMLElement).classList.contains('header__btn__menu')) {
-        switchMenu(e.target as HTMLElement, menu);
-      }
-    });
-
+    // Add listeners===========================================================
+    // Handle game mode switch===================
     header.addEventListener('change', (e) => {
       if ((e.target as HTMLElement).classList.contains('header__switch__mode__input')) {
-        const span = header.querySelector('.header__switch__mode__slider');
-
-        if ((e.target as HTMLInputElement).checked) {
-          this.playMode = true;
-          (span as HTMLSpanElement).innerText = 'Play';
-        } else {
-          this.playMode = false;
-          (span as HTMLSpanElement).innerText = 'Train';
-        }
+        if ((e.target as HTMLInputElement).checked) this.playMode = true;
+        if (!(e.target as HTMLInputElement).checked) this.playMode = false;
         switchGameMode(app, this.playMode);
       }
     });
 
+    // Handle menu button========================
+    header.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).classList.contains('header__btn__menu')) {
+        switchMenu(btnMenu as HTMLElement, menu);
+      }
+    });
+
+    // Handle menu items=========================
     menu.addEventListener('click', (e) => {
       if ((e.target as HTMLElement).classList.contains('menu__item__main')) {
         cardsWrapper.classList.add('category_transition');
@@ -81,6 +79,7 @@ export default class App {
           cardsWrapper.innerHTML = '';
           assembleMainPage(cardsWrapper);
         }, 300);
+
         return;
       }
 
@@ -94,5 +93,15 @@ export default class App {
         }, 300);
       }
     });
+
+    spawnModal(
+      'Info',
+      `innerRes: ${window.innerWidth}x${window.innerHeight}\n
+       outerRes: ${window.outerWidth}x${window.outerHeight}`,
+    );
   }
+
+  /* playSound(): void {
+
+  } */
 }

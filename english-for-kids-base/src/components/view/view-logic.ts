@@ -3,21 +3,35 @@ import CardMain from './card-main';
 import CardPlay from './card-play';
 import CardTrain from './card-train';
 import MenuItem from './side-menu-item';
+import Modal from './modal';
 
 const words = new Words();
 
 // Open/close menu=============================================================
 function switchMenu(btn: HTMLElement, menu: HTMLElement): void {
-  // Process button
-  btn.classList.toggle('header__btn__menu_animate');
+  // Animate button
+  (btn as HTMLElement).classList.toggle('header__btn__menu_animate');
 
   setTimeout(() => {
-    btn.classList.toggle('header__btn__menu_animate');
-    btn.classList.toggle('header__btn__menu_close');
+    (btn as HTMLElement).classList.toggle('header__btn__menu_animate');
+    (btn as HTMLElement).classList.toggle('header__btn__menu_close');
   }, 300);
 
-  // Process menu
+  // Open menu
   menu.classList.toggle('menu_enabled');
+
+  // Close menu if click is made outside
+  document.addEventListener('click', (e) => {
+    if (menu.classList.contains('menu_enabled')) {
+      if (e.target !== btn && e.target !== menu) switchMenu(btn, menu);
+    }
+  });
+}
+
+// Flip card===================================================================
+function flipCard(btn: HTMLElement): void {
+  const card = btn.closest('.card-train');
+  card?.classList.toggle('card-train_flipped');
 }
 
 // Assemble side menu==========================================================
@@ -35,10 +49,10 @@ function assembleMenu(menu: HTMLElement): void {
 function assembleMainPage(elem: HTMLElement): void {
   words.getCategories().forEach((cat) => {
     const pic = words.getCategory(cat)[0].picture;
-
     elem.appendChild(new CardMain(cat, pic).render());
-    elem.classList.remove('category_transition');
   });
+
+  elem.classList.remove('category_transition');
 }
 
 // Assemble category in play mode==============================================
@@ -46,10 +60,11 @@ function assemblePlayMode(elem: HTMLElement, cat: string): void {
   const cards = words.getCategory(cat);
 
   cards.forEach((word) => {
-    const card = new CardPlay(word.word, word.picture);
-    elem.appendChild(card.render());
-    elem.classList.remove('category_transition');
+    const card = new CardPlay(word.word, word.picture).render();
+    elem.appendChild(card);
   });
+
+  elem.classList.remove('category_transition');
 }
 
 // Assemble category in train mode=============================================
@@ -57,16 +72,31 @@ function assembleTrainMode(elem: HTMLElement, cat: string): void {
   const cards = words.getCategory(cat);
 
   cards.forEach((word) => {
-    const card = new CardTrain(word.word, word.translate, word.picture);
-    elem.appendChild(card.render());
-    elem.classList.remove('category_transition');
+    const card = new CardTrain(word.word, word.translate, word.picture).render();
+
+    card.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).className === 'card-train__btn-flip') {
+        flipCard(e.target as HTMLElement);
+      }
+    });
+    elem.appendChild(card);
   });
+
+  elem.classList.remove('category_transition');
 }
 
 // Switch game mode============================================================
 function switchGameMode(app: HTMLElement, mode: boolean): void {
   if (mode) app.classList.add('app_play');
   if (!mode) app.classList.remove('app_play');
+}
+
+// Spawn modal window==========================================================
+function spawnModal(heading: string, text: string): void {
+  const modal = new Modal(heading, text).render();
+  document.body.appendChild(modal);
+  document.addEventListener('click', () => modal.remove());
+  modal.addEventListener('click', () => modal.remove());
 }
 
 export {
@@ -76,4 +106,5 @@ export {
   assemblePlayMode,
   assembleTrainMode,
   switchGameMode,
+  spawnModal,
 };

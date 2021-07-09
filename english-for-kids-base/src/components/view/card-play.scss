@@ -16,9 +16,11 @@ $breakpoint-desktop-fullhd: 1920px;
   will-change: transform, filter;
 
   &__picture {
-    display: block;
     width: auto;
     height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
   }
 
   &:hover {

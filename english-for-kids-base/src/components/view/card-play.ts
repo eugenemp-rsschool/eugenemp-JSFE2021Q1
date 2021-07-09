@@ -9,10 +9,10 @@ export default class CardPlay {
 
   constructor(word: string, picture: string) {
     this.card = new Component('div', 'card-play').render();
-    this.cardImage = new Component('img', 'card-play__picture').render();
+    this.cardImage = new Component('div', 'card-play__picture').render();
 
     this.card.id = word;
-    this.cardImage.setAttribute('src', this.PATH_IMAGES + picture);
+    this.cardImage.style.backgroundImage = `url(${this.PATH_IMAGES + picture})`;
     this.cardImage.setAttribute('alt', word);
   }
 

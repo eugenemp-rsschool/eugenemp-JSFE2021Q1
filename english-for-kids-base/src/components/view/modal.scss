@@ -1,0 +1,34 @@
+$modal-width: 200px;
+$modal-height: 200px;
+
+.modal {
+  position: fixed;
+  top: calc(50% - #{$modal-width / 2});
+  left: calc(50% - #{$modal-height / 2});
+  width: $modal-width;
+  height: $modal-height;
+  border: 1px solid #787878;
+
+  &__header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+    padding: 20px;
+    background-color: #787878;
+    font-family: 'Roboto', sans-serif;
+    font-size: 22px;
+    color: #dfdfdf;
+  }
+
+  &__content {
+    width: 100%;
+    height: 160px;
+    padding: 10px;
+    background-color: rgba($color: #454545, $alpha: 0.8);
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    color: #dfdfdf;
+  }
+}

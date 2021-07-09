@@ -1,23 +1,38 @@
 import Component from './view-component';
+import './card-train.scss';
 
 // Word card in Train-mode==========================================================================
 export default class CardTrain {
-  private readonly card: HTMLElement;
-  private readonly cardImage: HTMLElement;
+  private readonly cardWrapper: HTMLElement;
+  private readonly cardFront: HTMLElement;
+  private readonly cardBack: HTMLElement;
+  private readonly cardImageFront: HTMLElement;
+  private readonly cardImageBack: HTMLElement;
   private readonly cardWordEn: HTMLElement;
   private readonly cardWordRu: HTMLElement;
+  private readonly cardBtnFlipFront: HTMLElement;
+  private readonly cardBtnFlipBack: HTMLElement;
   private readonly PATH_IMAGES = 'assets/images/';
   private readonly PATH_SOUNDS = 'assets/sounds/';
 
   constructor(word: string, translate: string, picture: string) {
-    this.card = new Component('div', 'card-train').render();
-    this.cardImage = new Component('img', 'card__picture').render();
-    this.cardWordEn = new Component('div', 'card-train__word-en').render();
-    this.cardWordRu = new Component('div', 'card-train__word-en').render();
+    this.cardWrapper = new Component('div', 'card-train').render();
+    this.cardFront = new Component('div', 'card-train__front').render();
+    this.cardBack = new Component('div', 'card-train__back').render();
+    this.cardImageFront = new Component('div', 'card-train__picture picture__front').render();
+    this.cardImageBack = new Component('div', 'card-train__picture picture__back').render();
+    this.cardWordEn = new Component('div', 'card-train__word word-en').render();
+    this.cardWordRu = new Component('div', 'card-train__word word-ru').render();
+    this.cardBtnFlipFront = new Component('button', 'card-train__btn-flip').render();
+    this.cardBtnFlipBack = new Component('button', 'card-train__btn-flip').render();
 
-    this.card.id = word;
-    this.cardImage.setAttribute('src', this.PATH_IMAGES + picture);
-    this.cardImage.setAttribute('alt', word);
+    this.cardWrapper.id = word;
+    this.cardImageFront.style.backgroundImage = `url(${this.PATH_IMAGES + picture})`;
+    this.cardImageBack.style.backgroundImage = `url(${this.PATH_IMAGES + picture})`;
+    this.cardImageFront.setAttribute('alt', word);
+    this.cardImageBack.setAttribute('alt', word);
+    this.cardBtnFlipFront.setAttribute('title', 'Flip to translation');
+    this.cardBtnFlipBack.setAttribute('title', 'Flip back');
     this.cardWordEn.innerText = word;
     this.cardWordRu.innerText = translate;
   }
@@ -25,11 +40,22 @@ export default class CardTrain {
   // Render Train-mode card
   render(): HTMLElement {
     [
-      this.cardImage,
+      this.cardImageFront,
       this.cardWordEn,
-      this.cardWordRu,
-    ].forEach((elem) => this.card.appendChild(elem));
+      this.cardBtnFlipFront,
+    ].forEach((elem) => this.cardFront.appendChild(elem));
 
-    return this.card;
+    [
+      this.cardImageBack,
+      this.cardWordRu,
+      this.cardBtnFlipBack,
+    ].forEach((elem) => this.cardBack.appendChild(elem));
+
+    [
+      this.cardFront,
+      this.cardBack,
+    ].forEach((side) => this.cardWrapper.appendChild(side));
+
+    return this.cardWrapper;
   }
 }

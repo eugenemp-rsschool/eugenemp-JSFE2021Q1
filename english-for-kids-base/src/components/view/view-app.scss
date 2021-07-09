@@ -4,6 +4,7 @@ $bg-play: linear-gradient(#5b5b5b, #5a4922);
 
 /*Basic rules================================================================*/
 .app {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;

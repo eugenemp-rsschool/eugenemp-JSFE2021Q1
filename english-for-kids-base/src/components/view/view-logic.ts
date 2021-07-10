@@ -39,6 +39,10 @@ function flipCard(btn: HTMLElement): void {
   card?.addEventListener('mouseleave', () => {
     flipCard(btn);
   });
+
+  card?.addEventListener('touchend', () => {
+    flipCard(btn);
+  });
 }
 
 // Assemble side menu==========================================================

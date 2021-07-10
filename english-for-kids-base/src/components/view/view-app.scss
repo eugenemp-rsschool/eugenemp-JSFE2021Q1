@@ -1,3 +1,9 @@
+$breakpoint-mobile: 320px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+$breakpoint-desktop-hdready: 1280px;
+$breakpoint-desktop-fullhd: 1920px;
+
 /*Background gradient========================================================*/
 $bg-train: linear-gradient(#5b5b5b, #3b6161);
 $bg-play: linear-gradient(#5b5b5b, #5a4922);
@@ -6,6 +12,7 @@ $bg-play: linear-gradient(#5b5b5b, #5a4922);
 .app {
   position: relative;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   overflow: hidden;
@@ -15,5 +22,43 @@ $bg-play: linear-gradient(#5b5b5b, #5a4922);
 
   &_play {
     background: $bg-play;
+  }
+}
+
+@media screen and (min-width: $breakpoint-mobile)
+              and (orientation: portrait) {
+  .app {
+    gap: 10px;
+  }
+}
+
+@media screen and (min-width: $breakpoint-mobile)
+              and (orientation: landscape) {
+  .app {
+    gap: 10px;
+  }
+}
+
+@media screen and (min-width: $breakpoint-tablet) {
+  .app {
+    gap: 10px;
+  }
+}
+
+@media screen and (min-width: $breakpoint-desktop) {
+  .app {
+    gap: 40px;
+  }
+}
+
+@media screen and (min-width: $breakpoint-desktop-hdready) {
+  .app {
+    gap: 40px;
+  }
+}
+
+@media screen and (min-width: $breakpoint-desktop-fullhd) {
+  .app {
+    gap: 50px;
   }
 }

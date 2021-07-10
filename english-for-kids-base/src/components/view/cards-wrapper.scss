@@ -28,7 +28,7 @@ $breakpoint-desktop-fullhd: 1920px;
 @media screen and (min-width: $breakpoint-mobile)
               and (orientation: portrait) {
   $width: 280px;
-  $height: 560px;
+  $height: 520px;
 
   .cards-wrapper {
     top: calc(50% - #{$height / 2});
@@ -41,8 +41,8 @@ $breakpoint-desktop-fullhd: 1920px;
 /*from 320 to 767*/
 @media screen and (min-width: $breakpoint-mobile)
               and (orientation: landscape) {
-  $width: 560px;
-  $height: 280px;
+  $width: 520px;
+  $height: 250px;
 
   .cards-wrapper {
     top: calc(50% - #{$height / 2});
@@ -58,7 +58,7 @@ $breakpoint-desktop-fullhd: 1920px;
 /*from 768 to 1023*/
 @media screen and (min-width: $breakpoint-tablet) {
   $width: 440px;
-  $height: 880px;
+  $height: 820px;
 
   .cards-wrapper {
     top: calc(50% - #{$height / 2});

@@ -66,7 +66,7 @@ function assembleMainPage(elem: HTMLElement): void {
 // Assemble category in train mode=============================================
 function assembleTrainMode(
   elem: HTMLElement,
-  cat: Category | undefined,
+  cat: Category | null,
   audioFn: CallableFunction,
 ): void {
   cat?.forEach((word) => {
@@ -87,7 +87,7 @@ function assembleTrainMode(
 }
 
 // Assemble category in play mode==============================================
-function assemblePlayMode(elem: HTMLElement, cat: Category | undefined): void {
+function assemblePlayMode(elem: HTMLElement, cat: Category | null): void {
   cat?.forEach((word) => {
     const card = new CardPlay(word.word, word.picture).render();
     elem.appendChild(card);

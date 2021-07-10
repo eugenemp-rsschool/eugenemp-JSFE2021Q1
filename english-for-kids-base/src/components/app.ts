@@ -25,7 +25,7 @@ export default class App {
   private readonly footerElement: Footer;
   private readonly words: Words;
 
-  private currentCat: Category | undefined;
+  private currentCat: Category | null = null;
   private currentSnd = '';
 
   private playMode = false;
@@ -93,6 +93,8 @@ export default class App {
     // Handle menu items=========================
     menu.addEventListener('click', (e) => {
       if ((e.target as HTMLElement).classList.contains('menu__item__main')) {
+        this.currentCat = null;
+
         cardsWrapper.classList.add('cards-wrapper_transition');
 
         setTimeout(() => {

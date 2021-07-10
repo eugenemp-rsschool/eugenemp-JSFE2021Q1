@@ -84,7 +84,7 @@ $breakpoint-desktop-fullhd: 1920px;
     width: 120px;
     height: 120px;
     perspective: 300px;
-    transition-duration: 0.8;
+    transition-duration: 0.8s;
 
     &__picture {
       height: 100px;
@@ -108,7 +108,7 @@ $breakpoint-desktop-fullhd: 1920px;
     width: 180px;
     height: 180px;
     perspective: 300px;
-    transition-duration: 0.8;
+    transition-duration: 0.8s;
 
     &__picture {
       height: 150px;
@@ -132,7 +132,7 @@ $breakpoint-desktop-fullhd: 1920px;
     width: 220px;
     height: 220px;
     perspective: 600px;
-    transition-duration: 0.8;
+    transition-duration: 0.8s;
 
     &__picture {
       height: 190px;
@@ -156,7 +156,7 @@ $breakpoint-desktop-fullhd: 1920px;
     width: 220px;
     height: 220px;
     perspective: 600px;
-    transition-duration: 0.5;
+    transition-duration: 0.5s;
 
     &__picture {
       height: 190px;
@@ -180,7 +180,7 @@ $breakpoint-desktop-fullhd: 1920px;
     width: 260px;
     height: 260px;
     perspective: 600px;
-    transition-duration: 0.5;
+    transition-duration: 0.5s;
 
     &__picture {
       height: 220px;

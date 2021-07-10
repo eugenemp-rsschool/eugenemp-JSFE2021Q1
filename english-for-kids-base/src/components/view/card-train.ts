@@ -11,7 +11,6 @@ export default class CardTrain {
   private readonly cardWordEn: HTMLElement;
   private readonly cardWordRu: HTMLElement;
   private readonly cardBtnFlipFront: HTMLElement;
-  private readonly cardBtnFlipBack: HTMLElement;
   private readonly PATH_IMAGES = 'assets/images/';
   private readonly PATH_SOUNDS = 'assets/sounds/';
 
@@ -24,7 +23,6 @@ export default class CardTrain {
     this.cardWordEn = new Component('div', 'card-train__word word-en').render();
     this.cardWordRu = new Component('div', 'card-train__word word-ru').render();
     this.cardBtnFlipFront = new Component('button', 'card-train__btn-flip').render();
-    this.cardBtnFlipBack = new Component('button', 'card-train__btn-flip').render();
 
     this.cardWrapper.id = word;
     this.cardImageFront.style.backgroundImage = `url(${this.PATH_IMAGES + picture})`;
@@ -32,7 +30,6 @@ export default class CardTrain {
     this.cardImageFront.setAttribute('alt', word);
     this.cardImageBack.setAttribute('alt', word);
     this.cardBtnFlipFront.setAttribute('title', 'Flip to translation');
-    this.cardBtnFlipBack.setAttribute('title', 'Flip back');
     this.cardWordEn.innerText = word;
     this.cardWordRu.innerText = translate;
   }
@@ -48,7 +45,6 @@ export default class CardTrain {
     [
       this.cardImageBack,
       this.cardWordRu,
-      this.cardBtnFlipBack,
     ].forEach((elem) => this.cardBack.appendChild(elem));
 
     [

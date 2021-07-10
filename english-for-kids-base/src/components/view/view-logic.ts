@@ -32,6 +32,10 @@ function switchMenu(btn: HTMLElement, menu: HTMLElement): void {
 function flipCard(btn: HTMLElement): void {
   const card = btn.closest('.card-train');
   card?.classList.toggle('card-train_flipped');
+
+  card?.addEventListener('mouseleave', () => {
+    flipCard(btn);
+  });
 }
 
 // Assemble side menu==========================================================

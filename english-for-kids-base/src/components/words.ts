@@ -11,7 +11,7 @@ interface Dictionary {
   [key: string]: Category;
 }
 
-export default class Words {
+class Words {
   private readonly words: Dictionary;
 
   constructor() {
@@ -436,3 +436,5 @@ export default class Words {
     this.words[name] = category;
   }
 }
+
+export { Word, Category, Words };

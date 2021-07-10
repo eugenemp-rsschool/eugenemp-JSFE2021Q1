@@ -1,4 +1,7 @@
-import Words from '../words';
+import {
+  Words,
+  Category,
+} from '../words';
 import CardMain from './card-main';
 import CardPlay from './card-play';
 import CardTrain from './card-train';
@@ -53,44 +56,48 @@ function assembleMenu(menu: HTMLElement): void {
 function assembleMainPage(elem: HTMLElement): void {
   words.getCategories().forEach((cat) => {
     const pic = words.getCategory(cat)[0].picture;
+
     elem.appendChild(new CardMain(cat, pic).render());
   });
 
-  elem.classList.remove('category_transition');
-}
-
-// Assemble category in play mode==============================================
-function assemblePlayMode(elem: HTMLElement, cat: string): void {
-  const cards = words.getCategory(cat);
-
-  cards.forEach((word) => {
-    const card = new CardPlay(word.word, word.picture).render();
-    elem.appendChild(card);
-  });
-
-  elem.classList.remove('category_transition');
+  elem.classList.remove('cards-wrapper_transition');
 }
 
 // Assemble category in train mode=============================================
-function assembleTrainMode(elem: HTMLElement, cat: string): void {
-  const cards = words.getCategory(cat);
-
-  cards.forEach((word) => {
+function assembleTrainMode(
+  elem: HTMLElement,
+  cat: Category | undefined,
+  audioFn: CallableFunction,
+): void {
+  cat?.forEach((word) => {
     const card = new CardTrain(word.word, word.translate, word.picture).render();
 
     card.addEventListener('click', (e) => {
-      if ((e.target as HTMLElement).className === 'card-train__btn-flip') {
+      if ((e.target as HTMLElement).classList.contains('card-train__btn-flip')) {
         flipCard(e.target as HTMLElement);
+      }
+      if ((e.target as HTMLElement).classList.contains('picture__front')) {
+        audioFn(word.sound);
       }
     });
     elem.appendChild(card);
   });
 
-  elem.classList.remove('category_transition');
+  elem.classList.remove('cards-wrapper_transition');
+}
+
+// Assemble category in play mode==============================================
+function assemblePlayMode(elem: HTMLElement, cat: Category | undefined): void {
+  cat?.forEach((word) => {
+    const card = new CardPlay(word.word, word.picture).render();
+    elem.appendChild(card);
+  });
+
+  elem.classList.remove('cards-wrapper_transition');
 }
 
 // Switch game mode============================================================
-function switchGameMode(app: HTMLElement, mode: boolean): void {
+function switchAppView(app: HTMLElement, mode: boolean): void {
   if (mode) app.classList.add('app_play');
   if (!mode) app.classList.remove('app_play');
 }
@@ -109,6 +116,6 @@ export {
   assembleMainPage,
   assemblePlayMode,
   assembleTrainMode,
-  switchGameMode,
+  switchAppView,
   spawnModal,
 };

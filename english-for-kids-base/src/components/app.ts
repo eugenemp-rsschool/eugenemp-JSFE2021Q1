@@ -2,16 +2,19 @@ import AppComponent from './view/view-app';
 import Menu from './view/side-menu';
 import Header from './view/header';
 import Footer from './view/footer';
-import Category from './view/category';
-import Words from './words';
+import CardsWrapper from './view/cards-wrapper';
+import {
+  Words,
+  Category,
+} from './words';
 import {
   switchMenu,
   assembleMenu,
   assembleMainPage,
   assemblePlayMode,
   assembleTrainMode,
-  switchGameMode,
-  spawnModal,
+  switchAppView,
+  // spawnModal,
 } from './view/view-logic';
 
 export default class App {
@@ -21,6 +24,9 @@ export default class App {
   private readonly headerElement: Header;
   private readonly footerElement: Footer;
   private readonly words: Words;
+
+  private currentCat: Category | undefined;
+  private currentSnd = '';
 
   private playMode = false;
 
@@ -40,8 +46,14 @@ export default class App {
     const menu = this.menuElement.render();
     const header = this.headerElement.render();
     const footer = this.footerElement.render();
-    const cardsWrapper = new Category().render();
+    const cardsWrapper = new CardsWrapper().render();
     const btnMenu = header.querySelector('.header__btn__menu');
+
+    // Play word pronouncenation=================
+    const playSound = (path: string): void => {
+      const sound = new Audio(path);
+      sound.play();
+    };
 
     // Assemble initial view===================================================
     assembleMenu(menu);
@@ -58,8 +70,16 @@ export default class App {
     header.addEventListener('change', (e) => {
       if ((e.target as HTMLElement).classList.contains('header__switch__mode__input')) {
         if ((e.target as HTMLInputElement).checked) this.playMode = true;
-        if (!(e.target as HTMLInputElement).checked) this.playMode = false;
-        switchGameMode(app, this.playMode);
+        else this.playMode = false;
+
+        switchAppView(app, this.playMode);
+
+        if (this.currentCat) {
+          cardsWrapper.innerHTML = '';
+
+          if (this.playMode) assemblePlayMode(cardsWrapper, this.currentCat);
+          else assembleTrainMode(cardsWrapper, this.currentCat, playSound);
+        }
       }
     });
 
@@ -73,7 +93,7 @@ export default class App {
     // Handle menu items=========================
     menu.addEventListener('click', (e) => {
       if ((e.target as HTMLElement).classList.contains('menu__item__main')) {
-        cardsWrapper.classList.add('category_transition');
+        cardsWrapper.classList.add('cards-wrapper_transition');
 
         setTimeout(() => {
           cardsWrapper.innerHTML = '';
@@ -84,24 +104,16 @@ export default class App {
       }
 
       if ((e.target as HTMLElement).classList.contains('menu__item')) {
-        cardsWrapper.classList.add('category_transition');
+        cardsWrapper.classList.add('cards-wrapper_transition');
 
         setTimeout(() => {
           cardsWrapper.innerHTML = '';
-          if (this.playMode) assemblePlayMode(cardsWrapper, (e.target as HTMLElement).innerText);
-          if (!this.playMode) assembleTrainMode(cardsWrapper, (e.target as HTMLElement).innerText);
+          this.currentCat = this.words.getCategory((e.target as HTMLElement).innerText);
+
+          if (this.playMode) assemblePlayMode(cardsWrapper, this.currentCat);
+          else assembleTrainMode(cardsWrapper, this.currentCat, playSound);
         }, 300);
       }
     });
-
-    spawnModal(
-      'Info',
-      `innerRes: ${window.innerWidth}x${window.innerHeight}\n
-       outerRes: ${window.outerWidth}x${window.outerHeight}`,
-    );
   }
-
-  /* playSound(): void {
-
-  } */
 }

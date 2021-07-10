@@ -24,6 +24,7 @@ export default class App {
   private readonly headerElement: Header;
   private readonly footerElement: Footer;
   private readonly words: Words;
+  private readonly PATH_AUDIO = 'assets/audio/';
 
   private currentCat: Category | null = null;
   private currentSnd = '';
@@ -49,10 +50,10 @@ export default class App {
     const cardsWrapper = new CardsWrapper().render();
     const btnMenu = header.querySelector('.header__btn__menu');
 
-    // Play word pronouncenation=================
-    const playSound = (path: string): void => {
-      const sound = new Audio(path);
-      sound.play();
+    // Play word pronunciation=================
+    const playSound = (sound: string): void => {
+      const audio = new Audio(this.PATH_AUDIO + sound);
+      audio.play();
     };
 
     // Assemble initial view===================================================

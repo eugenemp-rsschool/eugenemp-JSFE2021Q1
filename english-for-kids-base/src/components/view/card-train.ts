@@ -12,7 +12,6 @@ export default class CardTrain {
   private readonly cardWordRu: HTMLElement;
   private readonly cardBtnFlipFront: HTMLElement;
   private readonly PATH_IMAGES = 'assets/images/';
-  private readonly PATH_SOUNDS = 'assets/sounds/';
 
   constructor(word: string, translate: string, picture: string) {
     this.cardWrapper = new Component('div', 'card-train').render();

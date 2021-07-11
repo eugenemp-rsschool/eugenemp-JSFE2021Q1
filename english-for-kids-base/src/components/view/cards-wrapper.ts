@@ -4,8 +4,8 @@ import './cards-wrapper.scss';
 export default class CardsWrapper {
   private readonly wrapperElement: HTMLElement;
 
-  constructor() {
-    this.wrapperElement = new Component('main', 'cards-wrapper').render();
+  constructor(className: string) {
+    this.wrapperElement = new Component('div', `${className}`).render();
   }
 
   render(): HTMLElement {

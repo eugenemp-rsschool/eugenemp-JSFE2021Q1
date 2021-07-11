@@ -25,40 +25,16 @@ $bg-play: linear-gradient(#5b5b5b, #5a4922);
   }
 }
 
-@media screen and (min-width: $breakpoint-mobile)
-              and (orientation: portrait) {
-  .app {
-    gap: 10px;
-  }
-}
+.page-wrapper {
+  opacity: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  transition: opacity 0.3s ease-in-out;
+  will-change: opacity;
 
-@media screen and (min-width: $breakpoint-mobile)
-              and (orientation: landscape) {
-  .app {
-    gap: 10px;
-  }
-}
-
-@media screen and (min-width: $breakpoint-tablet) {
-  .app {
-    gap: 10px;
-  }
-}
-
-@media screen and (min-width: $breakpoint-desktop) {
-  .app {
-    gap: 40px;
-  }
-}
-
-@media screen and (min-width: $breakpoint-desktop-hdready) {
-  .app {
-    gap: 40px;
-  }
-}
-
-@media screen and (min-width: $breakpoint-desktop-fullhd) {
-  .app {
-    gap: 50px;
+  &_transition {
+    opacity: 0;
   }
 }

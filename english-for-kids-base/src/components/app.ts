@@ -1,5 +1,5 @@
 import AppComponent from './view/view-app';
-import Component from './view/view-component';
+import PageWrapper from './view/page-wrapper';
 import Menu from './view/side-menu';
 import Header from './view/header';
 import Footer from './view/footer';
@@ -36,7 +36,6 @@ export default class App {
   private currentCat: Category | null = null;
   private currentSnd = '';
   private onMainPage = true;
-
   private playMode = false;
 
   constructor() {
@@ -45,11 +44,11 @@ export default class App {
     this.menuElement = new Menu().render();
     this.headerElement = new Header().render();
     this.footerElement = new Footer().render();
-    this.pageWrap = new Component('main', 'page-wrapper').render();
-    this.btnMenu = this.headerElement.querySelector('.header__btn__menu');
-    this.btnStart = new BtnGameStart().render();
+    this.pageWrap = new PageWrapper().render();
     this.mainCardsWrap = new CardsWrapper('cards-wrapper page-main__cards-wrapper').render();
     this.gameCardsWrap = new CardsWrapper('cards-wrapper page-game__cards-wrapper').render();
+    this.btnStart = new BtnGameStart().render();
+    this.btnMenu = this.headerElement.querySelector('.header__btn__menu');
 
     this.words = new Words();
   }
@@ -144,7 +143,7 @@ export default class App {
         }, 300);
       }
 
-      // If Category item ins pressed============
+      // If Category item is pressed============
       if ((e.target as HTMLElement).className === 'menu__item') {
         changeCategory((e.target as HTMLElement).innerText);
       }

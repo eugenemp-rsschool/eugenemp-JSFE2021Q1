@@ -63,8 +63,6 @@ function assembleMainPage(elem: HTMLElement): void {
 
     elem.appendChild(new CardMain(cat, pic).render());
   });
-
-  elem.classList.remove('cards-wrapper_transition');
 }
 
 // Assemble category in train mode=============================================
@@ -86,8 +84,6 @@ function assembleTrainMode(
     });
     elem.appendChild(card);
   });
-
-  elem.classList.remove('cards-wrapper_transition');
 }
 
 // Assemble category in play mode==============================================
@@ -96,14 +92,18 @@ function assemblePlayMode(elem: HTMLElement, cat: Category | null): void {
     const card = new CardPlay(word.word, word.picture).render();
     elem.appendChild(card);
   });
-
-  elem.classList.remove('cards-wrapper_transition');
 }
 
 // Switch game mode============================================================
-function switchAppView(app: HTMLElement, mode: boolean): void {
-  if (mode) app.classList.add('app_play');
-  if (!mode) app.classList.remove('app_play');
+function switchAppView(app: HTMLElement, btn: HTMLElement, mode: boolean): void {
+  if (mode) {
+    app.classList.add('app_play');
+    btn.classList.add('game__btn-start_enabled');
+  }
+  if (!mode) {
+    app.classList.remove('app_play');
+    btn.classList.remove('game__btn-start_enabled');
+  }
 }
 
 // Spawn modal window==========================================================

@@ -24,17 +24,3 @@ $bg-play: linear-gradient(#5b5b5b, #5a4922);
     background: $bg-play;
   }
 }
-
-.page-wrapper {
-  opacity: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  transition: opacity 0.3s ease-in-out;
-  will-change: opacity;
-
-  &_transition {
-    opacity: 0;
-  }
-}

@@ -43,7 +43,7 @@ class Words {
         },
         {
           word: 'fish',
-          translate: 'плакать',
+          translate: 'ловить рыбу',
           picture: 'action1/fish.jpg',
           sound: 'fish.mp3',
         },

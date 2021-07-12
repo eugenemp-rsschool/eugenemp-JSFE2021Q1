@@ -5,6 +5,11 @@ import Header from './view/header';
 import Footer from './view/footer';
 import CardsWrapper from './view/cards-wrapper';
 import BtnGameStart from './view/btn-start';
+import GameScoreStar from './view/game-score-star';
+import {
+  playSound,
+  // shuffleWords,
+} from './game-cycle';
 import {
   Words,
   Category,
@@ -30,8 +35,8 @@ export default class App {
   private readonly btnStart: HTMLElement;
   private readonly mainCardsWrap: HTMLElement;
   private readonly gameCardsWrap: HTMLElement;
+  private readonly gameStarsWrap: HTMLElement | null;
   private readonly words: Words;
-  private readonly PATH_AUDIO = 'assets/audio/';
 
   private currentCat: Category | null = null;
   private currentSnd = '';
@@ -49,6 +54,7 @@ export default class App {
     this.gameCardsWrap = new CardsWrapper('cards-wrapper page-game__cards-wrapper').render();
     this.btnStart = new BtnGameStart().render();
     this.btnMenu = this.headerElement.querySelector('.header__btn__menu');
+    this.gameStarsWrap = this.headerElement.querySelector('.header__stars-box');
 
     this.words = new Words();
   }
@@ -74,17 +80,16 @@ export default class App {
     this.pageWrap.appendChild(this.mainCardsWrap);
 
     // Remaining components======================
+    for (let i = 0; i < 8; i += 1) {
+      this.gameStarsWrap?.appendChild(new GameScoreStar(true).render());
+    }
+
     this.appElement.appendChild(this.menuElement);
     this.appElement.appendChild(this.headerElement);
     this.appElement.appendChild(this.pageWrap);
     this.appElement.appendChild(this.footerElement);
     this.rootElement?.appendChild(this.appElement);
 
-    // Play word pronunciation=================================================
-    const playSound = (sound: string): void => {
-      const audio = new Audio(this.PATH_AUDIO + sound);
-      audio.play();
-    };
     // Open and generate specific category=====================================
     const changeCategory = (cat: string) => {
       this.pageWrap.classList.add('page-wrapper_transition');

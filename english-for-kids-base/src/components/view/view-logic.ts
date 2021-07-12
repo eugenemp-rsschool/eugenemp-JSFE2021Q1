@@ -7,6 +7,7 @@ import CardPlay from './card-play';
 import CardTrain from './card-train';
 import MenuItem from './side-menu-item';
 import Modal from './modal';
+import { playSound } from '../game-cycle';
 
 const words = new Words();
 
@@ -70,11 +71,7 @@ function assembleMainPage(elem: HTMLElement): void {
 }
 
 // Assemble category in train mode=============================================
-function assembleTrainMode(
-  elem: HTMLElement,
-  cat: Category | null,
-  audioFn: CallableFunction,
-): void {
+function assembleTrainMode(elem: HTMLElement, cat: Category | null): void {
   cat?.forEach((word) => {
     const card = new CardTrain(word.word, word.translate, word.picture).render();
 
@@ -83,7 +80,7 @@ function assembleTrainMode(
         flipCard(e.target as HTMLElement);
       }
       if ((e.target as HTMLElement).classList.contains('picture__front')) {
-        audioFn(word.sound);
+        playSound(word.sound);
       }
     });
     elem.appendChild(card);

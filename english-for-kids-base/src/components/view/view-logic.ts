@@ -54,6 +54,10 @@ function assembleMenu(menu: HTMLElement): void {
   words.getCategories().forEach((name) => {
     menu.appendChild(new MenuItem(name).render());
   });
+
+  const statsItem = new MenuItem('Statistics').render();
+  statsItem.classList.add('menu__item__stats');
+  menu.appendChild(statsItem);
 }
 
 // Assemble main page==========================================================

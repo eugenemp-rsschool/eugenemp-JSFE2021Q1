@@ -5,7 +5,7 @@ export default class Menu {
   private readonly menuElement: HTMLElement;
 
   constructor() {
-    this.menuElement = new Component('div', 'menu').render();
+    this.menuElement = new Component('aside', 'menu').render();
   }
 
   render(): HTMLElement {

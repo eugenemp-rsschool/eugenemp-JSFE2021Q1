@@ -1,0 +1,64 @@
+$breakpoint-mobile: 320px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+$breakpoint-desktop-hdready: 1280px;
+$breakpoint-desktop-fullhd: 1920px;
+
+// Basic rules=================================================================
+.game__score-star {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.star_black {
+  background-image: url(../../assets/icons/game-star-black.svg);
+}
+
+.star_yellow {
+  background-image: url(../../assets/icons/game-star-yellow.svg);
+}
+
+@media screen and (min-width: $breakpoint-mobile)
+              and (orientation: portrait) {
+  .game__score-star {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+@media screen and (min-width: $breakpoint-mobile)
+              and (orientation: portrait) {
+  .game__score-star {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+@media screen and (min-width: $breakpoint-tablet) {
+  .game__score-star {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+@media screen and (min-width: $breakpoint-desktop) {
+  .game__score-star {
+    width: 42px;
+    height: 42px;
+  }
+}
+
+@media screen and (min-width: $breakpoint-desktop-hdready) {
+  .game__score-star {
+    width: 42px;
+    height: 42px;
+  }
+}
+
+@media screen and (min-width: $breakpoint-desktop-fullhd) {
+  .game__score-star {
+    width: 60px;
+    height: 60px;
+  }
+}

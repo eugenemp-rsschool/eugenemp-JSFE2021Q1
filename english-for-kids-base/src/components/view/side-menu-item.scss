@@ -22,7 +22,8 @@ $breakpoint-desktop-fullhd: 1920px;
   transition-property: background-color, color;
   will-change: background-color, color;
 
-  &:hover {
+  &:hover,
+  &_selected {
     background-color: rgba($color: #afafaf, $alpha: 0.8);
     color: #232323;
   }

@@ -5,7 +5,7 @@ export default class PageWrapper {
   private readonly wrapperElement: HTMLElement;
 
   constructor() {
-    this.wrapperElement = new Component('main', 'page-wrapper').render();
+    this.wrapperElement = new Component('main', 'page-wrapper page-wrapper_transition').render();
   }
 
   render(): HTMLElement {

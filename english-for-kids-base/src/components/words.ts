@@ -1,15 +1,8 @@
-type Word = {
-  word: string,
-  translate: string,
-  picture: string,
-  sound: string,
-};
-
-type Category = Word[];
-
-interface Dictionary {
-  [key: string]: Category;
-}
+import {
+  Dictionary,
+  Category,
+  Word,
+} from './interface';
 
 class Words {
   private readonly words: Dictionary;

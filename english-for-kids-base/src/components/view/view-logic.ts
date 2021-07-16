@@ -1,13 +1,13 @@
+import Component from './view-component';
 import PageWrapper from './page-wrapper';
 import CardsWrapper from './cards-wrapper';
 import CardMain from './card-main';
 import CardPlay from './card-play';
 import CardTrain from './card-train';
 import BtnGameStart from './btn-start';
-import BtnRepeat from './btn-repeat';
 import MenuItem from './side-menu-item';
 import Modal from './modal';
-import { playSound } from '../game-cycle';
+import { playSound, startGameCycle } from '../game-cycle';
 import { State } from '../interface';
 import Words from '../words';
 
@@ -109,6 +109,7 @@ async function assembleTrainMode(state: State): Promise<HTMLElement> {
         playSound(word.sound);
       }
     });
+
     newCardsWrap.appendChild(card);
   });
 
@@ -133,12 +134,18 @@ async function assemblePlayMode(state: State): Promise<HTMLElement> {
     newCardsWrap.appendChild(card);
   });
 
-  // Append cards wrapper to page wrapper
-  newPageWrap.appendChild(newCardsWrap);
+  // Create stars box, start button and add listener with game handler to it
+  const starsWrap = new Component('div', 'game__stars-box').render();
+  const btnStart = new BtnGameStart().render();
 
-  // Append start and repeat buttons
-  newPageWrap.appendChild(new BtnGameStart().render());
-  newPageWrap.appendChild(new BtnRepeat().render());
+  btnStart.addEventListener('click', () => startGameCycle(cat));
+
+  // Append elements to page
+  [
+    starsWrap,
+    newCardsWrap,
+    btnStart,
+  ].forEach((elem) => newPageWrap.appendChild(elem));
 
   return newPageWrap;
 }

@@ -415,19 +415,28 @@ class Words {
   }
 
   // Get all categories names
-  getCategories(): string[] {
+  async getCategories(): Promise<string[]> {
     return Object.keys(this.words);
   }
 
   // Get specific category of words
-  getCategory(name: string): Category {
+  async getCategory(name: string): Promise<Category> {
     return this.words[name];
   }
 
   // Add specific category of words
-  addCategory(name: string, category: Category): void {
-    this.words[name] = category;
+  async addCategory(name: string): Promise<boolean> {
+    this.words[name] = [];
+
+    return true;
+  }
+
+  // Add word to category
+  async addWord(category: string, word: Word): Promise<boolean> {
+    this.words[category].push(word);
+
+    return true;
   }
 }
 
-export { Word, Category, Words };
+export default Words;

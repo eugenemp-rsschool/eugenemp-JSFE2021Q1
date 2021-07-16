@@ -9,7 +9,7 @@ import MenuItem from './side-menu-item';
 import Modal from './modal';
 import { playSound } from '../game-cycle';
 import { State } from '../interface';
-import { Words } from '../words';
+import Words from '../words';
 
 const words = new Words();
 
@@ -50,26 +50,35 @@ function assembleMenu(menu: HTMLElement): void {
   menu.appendChild(mainItem);
 
   // Create menu items for word categories
-  words.getCategories().forEach((name) => {
-    menu.appendChild(new MenuItem(name).render());
-  });
+  words.getCategories()
+    .then((cats: string[]) => {
+      cats.forEach((name) => {
+        menu.appendChild(new MenuItem(name).render());
+      });
 
-  // Create menu item for statistics
-  const statsItem = new MenuItem('Statistics').render();
-  menu.appendChild(statsItem);
+      // Create menu item for statistics
+      const statsItem = new MenuItem('Statistics').render();
+      menu.appendChild(statsItem);
+    });
 }
 
 // Assemble main page==========================================================
-function assembleMainPage(): HTMLElement {
+async function assembleMainPage(): Promise<HTMLElement> {
   // Create new page and cards wrappers
   const newPageWrap = new PageWrapper().render();
   const newCardsWrap = new CardsWrapper('cards-wrapper page-main__cards-wrapper').render();
 
   // Append cards to cards wrapper
-  words.getCategories().forEach((cat) => {
-    const pic = words.getCategory(cat)[0].picture;
+  const promise = words.getCategories();
+  const cats = await promise;
 
-    newCardsWrap.appendChild(new CardMain(cat, pic).render());
+  cats.forEach((cat) => {
+    words.getCategory(cat)
+      .then((currentCat) => {
+        const pic = currentCat[0].picture;
+
+        newCardsWrap.appendChild(new CardMain(cat, pic).render());
+      });
   });
 
   // Append cards wrapper to page wrapper
@@ -79,14 +88,15 @@ function assembleMainPage(): HTMLElement {
 }
 
 // Assemble category page in train mode========================================
-function assembleTrainMode(state: State): HTMLElement {
+async function assembleTrainMode(state: State): Promise<HTMLElement> {
   // Create new page and cards wrappers
   const newPageWrap = new PageWrapper().render();
   const newCardsWrap = new CardsWrapper('cards-wrapper page-game__cards-wrapper').render();
 
   // Generate cards within passed category, add listener that handles flip and speech;
   // Append it to cards wrapper;
-  const cat = words.getCategory(state.currentPage);
+  const promise = words.getCategory(state.currentPage);
+  const cat = await promise;
 
   cat.forEach((word) => {
     const card = new CardTrain(word.word, word.translate, word.picture).render();
@@ -109,13 +119,14 @@ function assembleTrainMode(state: State): HTMLElement {
 }
 
 // Assemble category in play mode==============================================
-function assemblePlayMode(state: State): HTMLElement {
+async function assemblePlayMode(state: State): Promise<HTMLElement> {
   // Create new page and cards wrappers
   const newPageWrap = new PageWrapper().render();
   const newCardsWrap = new CardsWrapper('cards-wrapper page-game__cards-wrapper').render();
 
   // Generate cards within passed category and append it to cards wrapper
-  const cat = words.getCategory(state.currentPage);
+  const promise = words.getCategory(state.currentPage);
+  const cat = await promise;
 
   cat.forEach((word) => {
     const card = new CardPlay(word.word, word.picture).render();
@@ -133,7 +144,7 @@ function assemblePlayMode(state: State): HTMLElement {
 }
 
 // Assemble statistics page====================================================
-function assembleStats(): HTMLElement {
+async function assembleStats(): Promise<HTMLElement> {
   return document.createElement('div');
 }
 
@@ -142,17 +153,28 @@ function switchAppView(app: HTMLElement): void {
   app.classList.toggle('app_play');
 }
 
+// Toggle page fade in/out effect==============================================
+function startPageFadeInOut(pageElement: HTMLElement): void {
+  pageElement.classList.toggle('page-wrapper_transition');
+}
+
+// Switch currentmenu item item visuals========================================
+function handleMenuItemStyle(menu: HTMLElement, item: string): void {
+  menu.childNodes.forEach((elem) => {
+    if ((elem as HTMLElement).innerText === item) {
+      (elem as HTMLElement).classList.add('menu__item_selected');
+    } else {
+      (elem as HTMLElement).classList.remove('menu__item_selected');
+    }
+  });
+}
+
 // Spawn modal window==========================================================
 function spawnModal(heading: string, text: string): void {
   const modal = new Modal(heading, text).render();
   document.body.appendChild(modal);
   document.addEventListener('click', () => modal.remove());
   modal.addEventListener('click', () => modal.remove());
-}
-
-// Toggle page fade in/out effect==============================================
-function startPageFadeInOut(pageElement: HTMLElement): void {
-  pageElement.classList.toggle('page-wrapper_transition');
 }
 
 export {
@@ -165,4 +187,5 @@ export {
   switchAppView,
   spawnModal,
   startPageFadeInOut,
+  handleMenuItemStyle,
 };

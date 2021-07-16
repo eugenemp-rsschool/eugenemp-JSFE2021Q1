@@ -4,6 +4,7 @@ import {
   assembleTrainMode,
   assembleStats,
   startPageFadeInOut,
+  handleMenuItemStyle,
 } from './view/view-logic';
 import { State } from './interface';
 
@@ -19,6 +20,9 @@ export default class Router {
   }
 
   changePage(state: State): void {
+    // Switch current menu item visuals
+    handleMenuItemStyle(this.menu, state.currentPage);
+
     // Start page fade effect
     const currentPage = this.app.querySelector('.page-wrapper');
     let delayTime = 0;
@@ -34,31 +38,33 @@ export default class Router {
       if (currentPage) currentPage?.remove();
 
       // Generate specific page
-      let newPage: HTMLElement | undefined;
-
       if (state.currentPage === 'Main Page') {
-        newPage = assembleMainPage();
-        this.app.insertBefore(newPage, this.footer);
-        startPageFadeInOut(newPage);
+        assembleMainPage()
+          .then((page) => this.appendPage(page));
+
+        return;
       }
 
       if (state.currentPage === 'Statistics') {
-        newPage = assembleStats();
-        this.app.insertBefore(newPage, this.footer);
-        startPageFadeInOut(newPage);
+        assembleStats()
+          .then((page) => this.appendPage(page));
       } else {
         if (state.playMode) {
-          newPage = assemblePlayMode(state);
-          this.app.insertBefore(newPage, this.footer);
-          startPageFadeInOut(newPage);
+          assemblePlayMode(state)
+            .then((page) => this.appendPage(page));
         }
 
         if (!state.playMode) {
-          newPage = assembleTrainMode(state);
-          this.app.insertBefore(newPage, this.footer);
-          startPageFadeInOut(newPage);
+          assembleTrainMode(state)
+            .then((page) => this.appendPage(page));
         }
       }
     }, delayTime);
+  }
+
+  // Append new page to app
+  appendPage(newPage: HTMLElement): void {
+    this.app.insertBefore(newPage, this.footer);
+    startPageFadeInOut(newPage);
   }
 }

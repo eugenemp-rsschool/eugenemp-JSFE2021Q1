@@ -65,6 +65,6 @@ export default class Router {
   // Append new page to app
   appendPage(newPage: HTMLElement): void {
     this.app.insertBefore(newPage, this.footer);
-    startPageFadeInOut(newPage);
+    setTimeout(() => startPageFadeInOut(newPage), 50);
   }
 }

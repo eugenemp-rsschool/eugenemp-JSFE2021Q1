@@ -67,7 +67,40 @@ $breakpoint-desktop-fullhd: 1920px;
 }
 
 /*from 320 to 767*/
-@media screen and (min-width: $breakpoint-mobile) {
+@media screen and (min-width: $breakpoint-mobile)
+              and (orientation: portrait) {
+  .footer {
+    height: 42px;
+    padding: 0 10px;
+  
+    &__rs {
+      width: 80px;
+      height: 40px;
+    }
+
+    &__gh {
+      width: 95px;
+      height: 32px;
+
+      &__logo {
+        width: 32px;
+        height: 32px;
+      }
+
+      &__text {
+        font-size: 12px;
+      }
+    }
+  
+    &__cr {
+        display: none;
+    }
+  }
+}
+
+/*from 320 to 767*/
+@media screen and (min-width: $breakpoint-mobile)
+              and (orientation: landscape) {
   .footer {
     height: 42px;
     padding: 0 10px;

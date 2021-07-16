@@ -44,7 +44,7 @@ $breakpoint-desktop-fullhd: 1920px;
 
   &__stars-box {
     display: none;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     opacity: 0;
     height: 100%;
@@ -175,7 +175,7 @@ $breakpoint-desktop-fullhd: 1920px;
               and (orientation: landscape) {
   .header {
     height: 42px;
-    padding: 0 50px;
+    padding: 0 10px;
 
     &__btn__menu {
       width: 32px;
@@ -223,7 +223,7 @@ $breakpoint-desktop-fullhd: 1920px;
 @media screen and (min-width: $breakpoint-tablet) {
   .header {
     height: 62px;
-    padding: 0 100px;
+    padding: 0 20px;
 
     &__btn__menu {
       width: 42px;
@@ -271,7 +271,7 @@ $breakpoint-desktop-fullhd: 1920px;
 @media screen and (min-width: $breakpoint-desktop) {
   .header {
     height: 62px;
-    padding: 0 100px;
+    padding: 0 20px;
 
     &__btn__menu {
       width: 42px;
@@ -318,7 +318,7 @@ $breakpoint-desktop-fullhd: 1920px;
 @media screen and (min-width: $breakpoint-desktop-hdready) {
   .header {
     height: 62px;
-    padding: 0 320px;
+    padding: 0 20px;
 
     &__btn__menu {
       width: 42px;
@@ -366,7 +366,7 @@ $breakpoint-desktop-fullhd: 1920px;
 @media screen and (min-width: $breakpoint-desktop-fullhd) {
   .header {
     height: 62px;
-    padding: 0 400px;
+    padding: 0 20px;
 
     &__btn__menu {
       width: 42px;

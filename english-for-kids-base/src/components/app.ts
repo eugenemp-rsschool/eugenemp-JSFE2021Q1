@@ -9,7 +9,7 @@ import {
   switchAppView,
   // spawnModal,
 } from './view/view-logic';
-import { Words } from './words';
+import Words from './words';
 import Router from './router';
 
 export default class App {

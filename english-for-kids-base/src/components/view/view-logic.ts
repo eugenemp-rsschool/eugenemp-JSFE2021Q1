@@ -1,9 +1,9 @@
-import Component from './view-component';
 import PageWrapper from './page-wrapper';
 import CardsWrapper from './cards-wrapper';
 import CardMain from './card-main';
 import CardPlay from './card-play';
 import CardTrain from './card-train';
+import GameStarsBox from './game-stars-box';
 import BtnGameStart from './btn-start';
 import MenuItem from './side-menu-item';
 import Modal from './modal';
@@ -135,7 +135,7 @@ async function assemblePlayMode(state: State): Promise<HTMLElement> {
   });
 
   // Create stars box, start button and add listener with game handler to it
-  const starsWrap = new Component('div', 'game__stars-box').render();
+  const starsWrap = new GameStarsBox().render();
   const btnStart = new BtnGameStart().render();
 
   btnStart.addEventListener('click', () => startGameCycle(cat));

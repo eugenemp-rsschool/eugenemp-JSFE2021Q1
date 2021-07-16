@@ -8,7 +8,7 @@ export default class CardPlay {
   private readonly PATH_IMAGES = 'assets/images/';
 
   constructor(word: string, picture: string) {
-    this.card = new Component('div', 'card-play').render();
+    this.card = new Component('div', 'card-play card-play_inactive').render();
     this.cardImage = new Component('div', 'card-play__picture').render();
 
     this.card.id = word;

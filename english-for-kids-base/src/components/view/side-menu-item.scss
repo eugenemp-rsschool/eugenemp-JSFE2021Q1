@@ -13,7 +13,7 @@ $breakpoint-desktop-fullhd: 1920px;
   align-items: center;
   width: 100%;
   border-bottom: 1px solid;
-  border-image: linear-gradient(90deg, #afafaf, #5a5a5a, #afafaf) 1;
+  border-image: linear-gradient(90deg, #5a5a5a, #afafaf, #5a5a5a) 1;
   font-family: 'Robot', sans-serif;
   color: #afafaf;
   text-align: center;
@@ -22,9 +22,13 @@ $breakpoint-desktop-fullhd: 1920px;
   transition-property: background-color, color;
   will-change: background-color, color;
 
-  &:hover,
-  &_selected {
+  &:hover {
     background-color: rgba($color: #afafaf, $alpha: 0.8);
+    color: #232323;
+  }
+
+  &_selected {
+    background: linear-gradient(90deg, #5a5a5a, #afafaf, #5a5a5a);
     color: #232323;
   }
 }

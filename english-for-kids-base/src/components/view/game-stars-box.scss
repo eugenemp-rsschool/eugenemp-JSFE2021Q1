@@ -1,0 +1,93 @@
+$breakpoint-mobile: 320px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+$breakpoint-desktop-hdready: 1280px;
+$breakpoint-desktop-fullhd: 1920px;
+
+/*Basic styles*/
+.game__stars-box {
+  position: fixed;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/*from 320 to 767*/
+@media screen and (min-width: $breakpoint-mobile)
+              and (orientation: portrait) {
+  $width: 211px;
+
+  .game__stars-box {
+    gap: 5px;
+    width: $width;
+    height: 24px;
+    top: 5px;
+    left: calc(50% - #{$width / 2});
+  }
+}
+
+/*from 320 to 767*/
+@media screen and (min-width: $breakpoint-mobile)
+              and (orientation: landscape) {
+  $width: 211px;
+
+  .game__stars-box {
+    gap: 5px;
+    width: $width;
+    height: 24px;
+    top: 5px;
+    left: calc(50% - #{$width / 2});
+  }
+}
+
+/*from 768 to 1023*/
+@media screen and (min-width: $breakpoint-tablet) {
+  $width: 662px;
+
+  .game__stars-box {
+    gap: 10px;
+    width: $width;
+    height: 34px;
+    top: 10px;
+    left: calc(50% - #{$width / 2});
+  }
+}
+
+/*from 1024 to 1279*/
+@media screen and (min-width: $breakpoint-desktop) {
+  $width: 822px;
+
+  .game__stars-box {
+    gap: 10px;
+    width: $width;
+    height: 44px;
+    top: 10px;
+    left: calc(50% - #{$width / 2});
+  }
+}
+
+/*from 1280 to 1919*/
+@media screen and (min-width: $breakpoint-desktop-hdready) {
+  $width: 822px;
+
+  .game__stars-box {
+    gap: 10px;
+    width: $width;
+    height: 44px;
+    top: 10px;
+    left: calc(50% - #{$width / 2});
+  }
+}
+
+/*from 1920 and up*/
+@media screen and (min-width: $breakpoint-desktop-fullhd) {
+  $width: 1100px;
+
+  .game__stars-box {
+    gap: 10px;
+    width: $width;
+    height: 62px;
+    top: 10px;
+    left: calc(50% - #{$width / 2});
+  }
+}

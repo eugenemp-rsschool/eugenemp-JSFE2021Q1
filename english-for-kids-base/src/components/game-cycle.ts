@@ -1,4 +1,4 @@
-import { Category, Word } from './words';
+import { Category, Word } from './interface';
 import GameScoreStar from './view/game-score-star';
 import Modal from './view/modal';
 

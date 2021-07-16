@@ -27,13 +27,17 @@ $breakpoint-desktop-fullhd: 1920px;
 /*from 320 to 767*/
 @media screen and (min-width: $breakpoint-mobile)
               and (orientation: portrait) {
-
+  .page-wrapper {
+    gap: 20px;
+  }
 }
 
 /*from 320 to 767*/
 @media screen and (min-width: $breakpoint-mobile)
               and (orientation: landscape) {
-
+  .page-wrapper {
+    gap: 10px;
+  }
 }
 
 
@@ -41,7 +45,9 @@ $breakpoint-desktop-fullhd: 1920px;
 
 /*from 768 to 1023*/
 @media screen and (min-width: $breakpoint-tablet) {
-
+  .page-wrapper {
+    gap: 20px;
+  }
 }
 
 
@@ -49,7 +55,9 @@ $breakpoint-desktop-fullhd: 1920px;
 
 /*from 1024 to 1279*/
 @media screen and (min-width: $breakpoint-desktop) {
-
+  .page-wrapper {
+    gap: 20px;
+  }
 }
 
 
@@ -57,12 +65,16 @@ $breakpoint-desktop-fullhd: 1920px;
 
 /*from 1280 to 1919*/
 @media screen and (min-width: $breakpoint-desktop-hdready) {
-
+  .page-wrapper {
+    gap: 20px;
+  }
 }
 
 /*Tablet=====================================================================*/
 
 /*from 1920 and up*/
 @media screen and (min-width: $breakpoint-desktop-fullhd) {
-
+  .page-wrapper {
+    gap: 20px;
+  }
 }

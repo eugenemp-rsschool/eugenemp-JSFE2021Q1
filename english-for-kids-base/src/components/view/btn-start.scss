@@ -5,8 +5,6 @@ $breakpoint-desktop-hdready: 1280px;
 $breakpoint-desktop-fullhd: 1920px;
 
 .game__btn-start {
-  visibility: hidden;
-  opacity: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -14,17 +12,12 @@ $breakpoint-desktop-fullhd: 1920px;
   border: 1px solid #2374a3;
   font-family: 'Roboto', sans-serif;
   color: #dfdfdf;
-  transition: 0.2s ease-in-out;
+  transition: 0.5s ease-in-out;
   transition-property: background-color,
                        border-color,
                        opacity,
                        filter,
                        width;
-
-  &_enabled {
-    visibility: visible;
-    opacity: 1;
-  }
 
   &_mode-repeat {
     color: transparent;

@@ -28,7 +28,7 @@ $breakpoint-desktop-fullhd: 1920px;
 }
 
 @media screen and (min-width: $breakpoint-mobile)
-              and (orientation: portrait) {
+              and (orientation: landscape) {
   .game__score-star {
     width: 22px;
     height: 22px;
@@ -44,8 +44,8 @@ $breakpoint-desktop-fullhd: 1920px;
 
 @media screen and (min-width: $breakpoint-desktop) {
   .game__score-star {
-    width: 42px;
-    height: 42px;
+    width: 32px;
+    height: 32px;
   }
 }
 

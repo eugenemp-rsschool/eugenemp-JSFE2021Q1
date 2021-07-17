@@ -2,7 +2,6 @@ type Word = {
   word: string,
   translate: string,
   picture: string,
-  sound: string,
 };
 
 type Category = Word[];

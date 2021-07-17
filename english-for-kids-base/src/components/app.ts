@@ -99,7 +99,7 @@ export default class App {
       }
 
       if ((e.target as HTMLElement).classList.contains('menu__btn-login')) {
-        spawnModal('Oops...', 'This part has not been completed yed');
+        spawnModal('Oops...', 'This part has not been completed yet');
       }
     });
 

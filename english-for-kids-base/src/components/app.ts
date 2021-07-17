@@ -7,7 +7,7 @@ import {
   switchMenu,
   assembleMenu,
   switchAppView,
-  // spawnModal,
+  spawnModal,
 } from './view/view-logic';
 import Words from './words';
 import Router from './router';
@@ -24,7 +24,7 @@ export default class App {
   private readonly words: Words;
 
   constructor() {
-    this.rootElement = document.querySelector('body');
+    this.rootElement = document.body;
     this.appElement = new AppComponent().render();
     this.menuElement = new Menu().render();
     this.headerElement = new Header().render();
@@ -96,6 +96,10 @@ export default class App {
         this.state.currentPage = item.innerText;
 
         this.router.changePage(this.state);
+      }
+
+      if ((e.target as HTMLElement).classList.contains('menu__btn-login')) {
+        spawnModal('Oops...', 'This part has not been completed yed');
       }
     });
 

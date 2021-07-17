@@ -182,9 +182,8 @@ function handleMenuItemStyle(menu: HTMLElement, item: string): void {
 // Spawn modal window==========================================================
 function spawnModal(heading: string, text: string): void {
   const modal = new Modal(heading, text).render();
-  document.body.appendChild(modal);
-  document.addEventListener('click', () => modal.remove());
   modal.addEventListener('click', () => modal.remove());
+  document.body.appendChild(modal);
 }
 
 export {

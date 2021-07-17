@@ -1,0 +1,128 @@
+/*Screen sizes for media queries=============================================*/
+$breakpoint-mobile: 320px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+$breakpoint-desktop-hdready: 1280px;
+$breakpoint-desktop-fullhd: 1920px;
+
+
+/*Basic rules================================================================*/
+.menu__btn-login {
+  position: absolute;
+  border: 1px solid #787878;
+  background-color: #454545;
+  font-family: 'Roboto', sans-serif;
+  color: #dfdfdf;
+  text-transform: uppercase;
+  transition: filter 0.3s ease-in-out;
+  will-change: filter;
+
+  &:hover {
+    filter: drop-shadow(0 0 5px #dfdfdf);
+  }
+}
+
+/*Mobile=====================================================================*/
+
+/*from 320 to 767*/
+@media screen and (min-width: $breakpoint-mobile)
+              and (orientation: portrait) {
+  $width: 60px;
+  $height: 20px;
+
+  .menu__btn-login {
+    width: $width;
+    height: $height;
+    bottom: 10px;
+    left: calc(50% - #{$width / 2});
+    border-radius: 10px;
+    font-size: 12px;
+  }
+}
+
+/*from 320 to 767*/
+@media screen and (min-width: $breakpoint-mobile)
+              and (orientation: landscape) {
+  $width: 60px;
+  $height: 20px;
+
+  .menu__btn-login {
+    width: $width;
+    height: $height;
+    bottom: 10px;
+    left: calc(50% - #{$width / 2});
+    border-radius: 10px;
+    font-size: 12px;
+  }
+}
+
+
+/*Tablet=====================================================================*/
+
+/*from 768 to 1023*/
+@media screen and (min-width: $breakpoint-tablet) {
+  $width: 120px;
+  $height: 40px;
+
+  .menu__btn-login {
+    width: $width;
+    height: $height;
+    bottom: 20px;
+    left: calc(50% - #{$width / 2});
+    border-radius: 20px;
+    font-size: 16px;
+  }
+}
+
+
+/*Desktop====================================================================*/
+
+/*from 1024 to 1279*/
+@media screen and (min-width: $breakpoint-desktop) {
+  $width: 120px;
+  $height: 40px;
+
+  .menu__btn-login {
+    width: $width;
+    height: $height;
+    bottom: 20px;
+    left: calc(50% - #{$width / 2});
+    border-radius: 20px;
+    font-size: 16px;
+  }
+}
+
+
+/*HD Ready===================================================================*/
+
+/*from 1280 to 1919*/
+@media screen and (min-width: $breakpoint-desktop-hdready) {
+  $width: 120px;
+  $height: 40px;
+
+  .menu__btn-login {
+    width: $width;
+    height: $height;
+    bottom: 20px;
+    left: calc(50% - #{$width / 2});
+    border-radius: 20px;
+    font-size: 18px;
+  }
+}
+
+/*Tablet=====================================================================*/
+
+/*from 1920 and up*/
+@media screen and (min-width: $breakpoint-desktop-fullhd) {
+  $width: 140px;
+  $height: 50px;
+
+  .menu__btn-login {
+    width: $width;
+    height: $height;
+    bottom: 50px;
+    left: calc(50% - #{$width / 2});
+    border-radius: 25px;
+    font-size: 20px;
+  }
+}

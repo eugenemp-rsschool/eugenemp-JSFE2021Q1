@@ -5,6 +5,7 @@ import CardPlay from './card-play';
 import CardTrain from './card-train';
 import GameStarsBox from './game-stars-box';
 import BtnGameStart from './btn-start';
+import BtnLogin from './btn-login';
 import MenuItem from './side-menu-item';
 import Modal from './modal';
 import { playSound, startGameCycle } from '../game-cycle';
@@ -57,8 +58,10 @@ function assembleMenu(menu: HTMLElement): void {
       });
 
       // Create menu item for statistics
-      const statsItem = new MenuItem('Statistics').render();
-      menu.appendChild(statsItem);
+      menu.appendChild(new MenuItem('Statistics').render());
+
+      // Add login button
+      menu.appendChild(new BtnLogin().render());
     });
 }
 

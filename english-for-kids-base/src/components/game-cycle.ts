@@ -5,6 +5,7 @@ import {
   MODAL_SUCCESS,
   MODAL_FAILURE,
 } from './view/modal-content-game';
+import synthVoice from './speech-synth';
 
 const PATH_AUDIO = 'assets/audio/';
 const SND_CORRECT = 'correct.mp3';
@@ -21,7 +22,7 @@ const roundStat = {
   failureTurnCnt: 0,
 };
 
-// Play word pronunciation=====================================================
+// Play sounds=================================================================
 function playSound(sound: string): void {
   const audio = new Audio(PATH_AUDIO + sound);
   audio.play();
@@ -105,9 +106,9 @@ function startGameCycle(cat: Category): void {
 
     setTimeout(() => {
       // Play word pronunciation
-      playSound(word.sound);
+      synthVoice(word.word);
       // Add listener with repeat handler
-      if (btnRepeat) (btnRepeat as HTMLElement).onclick = () => playSound(word.sound);
+      if (btnRepeat) (btnRepeat as HTMLElement).onclick = () => synthVoice(word.word);
       // Add listenet with card click handlers
       cards?.childNodes.forEach((node) => node.addEventListener('click', handleTurn));
     }, ROUND_DELAY);

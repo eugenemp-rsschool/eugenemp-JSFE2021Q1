@@ -8,7 +8,8 @@ import BtnGameStart from './btn-start';
 import BtnLogin from './btn-login';
 import MenuItem from './side-menu-item';
 import Modal from './modal';
-import { playSound, startGameCycle } from '../game-cycle';
+import { startGameCycle } from '../game-cycle';
+import synthVoice from '../speech-synth';
 import { State } from '../interface';
 import Words from '../words';
 
@@ -109,7 +110,7 @@ async function assembleTrainMode(state: State): Promise<HTMLElement> {
         flipCard(e.target as HTMLElement);
       }
       if ((e.target as HTMLElement).classList.contains('picture__front')) {
-        playSound(word.sound);
+        synthVoice(word.word);
       }
     });
 

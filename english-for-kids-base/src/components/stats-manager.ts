@@ -1,7 +1,4 @@
-import {
-  Store,
-  Stats,
-} from './interface';
+import { Store } from './interface';
 import Words from './words';
 
 const storage = window.localStorage;
@@ -18,50 +15,53 @@ function openStorage(): Store {
 
   if (store) return JSON.parse(store);
 
-  throw Error('Store open error!');
+  throw Error('Error opening store!');
 }
 
 // Clear store
 function clearStorage(): void {
-  storage.removeItem('eugenemp-efk');
+  if (storage.getItem('eugenemp-efk')) {
+    storage.removeItem('eugenemp-efk');
+  }
 }
 
 // Rebuild stats with initial values
-function initStats(): void {
+async function initStats(): Promise<void> {
   // Clear localStorage
   clearStorage();
-  // Set new store
-  storage.setItem('eugenemp-efk', '{}');
+
+  // Create new and empty one
+  storage.setItem('eugenemp-efk', '{"stats": []}');
 
   // Build stats elements within current words
-  words.getCategories()
-    .then((cats) => {
-      const store = openStorage();
-      const stats: Stats = [];
+  const store = openStorage();
 
-      // Generate initial element for every word in db
-      cats.forEach((cat) => {
-        words.getCategory(cat)
+  // Generate initial element for every word in db
+  await words.getCategories()
+    .then((cats) => {
+      for (let i = 0; i < cats.length; i += 1) {
+        words.getCategory(cats[i])
           .then((currCat) => {
-            currCat.forEach((word) => {
-              stats.push({
-                category: cat,
-                word: word.word,
-                translate: word.translate,
+            for (let j = 0; j < currCat.length; j += 1) {
+              store.stats.push({
+
+                word: currCat[j].word,
+                category: cats[i],
+                translate: currCat[j].translate,
                 trainCnt: 0,
                 successCnt: 0,
                 failureCnt: 0,
                 guessPercent: 0,
+
               });
-            });
+
+              // Save store
+              if (i === cats.length - 1 && j === currCat.length - 1) {
+                storage.setItem('eugenemp-efk', JSON.stringify(store));
+              }
+            }
           });
-      });
-
-      // Append generated elements to store
-      store.stats = stats;
-
-      // Save store
-      storage.setItem('eugenemp-efk', JSON.stringify(store));
+      }
     });
 }
 

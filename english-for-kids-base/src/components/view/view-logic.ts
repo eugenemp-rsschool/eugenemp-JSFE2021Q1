@@ -12,6 +12,9 @@ import { startGameCycle } from '../game-cycle';
 import synthVoice from '../speech-synth';
 import { State } from '../interface';
 import Words from '../words';
+import { openStorage } from '../stats-manager';
+import StatsTable from './stats-table';
+import StatsTableElement from './stats-element';
 
 const words = new Words();
 
@@ -156,7 +159,24 @@ async function assemblePlayMode(state: State): Promise<HTMLElement> {
 
 // Assemble statistics page====================================================
 async function assembleStats(): Promise<HTMLElement> {
-  return document.createElement('div');
+  // Create new page wrapper and table
+  const newPageWrap = new PageWrapper().render();
+  const newTable = new StatsTable().render();
+
+  // Generate table elements
+  const store = openStorage();
+  const tbody = newTable.querySelector('.stats__table__body');
+
+  store.stats.forEach((word) => {
+    const tableEl = new StatsTableElement(word).render();
+
+    tbody?.appendChild(tableEl);
+  });
+
+  // Append elements to page
+  newPageWrap.appendChild(newTable);
+
+  return newPageWrap;
 }
 
 // Switch game mode visuals====================================================

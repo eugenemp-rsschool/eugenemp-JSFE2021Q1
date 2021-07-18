@@ -30,8 +30,8 @@ type Stats = StatsElement[];
 
 // Interface for statistics element
 interface StatsElement {
-  category: string
   word: string,
+  category: string,
   translate: string,
   trainCnt: number,
   successCnt: number,

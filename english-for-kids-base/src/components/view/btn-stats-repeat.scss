@@ -1,0 +1,93 @@
+/*Screen sizes for media queries=============================================*/
+$breakpoint-mobile: 320px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+$breakpoint-desktop-hdready: 1280px;
+$breakpoint-desktop-fullhd: 1920px;
+
+
+/*Basic rules================================================================*/
+.stats__btn-repeat {
+  background-color: rgba($color: #54899e, $alpha: 0.8);
+  border: 1px solid #787878;
+  filter: drop-shadow(0 0 3px #585858);
+  font-family: 'Roboto', sans-serif;
+  color: #dfdfdf;
+  transition: 0.2s ease-in-out;
+  transition-property: background-color, filter;
+  will-change: background-color, filter;
+
+  &:hover {
+    background-color: rgba($color: #549e9a, $alpha: 0.8);
+    filter: drop-shadow(0 0 6px #54899e);
+  }
+}
+
+/*Mobile=====================================================================*/
+
+/*from 320 to 767*/
+@media screen and (min-width: $breakpoint-mobile)
+              and (orientation: portrait) {
+  .stats__btn-repeat {
+    width: 80px;
+    height: 26px;
+    border-radius: 13px;
+  }
+}
+
+/*from 320 to 767*/
+@media screen and (min-width: $breakpoint-mobile)
+              and (orientation: landscape) {
+  .stats__btn-repeat {
+    width: 80px;
+    height: 26px;
+    border-radius: 13px;
+  }
+}
+
+
+/*Tablet=====================================================================*/
+
+/*from 768 to 1023*/
+@media screen and (min-width: $breakpoint-tablet) {
+  .stats__btn-repeat {
+    width: 80px;
+    height: 32px;
+    border-radius: 16px;
+  }
+}
+
+
+/*Desktop====================================================================*/
+
+/*from 1024 to 1279*/
+@media screen and (min-width: $breakpoint-desktop) {
+  .stats__btn-repeat {
+    width: 80px;
+    height: 32px;
+    border-radius: 16px;
+  }
+}
+
+
+/*HD Ready===================================================================*/
+
+/*from 1280 to 1919*/
+@media screen and (min-width: $breakpoint-desktop-hdready) {
+  .stats__btn-repeat {
+    width: 80px;
+    height: 32px;
+    border-radius: 16px;
+  }
+}
+
+/*Tablet=====================================================================*/
+
+/*from 1920 and up*/
+@media screen and (min-width: $breakpoint-desktop-fullhd) {
+  .stats__btn-repeat {
+    width: 120px;
+    height: 50px;
+    border-radius: 25px;
+  }
+}

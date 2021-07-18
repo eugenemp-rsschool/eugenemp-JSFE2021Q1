@@ -7,6 +7,12 @@ $breakpoint-desktop-fullhd: 1920px;
 
 
 /*Basic rules================================================================*/
+.stats__btn__wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
 .stats__table__wrapper {
   box-shadow: 0 4px 15px #383838;
   background-color: rgba($color: #afafaf, $alpha: 0.2);
@@ -67,9 +73,13 @@ $breakpoint-desktop-fullhd: 1920px;
 /*from 320 to 767*/
 @media screen and (min-width: $breakpoint-mobile)
               and (orientation: portrait) {
+  .stats__btn__wrapper {
+    padding: 0 10px;
+  }
+
   .stats__table__wrapper {
     width: 100vw;
-    height: 85vh;
+    height: 80vh;
     border: none;
   }
 
@@ -89,9 +99,13 @@ $breakpoint-desktop-fullhd: 1920px;
 /*from 320 to 767*/
 @media screen and (min-width: $breakpoint-mobile)
               and (orientation: landscape) {
+  .stats__btn__wrapper {
+    padding: 0 10px;
+  }
+
   .stats__table__wrapper {
     width: 100vw;
-    height: 75vh;
+    height: 65vh;
     border: none;
   }
 
@@ -113,9 +127,13 @@ $breakpoint-desktop-fullhd: 1920px;
 
 /*from 768 to 1023*/
 @media screen and (min-width: $breakpoint-tablet) {
+  .stats__btn__wrapper {
+    padding: 0 20px;
+  }
+
   .stats__table__wrapper {
     width: 100vw;
-    height: 900px;
+    height: 850px;
     border: none;
   }
 
@@ -126,7 +144,7 @@ $breakpoint-desktop-fullhd: 1920px;
     }
 
     &__lower {
-      height: 870px;
+      height: 820px;
       font-size: 14px;
     }
   }
@@ -137,9 +155,13 @@ $breakpoint-desktop-fullhd: 1920px;
 
 /*from 1024 to 1279*/
 @media screen and (min-width: $breakpoint-desktop) {
+  .stats__btn__wrapper {
+    padding: 0 20px;
+  }
+
   .stats__table__wrapper {
     width: 100vw;
-    height: 644px;
+    height: 590px;
     border: 1px solid #787878;
   }
 
@@ -150,7 +172,7 @@ $breakpoint-desktop-fullhd: 1920px;
     }
 
     &__lower {
-      height: 612px;
+      height: 558px;
       font-size: 16px;
     }
   }
@@ -161,9 +183,13 @@ $breakpoint-desktop-fullhd: 1920px;
 
 /*from 1280 to 1919*/
 @media screen and (min-width: $breakpoint-desktop-hdready) {
+  .stats__btn__wrapper {
+    padding: 0 0;
+  }
+
   .stats__table__wrapper {
-    width: 1200px;
-    height: 700px;
+    width: 1240px;
+    height: 544px;
     border: 1px solid #787878;
   }
 
@@ -174,7 +200,7 @@ $breakpoint-desktop-fullhd: 1920px;
     }
 
     &__lower {
-      height: 658px;
+      height: 502px;
       font-size: 16px;
     }
   }
@@ -184,6 +210,10 @@ $breakpoint-desktop-fullhd: 1920px;
 
 /*from 1920 and up*/
 @media screen and (min-width: $breakpoint-desktop-fullhd) {
+  .stats__btn__wrapper {
+    padding: 0 0;
+  }
+
   .stats__table__wrapper {
     width: 1600px;
     height: 800px;

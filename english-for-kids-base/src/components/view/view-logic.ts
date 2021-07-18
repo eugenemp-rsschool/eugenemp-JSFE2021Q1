@@ -6,6 +6,8 @@ import CardTrain from './card-train';
 import GameStarsBox from './game-stars-box';
 import BtnGameStart from './btn-start';
 import BtnLogin from './btn-login';
+import BtnStatsRepeat from './btn-stats-repeat';
+import BtnStatsReset from './btn-stats-reset';
 import MenuItem from './side-menu-item';
 import Modal from './modal';
 import { startGameCycle } from '../game-cycle';
@@ -15,6 +17,7 @@ import Words from '../words';
 import { openStorage } from '../stats-manager';
 import StatsTable from './stats-table';
 import StatsTableElement from './stats-element';
+import Component from './view-component';
 
 const words = new Words();
 
@@ -162,6 +165,9 @@ async function assembleStats(): Promise<HTMLElement> {
   // Create new page wrapper and table
   const newPageWrap = new PageWrapper().render();
   const newTable = new StatsTable().render();
+  const btnWrap = new Component('div', 'stats__btn__wrapper').render();
+  const btnRepeat = new BtnStatsRepeat().render();
+  const btnReset = new BtnStatsReset().render();
 
   // Generate table elements
   const store = openStorage();
@@ -174,7 +180,14 @@ async function assembleStats(): Promise<HTMLElement> {
   });
 
   // Append elements to page
-  newPageWrap.appendChild(newTable);
+  [
+    btnRepeat,
+    btnReset,
+  ].forEach((btn) => btnWrap.appendChild(btn));
+  [
+    btnWrap,
+    newTable,
+  ].forEach((elem) => newPageWrap.appendChild(elem));
 
   return newPageWrap;
 }

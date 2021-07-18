@@ -1,0 +1,204 @@
+/*Screen sizes for media queries=============================================*/
+$breakpoint-mobile: 320px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+$breakpoint-desktop-hdready: 1280px;
+$breakpoint-desktop-fullhd: 1920px;
+
+
+/*Basic rules================================================================*/
+.stats__table__wrapper {
+  box-shadow: 0 4px 15px #383838;
+  background-color: rgba($color: #afafaf, $alpha: 0.2);
+}
+
+.stats__table {
+  &__upper,
+  &__lower {
+    display: block;
+    width: 100%;
+
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    color: #232323;
+  }
+
+  &__upper {
+    background: linear-gradient(#dfdfdf, #afafaf);
+    border-bottom: 1px solid #232323;
+  }
+
+  &__lower {
+    overflow-y: scroll;
+  }
+
+  &__head,
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+
+    &__row {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
+    }
+
+    &__data {
+      flex-basis: 100%;
+    }
+  }
+
+  &__body__row:nth-child(odd) {
+    background-color: rgba($color: #acacac, $alpha: 0.4);
+  }
+
+  &__body__row:nth-child(even) {
+    background-color: rgba($color: #afaf00, $alpha: 0.4);
+  }
+  
+}
+
+
+/*Mobile=====================================================================*/
+
+/*from 320 to 767*/
+@media screen and (min-width: $breakpoint-mobile)
+              and (orientation: portrait) {
+  .stats__table__wrapper {
+    width: 100vw;
+    height: 85vh;
+    border: none;
+  }
+
+  .stats__table {
+    &__upper {
+      height: 20px;
+      font-size: 12px;
+    }
+
+    &__lower {
+      height: calc(100% - 20px);
+      font-size: 12px;
+    }
+  }
+}
+
+/*from 320 to 767*/
+@media screen and (min-width: $breakpoint-mobile)
+              and (orientation: landscape) {
+  .stats__table__wrapper {
+    width: 100vw;
+    height: 75vh;
+    border: none;
+  }
+
+  .stats__table {
+    &__upper {
+      height: 20px;
+      font-size: 12px;
+    }
+
+    &__lower {
+      height: calc(100% - 20px);
+      font-size: 12px;
+    }
+  }
+}
+
+
+/*Tablet=====================================================================*/
+
+/*from 768 to 1023*/
+@media screen and (min-width: $breakpoint-tablet) {
+  .stats__table__wrapper {
+    width: 100vw;
+    height: 900px;
+    border: none;
+  }
+
+  .stats__table {
+    &__upper {
+      height: 30px;
+      font-size: 16px;
+    }
+
+    &__lower {
+      height: 870px;
+      font-size: 14px;
+    }
+  }
+}
+
+
+/*Desktop====================================================================*/
+
+/*from 1024 to 1279*/
+@media screen and (min-width: $breakpoint-desktop) {
+  .stats__table__wrapper {
+    width: 100vw;
+    height: 644px;
+    border: 1px solid #787878;
+  }
+
+  .stats__table {
+    &__upper {
+      height: 30px;
+      font-size: 18px;
+    }
+
+    &__lower {
+      height: 612px;
+      font-size: 16px;
+    }
+  }
+}
+
+
+/*HD Ready===================================================================*/
+
+/*from 1280 to 1919*/
+@media screen and (min-width: $breakpoint-desktop-hdready) {
+  .stats__table__wrapper {
+    width: 1200px;
+    height: 700px;
+    border: 1px solid #787878;
+  }
+
+  .stats__table {
+    &__upper {
+      height: 40px;
+      font-size: 18px;
+    }
+
+    &__lower {
+      height: 658px;
+      font-size: 16px;
+    }
+  }
+}
+
+/*Tablet=====================================================================*/
+
+/*from 1920 and up*/
+@media screen and (min-width: $breakpoint-desktop-fullhd) {
+  .stats__table__wrapper {
+    width: 1600px;
+    height: 800px;
+    border: 1px solid #787878;
+  }
+
+  .stats__table {
+    &__upper {
+      height: 40px;
+      font-size: 20px;
+    }
+
+    &__lower {
+      height: 758px;
+      font-size: 18px;
+    }
+  }
+}

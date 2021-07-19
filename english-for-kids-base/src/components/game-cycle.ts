@@ -1,4 +1,9 @@
-import { Category, StatsElement, Word } from './interface';
+import {
+  Category,
+  StatsElement,
+  Word,
+  WordPropsHandle,
+} from './interface';
 import Modal from './view/modal';
 import GameScoreStar from './view/game-score-star';
 import {
@@ -64,9 +69,7 @@ function addScoreStar(starsBox: HTMLElement, type: boolean): void {
 }
 
 // Handle current word stats mgmt==============================================
-export type WordStatHandle = 'success' | 'failure' | 'trained';
-
-function handleWordStat(word: string, prop: WordStatHandle): void {
+function handleWordStat(word: string, prop: WordPropsHandle): void {
   const store = openStorage();
 
   // Edit current word statistics

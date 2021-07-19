@@ -367,6 +367,19 @@ class Words {
     return true;
   }
 
+  async getWord(category: string, word: string): Promise<Word | undefined> {
+    let wordObj: Word | undefined;
+
+    await this.getCategory(category)
+      .then((cat) => {
+        cat.forEach((el) => {
+          if (el.word === word) wordObj = el;
+        });
+      });
+
+    return wordObj;
+  }
+
   // Add word to category
   async addWord(category: string, word: Word): Promise<boolean> {
     this.words[category].push(word);

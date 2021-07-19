@@ -2,8 +2,11 @@ import {
   Stats,
   StatsElement,
   Store,
+  SortCol,
+  SortOrder,
+  Category,
+  Word,
 } from './interface';
-import StatsTableElement from './view/stats-element';
 import Words from './words';
 
 const storage = window.localStorage;
@@ -76,18 +79,13 @@ async function initStats(): Promise<void> {
     });
 }
 
-// Reset table and redraw it
+// Reset table
 async function resetTable(): Promise<void> {
   await initStats();
-  getTable();
 }
 
-// Assemble table from statistics
-export type SortCol = 'word' | 'category' | 'translate' | 'trained' | 'success' | 'failure' | 'guess';
-export type SortOrder = 'asc' | 'desc';
-
-function getTable(sort?: SortCol, order?: SortOrder, tableBody?: HTMLElement): void {
-  const tbody = tableBody || document.querySelector('.stats__table__body');
+// Get sorted stats
+function getTable(sort?: SortCol, order?: SortOrder): Stats {
   const store = openStorage();
   const field = sort || 'word';
 
@@ -102,14 +100,30 @@ function getTable(sort?: SortCol, order?: SortOrder, tableBody?: HTMLElement): v
     return 0;
   }
 
-  // Sort, if arg passed
+  // Sort array, if sort arg has passed
   if (sort) store.stats.sort(sortFn);
 
-  if (tbody) tbody.innerHTML = '';
+  return store.stats;
+}
 
-  store.stats.forEach((word) => {
-    tbody?.appendChild(new StatsTableElement(word).render());
+// Assemble difficult words train mode
+async function generateRepeatWords(): Promise<Category> {
+  const stats = getTable('guess', 'asc');
+  const results: Promise<Word | undefined>[] = [];
+  const cat: Category = [];
+
+  // Get difficult from db and assemble new category for train mode
+  stats.forEach((word) => {
+    if (
+      (word.success !== 0 || word.failure !== 0) && word.guess !== 100) {
+      results.push(words.getWord(word.category, word.word));
+    }
   });
+
+  await Promise.all(results)
+    .then((values) => values.forEach((word) => { if (word) cat.push(word); }));
+
+  return cat;
 }
 
 export {
@@ -119,4 +133,5 @@ export {
   writeStatsToStorage,
   resetTable,
   getTable,
+  generateRepeatWords,
 };

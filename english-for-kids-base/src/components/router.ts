@@ -2,6 +2,7 @@ import {
   assembleMainPage,
   assemblePlayMode,
   assembleTrainMode,
+  assembleRepeatTrainMode,
   assembleStats,
   startPageFadeInOut,
   handleMenuItemStyle,
@@ -48,16 +49,27 @@ export default class Router {
       if (state.currentPage === 'Statistics') {
         assembleStats()
           .then((page) => this.appendPage(page));
-      } else {
-        if (state.playMode) {
-          assemblePlayMode(state)
-            .then((page) => this.appendPage(page));
-        }
 
-        if (!state.playMode) {
-          assembleTrainMode(state)
-            .then((page) => this.appendPage(page));
-        }
+        return;
+      }
+
+      if (state.currentPage === 'Repeat') {
+        assembleRepeatTrainMode(state)
+          .then((page) => {
+            if (page) this.appendPage(page);
+          });
+
+        return;
+      }
+
+      if (state.playMode) {
+        assemblePlayMode(state)
+          .then((page) => this.appendPage(page));
+      }
+
+      if (!state.playMode) {
+        assembleTrainMode(state)
+          .then((page) => this.appendPage(page));
       }
     }, delayTime);
   }

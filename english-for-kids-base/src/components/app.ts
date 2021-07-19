@@ -9,6 +9,7 @@ import {
   switchAppView,
   spawnModal,
 } from './view/view-logic';
+import { generateRepeatWords } from './stats-manager';
 import Words from './words';
 import Router from './router';
 
@@ -94,7 +95,6 @@ export default class App {
         const item = e.target as HTMLElement;
 
         this.state.currentPage = item.innerText;
-
         this.router.changePage(this.state);
       }
 
@@ -103,14 +103,23 @@ export default class App {
       }
     });
 
-    // Handle main cards
+    // Handle main cards and repeat words btn
     this.appElement.addEventListener('click', (e) => {
       const card = (e.target as HTMLElement).closest('.card-main');
 
       if (card) {
         this.state.currentPage = card.id;
-
         this.router.changePage(this.state);
+      }
+
+      if ((e.target as HTMLElement).classList.contains('stats__btn-repeat')) {
+        generateRepeatWords()
+          .then((cat) => {
+            if (cat.length !== 0) {
+              this.state.currentPage = 'Repeat';
+              this.router.changePage(this.state);
+            } else spawnModal('', 'No words to repeat!');
+          });
       }
     });
 

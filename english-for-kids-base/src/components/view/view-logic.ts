@@ -15,15 +15,21 @@ import {
   handleWordStat,
 } from '../game-cycle';
 import synthVoice from '../speech-synth';
-import { State } from '../interface';
+import {
+  State,
+  Stats,
+  SortOrder,
+  SortCol,
+  Category,
+} from '../interface';
 import Words from '../words';
 import {
   resetTable,
   getTable,
-  SortOrder,
-  SortCol,
+  generateRepeatWords,
 } from '../stats-manager';
 import StatsTable from './stats-table';
+import StatsTableElement from './stats-element';
 import Component from './view-component';
 
 const words = new Words();
@@ -105,19 +111,22 @@ async function assembleMainPage(): Promise<HTMLElement> {
 }
 
 // Assemble category page in train mode========================================
-async function assembleTrainMode(state: State): Promise<HTMLElement> {
+async function assembleTrainMode(state: State, repeatCat?: Category): Promise<HTMLElement> {
   // Create new page and cards wrappers
   const newPageWrap = new PageWrapper().render();
   const newCardsWrap = new CardsWrapper('cards-wrapper page-game__cards-wrapper').render();
 
-  // Generate cards within passed category, add listener that handles flip and speech;
-  // Append it to cards wrapper;
-  const promise = words.getCategory(state.currentPage);
-  const cat = await promise;
+  // Generate cards within passed category
+  let cat: Category;
+
+  if (!repeatCat) {
+    const promise = words.getCategory(state.currentPage);
+    cat = await promise;
+  } else cat = repeatCat;
 
   cat.forEach((word) => {
     const card = new CardTrain(word.word, word.translate, word.picture).render();
-
+    // Add listeners that handles flip and speech
     card.addEventListener('click', (e) => {
       if ((e.target as HTMLElement).classList.contains('card-train__btn-flip')) {
         flipCard(e.target as HTMLElement);
@@ -127,7 +136,7 @@ async function assembleTrainMode(state: State): Promise<HTMLElement> {
       }
       handleWordStat(word.word, 'trained');
     });
-
+    // Append it to cards wrapper;
     newCardsWrap.appendChild(card);
   });
 
@@ -138,14 +147,19 @@ async function assembleTrainMode(state: State): Promise<HTMLElement> {
 }
 
 // Assemble category in play mode==============================================
-async function assemblePlayMode(state: State): Promise<HTMLElement> {
+async function assemblePlayMode(state: State, repeatCat?: Category): Promise<HTMLElement> {
   // Create new page and cards wrappers
   const newPageWrap = new PageWrapper().render();
   const newCardsWrap = new CardsWrapper('cards-wrapper page-game__cards-wrapper').render();
 
   // Generate cards within passed category and append it to cards wrapper
-  const promise = words.getCategory(state.currentPage);
-  const cat = await promise;
+  let cat: Category;
+
+  if (repeatCat) cat = repeatCat;
+  else {
+    const promise = words.getCategory(state.currentPage);
+    cat = await promise;
+  }
 
   cat.forEach((word) => {
     const card = new CardPlay(word.word, word.picture).render();
@@ -168,6 +182,16 @@ async function assemblePlayMode(state: State): Promise<HTMLElement> {
   return newPageWrap;
 }
 
+function assembleRepeatTrainMode(state: State): Promise<HTMLElement> {
+  return generateRepeatWords()
+    .then((cat) => assembleTrainMode(state, cat));
+}
+
+function assembleRepeatPlayMode(state: State): Promise<HTMLElement> {
+  return generateRepeatWords()
+    .then((cat) => assemblePlayMode(state, cat));
+}
+
 // Assemble statistics page====================================================
 async function assembleStats(): Promise<HTMLElement> {
   // Create new page wrapper and table
@@ -177,10 +201,10 @@ async function assembleStats(): Promise<HTMLElement> {
   const btnRepeat = new BtnStatsRepeat().render();
   const btnReset = new BtnStatsReset().render();
 
-  // Generate table elements
+  // Generate initial table elements
   const tbody = newTable.querySelector('.stats__table__body');
 
-  getTable('word', 'asc', tbody as HTMLElement);
+  drawTable(getTable(), tbody as HTMLElement);
 
   // Init listeners
   btnReset.addEventListener('click', resetTable);
@@ -194,7 +218,7 @@ async function assembleStats(): Promise<HTMLElement> {
       const ord = btn.dataset.order;
 
       // Regenerate table if sort options changes
-      if (col) getTable(col as SortCol, ord as SortOrder);
+      if (col) drawTable(getTable(col as SortCol, ord as SortOrder));
       if (ord === 'asc') btn.dataset.order = 'desc';
       if (ord === 'desc') btn.dataset.order = 'asc';
 
@@ -209,12 +233,10 @@ async function assembleStats(): Promise<HTMLElement> {
       }
     }
 
-    // Handle words repeat button
-    // if (e.target === btnRepeat)
-
     // Handle stats reset button
     if (e.target === btnReset) {
-      resetTable();
+      resetTable()
+        .then(() => drawTable(getTable()));
 
       btns.forEach((currBtn) => {
         if (currBtn.classList.contains('stats__table__head__data_active')) {
@@ -235,6 +257,18 @@ async function assembleStats(): Promise<HTMLElement> {
   ].forEach((elem) => newPageWrap.appendChild(elem));
 
   return newPageWrap;
+}
+
+function drawTable(stats: Stats, tableBody?: HTMLElement): void {
+  const tbody = document.querySelector('.stats__table__body') || tableBody;
+
+  if (tbody) {
+    tbody.innerHTML = '';
+
+    stats.forEach((word) => {
+      tbody?.appendChild(new StatsTableElement(word).render());
+    });
+  }
 }
 
 // Switch game mode visuals====================================================
@@ -276,4 +310,6 @@ export {
   spawnModal,
   startPageFadeInOut,
   handleMenuItemStyle,
+  assembleRepeatPlayMode,
+  assembleRepeatTrainMode,
 };

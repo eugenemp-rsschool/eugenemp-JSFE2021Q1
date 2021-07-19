@@ -39,6 +39,12 @@ interface StatsElement {
   guess: number,
 }
 
+type SortCol = 'word' | 'category' | 'translate' | 'trained' | 'success' | 'failure' | 'guess';
+
+type SortOrder = 'asc' | 'desc';
+
+type WordPropsHandle = 'success' | 'failure' | 'trained';
+
 export {
   Word,
   Category,
@@ -47,4 +53,7 @@ export {
   Store,
   Stats,
   StatsElement,
+  SortCol,
+  SortOrder,
+  WordPropsHandle,
 };

@@ -13,13 +13,13 @@ export default class StatsTable {
 
     this.tableUpperElement.innerHTML = `<thead class="stats__table__head">
                                           <tr class="stats__table__head__row">
-                                            <th class="stats__table__head__data">Category</th>
-                                            <th class="stats__table__head__data">Words</th>
-                                            <th class="stats__table__head__data">Translation</th>
-                                            <th class="stats__table__head__data">Trained</th>
-                                            <th class="stats__table__head__data">Success</th>
-                                            <th class="stats__table__head__data">Failure</th>
-                                            <th class="stats__table__head__data">%</th>
+                                            <th class="stats__table__head__data" data-order="asc" data-column="category">Category</th>
+                                            <th class="stats__table__head__data" data-order="asc" data-column="word">Word</th>
+                                            <th class="stats__table__head__data" data-order="asc" data-column="translate" data-order="asc">Translation</th>
+                                            <th class="stats__table__head__data" data-order="asc" data-column="trained" data-order="asc">Trained</th>
+                                            <th class="stats__table__head__data" data-order="asc" data-column="success">Correct</th>
+                                            <th class="stats__table__head__data" data-order="asc" data-column="failure">Wrong</th>
+                                            <th class="stats__table__head__data" data-order="asc" data-column="guess">Guess %</th>
                                           </tr>
                                         </thead>`;
 

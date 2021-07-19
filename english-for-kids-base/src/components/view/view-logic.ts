@@ -10,13 +10,20 @@ import BtnStatsRepeat from './btn-stats-repeat';
 import BtnStatsReset from './btn-stats-reset';
 import MenuItem from './side-menu-item';
 import Modal from './modal';
-import { startGameCycle } from '../game-cycle';
+import {
+  startGameCycle,
+  handleWordStat,
+} from '../game-cycle';
 import synthVoice from '../speech-synth';
 import { State } from '../interface';
 import Words from '../words';
-import { openStorage } from '../stats-manager';
+import {
+  resetTable,
+  getTable,
+  SortOrder,
+  SortCol,
+} from '../stats-manager';
 import StatsTable from './stats-table';
-import StatsTableElement from './stats-element';
 import Component from './view-component';
 
 const words = new Words();
@@ -118,6 +125,7 @@ async function assembleTrainMode(state: State): Promise<HTMLElement> {
       if ((e.target as HTMLElement).classList.contains('picture__front')) {
         synthVoice(word.word);
       }
+      handleWordStat(word.word, 'trained');
     });
 
     newCardsWrap.appendChild(card);
@@ -170,13 +178,50 @@ async function assembleStats(): Promise<HTMLElement> {
   const btnReset = new BtnStatsReset().render();
 
   // Generate table elements
-  const store = openStorage();
   const tbody = newTable.querySelector('.stats__table__body');
 
-  store.stats.forEach((word) => {
-    const tableEl = new StatsTableElement(word).render();
+  getTable('word', 'asc', tbody as HTMLElement);
 
-    tbody?.appendChild(tableEl);
+  // Init listeners
+  btnReset.addEventListener('click', resetTable);
+  newPageWrap.addEventListener('click', (e) => {
+    const btn = e.target as HTMLElement;
+    const btns = newTable.querySelectorAll('.stats__table__head__data');
+
+    // Handle table buttons (columns)
+    if (btn.classList.contains('stats__table__head__data')) {
+      const col = btn.dataset.column;
+      const ord = btn.dataset.order;
+
+      // Regenerate table if sort options changes
+      if (col) getTable(col as SortCol, ord as SortOrder);
+      if (ord === 'asc') btn.dataset.order = 'desc';
+      if (ord === 'desc') btn.dataset.order = 'asc';
+
+      // Handle table column visuals depending on sorting
+      if (col) {
+        btns.forEach((currBtn) => {
+          if (currBtn.classList.contains('stats__table__head__data_active')) {
+            currBtn.classList.remove('stats__table__head__data_active');
+          }
+        });
+        btn.classList.add('stats__table__head__data_active');
+      }
+    }
+
+    // Handle words repeat button
+    // if (e.target === btnRepeat)
+
+    // Handle stats reset button
+    if (e.target === btnReset) {
+      resetTable();
+
+      btns.forEach((currBtn) => {
+        if (currBtn.classList.contains('stats__table__head__data_active')) {
+          currBtn.classList.remove('stats__table__head__data_active');
+        }
+      });
+    }
   });
 
   // Append elements to page

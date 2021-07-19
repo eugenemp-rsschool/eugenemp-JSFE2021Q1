@@ -1,4 +1,9 @@
-import { Store } from './interface';
+import {
+  Stats,
+  StatsElement,
+  Store,
+} from './interface';
+import StatsTableElement from './view/stats-element';
 import Words from './words';
 
 const storage = window.localStorage;
@@ -16,6 +21,12 @@ function openStorage(): Store {
   if (store) return JSON.parse(store);
 
   throw Error('Error opening store!');
+}
+
+function writeStatsToStorage(stats: Stats): void {
+  const store: Store = { stats };
+
+  storage.setItem('eugenemp-efk', JSON.stringify(store));
 }
 
 // Clear store
@@ -48,10 +59,10 @@ async function initStats(): Promise<void> {
                 word: currCat[j].word,
                 category: cats[i],
                 translate: currCat[j].translate,
-                trainCnt: 0,
-                successCnt: 0,
-                failureCnt: 0,
-                guessPercent: 0,
+                trained: 0,
+                success: 0,
+                failure: 0,
+                guess: 0,
 
               });
 
@@ -65,8 +76,47 @@ async function initStats(): Promise<void> {
     });
 }
 
+// Reset table and redraw it
+async function resetTable(): Promise<void> {
+  await initStats();
+  getTable();
+}
+
+// Assemble table from statistics
+export type SortCol = 'word' | 'category' | 'translate' | 'trained' | 'success' | 'failure' | 'guess';
+export type SortOrder = 'asc' | 'desc';
+
+function getTable(sort?: SortCol, order?: SortOrder, tableBody?: HTMLElement): void {
+  const tbody = tableBody || document.querySelector('.stats__table__body');
+  const store = openStorage();
+  const field = sort || 'word';
+
+  function sortFn(a: StatsElement, b: StatsElement): number {
+    if (order === 'desc') {
+      if (a[field] > b[field]) return -1;
+      if (a[field] < b[field]) return 1;
+    } else {
+      if (a[field] > b[field]) return 1;
+      if (a[field] < b[field]) return -1;
+    }
+    return 0;
+  }
+
+  // Sort, if arg passed
+  if (sort) store.stats.sort(sortFn);
+
+  if (tbody) tbody.innerHTML = '';
+
+  store.stats.forEach((word) => {
+    tbody?.appendChild(new StatsTableElement(word).render());
+  });
+}
+
 export {
+  initStats,
   openStorage,
   clearStorage,
-  initStats,
+  writeStatsToStorage,
+  resetTable,
+  getTable,
 };

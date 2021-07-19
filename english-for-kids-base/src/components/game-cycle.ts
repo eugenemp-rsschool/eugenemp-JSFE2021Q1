@@ -1,4 +1,4 @@
-import { Category, Word } from './interface';
+import { Category, StatsElement, Word } from './interface';
 import Modal from './view/modal';
 import GameScoreStar from './view/game-score-star';
 import {
@@ -6,6 +6,10 @@ import {
   MODAL_FAILURE,
 } from './view/modal-content-game';
 import synthVoice from './speech-synth';
+import {
+  openStorage,
+  writeStatsToStorage,
+} from './stats-manager';
 
 const PATH_AUDIO = 'assets/audio/';
 const SND_CORRECT = 'correct.mp3';
@@ -16,11 +20,7 @@ const SND_FAILIURE = 'failure.mp3';
 const ROUND_DELAY = 1000;
 const FINISH_DELAY = 3000;
 
-const roundStat = {
-  allTurnCnt: 0,
-  successTurnCnt: 0,
-  failureTurnCnt: 0,
-};
+let roundErrorCnt = 0;
 
 // Play sounds=================================================================
 function playSound(sound: string): void {
@@ -61,6 +61,31 @@ function addScoreStar(starsBox: HTMLElement, type: boolean): void {
   }
   // Append new star based on type
   starsBox.appendChild(new GameScoreStar(type).render());
+}
+
+// Handle current word stats mgmt==============================================
+export type WordStatHandle = 'success' | 'failure' | 'trained';
+
+function handleWordStat(word: string, prop: WordStatHandle): void {
+  const store = openStorage();
+
+  // Edit current word statistics
+  store.stats.map((currWordStat) => {
+    const newWordStat: StatsElement = currWordStat;
+    // Find this word in storage and edit it's props
+    if (currWordStat.word === word) {
+      newWordStat[prop] += 1;
+    }
+    // Compute guess percentage
+    if (prop !== 'trained') {
+      const percent = 100 / (newWordStat.success + newWordStat.failure);
+      newWordStat.guess = Math.round(percent * newWordStat.success) || 0;
+    }
+
+    return newWordStat;
+  });
+
+  writeStatsToStorage(store.stats);
 }
 
 // Handle game start===========================================================
@@ -119,10 +144,10 @@ function startGameCycle(cat: Category): void {
     const card = (event.target as HTMLElement).closest('.card-play');
 
     if (card) {
-      // If correct card clicked=================
+      // If CORRECT card clicked=================
       if (card.id === shuffledCat[currentWord].word) {
         // Count successful turn
-        roundStat.successTurnCnt += 1;
+        handleWordStat(card.id, 'success');
         // Add yellow star
         addScoreStar(stars, true);
         // Change card state to disabled
@@ -135,10 +160,11 @@ function startGameCycle(cat: Category): void {
         currentWord += 1;
         startTurn(shuffledCat[currentWord]);
 
-      // If incorrect card clicked===============
+      // If INCORRECT card clicked===============
       } else {
         // Count successful turn
-        roundStat.failureTurnCnt += 1;
+        handleWordStat(card.id, 'failure');
+        roundErrorCnt += 1;
         // Add black star
         addScoreStar(stars, false);
         // Play "error" sound
@@ -152,17 +178,14 @@ function startGameCycle(cat: Category): void {
 }
 
 function finishGame(): void {
-  // Compute all turns count
-  roundStat.allTurnCnt = roundStat.successTurnCnt + roundStat.failureTurnCnt;
-
   // Show modal (depending on round results) and delete it after specific time
   let modal: HTMLElement;
 
-  if (roundStat.failureTurnCnt === 0) {
+  if (roundErrorCnt === 0) {
     modal = new Modal('Win!', MODAL_SUCCESS).render();
     playSound(SND_SUCCESS);
   } else {
-    modal = new Modal(`Errors: ${roundStat.failureTurnCnt}`, MODAL_FAILURE).render();
+    modal = new Modal(`Errors: ${roundErrorCnt}`, MODAL_FAILURE).render();
     playSound(SND_FAILIURE);
   }
 
@@ -179,4 +202,5 @@ export {
   playSound,
   shuffleWords,
   startGameCycle,
+  handleWordStat,
 };

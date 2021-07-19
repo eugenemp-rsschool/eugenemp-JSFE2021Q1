@@ -33,10 +33,10 @@ interface StatsElement {
   word: string,
   category: string,
   translate: string,
-  trainCnt: number,
-  successCnt: number,
-  failureCnt: number,
-  guessPercent: number,
+  trained: number,
+  success: number,
+  failure: number,
+  guess: number,
 }
 
 export {

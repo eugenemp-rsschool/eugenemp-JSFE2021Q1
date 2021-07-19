@@ -11,10 +11,10 @@ export default class StatsTableElement {
     this.tableRowElement.innerHTML = `<td class="stats__table__body__data">${element.category}</td>
                                       <td class="stats__table__body__data">${element.word}</td>
                                       <td class="stats__table__body__data">${element.translate}</td>
-                                      <td class="stats__table__body__data">${element.trainCnt}</td>
-                                      <td class="stats__table__body__data">${element.successCnt}</td>
-                                      <td class="stats__table__body__data">${element.failureCnt}</td>
-                                      <td class="stats__table__body__data">${element.guessPercent}</td>`;
+                                      <td class="stats__table__body__data">${element.trained}</td>
+                                      <td class="stats__table__body__data">${element.success}</td>
+                                      <td class="stats__table__body__data">${element.failure}</td>
+                                      <td class="stats__table__body__data">${element.guess}</td>`;
   }
 
   render(): HTMLElement {

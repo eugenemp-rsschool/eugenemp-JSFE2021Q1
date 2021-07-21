@@ -12,7 +12,7 @@ import {
 import { generateRepeatWords } from './stats-manager';
 import Words from './words';
 import Router from './router';
-import { MODAL_AUTH } from './view/modal-content-auth';
+import MODAL_AUTH from './view/modal-content-auth';
 
 export default class App {
   private readonly rootElement: HTMLElement | null;

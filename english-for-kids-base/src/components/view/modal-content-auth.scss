@@ -8,7 +8,8 @@ $breakpoint-desktop-fullhd: 1920px;
 /*Basic rules================================================================*/
 .modal {
   position: fixed;
-  border: 1px solid #787878;
+  border: 1px solid #989898;
+  filter: drop-shadow(0 0 10px #131313);
 
   &__header {
     display: flex;
@@ -26,10 +27,59 @@ $breakpoint-desktop-fullhd: 1920px;
   &__content {
     width: 100%;
     height: 160px;
-    padding: 10px;
+    background-color: #535353;
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
     color: #dfdfdf;
+
+    &__auth {
+      &__form {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+      }
+
+      &__input-name,
+      &__input-pass {
+        width: 80%;
+        border: 1px solid #989898;
+        transition: 0.2s ease-in-out;
+        transition-property: border-color, filter;
+        will-change: border-color, filter;
+
+        &:focus {
+          outline: none;
+          border-color: #007878;
+          filter: drop-shadow(0 0 5px #007878);
+        }
+      }
+
+      &__btn__wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 80%;
+      }
+
+      &__btn-submit,
+      &__btn-cancel {
+        background-color: #787878;
+        border: 1px solid #989898;
+        color: #dfdfdf;
+        transition: 0.2s ease-in-out;
+        transition-property: background-color, border-color, filter;
+        will-change: background-color, border-color, filter;
+
+        &:hover {
+          background-color: #989898;
+          border-color: #a8a8a8;
+          filter: drop-shadow(0 0 5px #a8a8a8);
+        }
+      }
+    }
   }
 }
 
@@ -47,8 +97,8 @@ $breakpoint-desktop-fullhd: 1920px;
 /*from 320 to 767*/
 @media screen and (min-width: $breakpoint-mobile)
               and (orientation: portrait) {
-  $modal-width: 200px;
-  $modal-height: 200px;
+  $modal-width: 300px;
+  $modal-height: 300px;
 
   .modal {
     top: calc(50% - #{$modal-width / 2});
@@ -57,15 +107,31 @@ $breakpoint-desktop-fullhd: 1920px;
     height: $modal-height;
 
     &__header {
-      height: 40px;
-      padding: 20px;
-      font-size: 22px;
+      height: 30px;
+      padding: 0 20px;
+      font-size: 18px;
     }
 
     &__content {
-      height: 160px;
+      height: 268px;
       padding: 10px;
       font-size: 16px;
+
+      &__auth { 
+        &__input-name,
+        &__input-pass {
+          min-height: 42px;
+          border-radius: 6px;
+        }
+
+        &__btn-submit,
+        &__btn-cancel {
+          width: 100px;
+          height: 42px;
+          border-radius: 21px;
+          font-size: 16px;
+        }
+      }
     }
   }
 }
@@ -73,8 +139,8 @@ $breakpoint-desktop-fullhd: 1920px;
 /*from 320 to 767*/
 @media screen and (min-width: $breakpoint-mobile)
               and (orientation: landscape) {
-  $modal-width: 200px;
-  $modal-height: 200px;
+  $modal-width: 300px;
+  $modal-height: 300px;
 
   .modal {
     top: calc(50% - #{$modal-width / 2});
@@ -83,15 +149,31 @@ $breakpoint-desktop-fullhd: 1920px;
     height: $modal-height;
 
     &__header {
-      height: 40px;
-      padding: 20px;
-      font-size: 22px;
+      height: 30px;
+      padding: 0 20px;
+      font-size: 16px;
     }
 
     &__content {
-      height: 160px;
+      height: 268px;
       padding: 10px;
       font-size: 16px;
+
+      &__auth {  
+        &__input-name,
+        &__input-pass {
+          min-height: 42px;
+          border-radius: 6px;
+        }
+
+        &__btn-submit,
+        &__btn-cancel {
+          width: 100px;
+          height: 42px;
+          border-radius: 21px;
+          font-size: 16px;
+        }
+      }
     }
   }
 }
@@ -101,8 +183,8 @@ $breakpoint-desktop-fullhd: 1920px;
 
 /*from 768 to 1023*/
 @media screen and (min-width: $breakpoint-tablet) {
-  $modal-width: 200px;
-  $modal-height: 200px;
+  $modal-width: 300px;
+  $modal-height: 300px;
 
   .modal {
     top: calc(50% - #{$modal-width / 2});
@@ -111,15 +193,24 @@ $breakpoint-desktop-fullhd: 1920px;
     height: $modal-height;
 
     &__header {
-      height: 60px;
-      padding: 20px;
-      font-size: 42px;
+      height: 30px;
+      padding: 0 20px;
+      font-size: 20px;
     }
 
     &__content {
-      height: 340px;
-      padding: 10px;
-      font-size: 26px;
+      height: 270px;
+      font-size: 20px;
+
+      &__auth {
+        &__btn-submit,
+        &__btn-cancel {
+          width: 100px;
+          height: 42px;
+          border-radius: 21px;
+          font-size: 18px;
+        }
+      }
     }
   }
 }
@@ -129,6 +220,49 @@ $breakpoint-desktop-fullhd: 1920px;
 
 /*from 1024 to 1279*/
 @media screen and (min-width: $breakpoint-desktop) {
+  $modal-width: 300px;
+  $modal-height: 300px;
+
+  .modal {
+    top: calc(50% - #{$modal-width / 2});
+    left: calc(50% - #{$modal-height / 2});
+    width: $modal-width;
+    height: $modal-height;
+
+    &__header {
+      height: 30px;
+      padding: 0 20px;
+      font-size: 20px;
+    }
+
+    &__content {
+      height: 268px;
+      font-size: 20px;
+
+      &__auth {
+        &__input-name,
+        &__input-pass {
+          height: 42px;
+          border-radius: 6px;
+        }
+  
+        &__btn-submit,
+        &__btn-cancel {
+          width: 100px;
+          height: 42px;
+          border-radius: 21px;
+          font-size: 18px;
+        }
+      }
+    }
+  }
+}
+
+
+/*HD Ready===================================================================*/
+
+/*from 1280 to 1919*/
+@media screen and (min-width: $breakpoint-desktop-hdready) {
   $modal-width: 400px;
   $modal-height: 400px;
 
@@ -139,43 +273,28 @@ $breakpoint-desktop-fullhd: 1920px;
     height: $modal-height;
 
     &__header {
-      height: 60px;
-      padding: 20px;
-      font-size: 42px;
+      height: 50px;
+      padding: 0 20px;
+      font-size: 22px;
     }
 
     &__content {
-      height: 340px;
-      padding: 10px;
-      font-size: 26px;
-    }
-  }
-}
+      height: 348px;
+      font-size: 16px;
 
-
-/*HD Ready===================================================================*/
-
-/*from 1280 to 1919*/
-@media screen and (min-width: $breakpoint-desktop-hdready) {
-  $modal-width: 500px;
-  $modal-height: 500px;
-
-  .modal {
-    top: calc(50% - #{$modal-width / 2});
-    left: calc(50% - #{$modal-height / 2});
-    width: $modal-width;
-    height: $modal-height;
-
-    &__header {
-      height: 80px;
-      padding: 20px;
-      font-size: 52px;
-    }
-
-    &__content {
-      height: 420px;
-      padding: 10px;
-      font-size: 36px;
+      &__auth {
+        &__input-name,
+        &__input-pass {
+          
+        }
+  
+        &__btn-submit,
+        &__btn-cancel {
+          width: 150px;
+          height: 52px;
+          border-radius: 26px;
+        }
+      }
     }
   }
 }
@@ -184,8 +303,8 @@ $breakpoint-desktop-fullhd: 1920px;
 
 /*from 1920 and up*/
 @media screen and (min-width: $breakpoint-desktop-fullhd) {
-  $modal-width: 600px;
-  $modal-height: 600px;
+  $modal-width: 400px;
+  $modal-height: 400px;
 
   .modal {
     top: calc(50% - #{$modal-width / 2});
@@ -194,15 +313,23 @@ $breakpoint-desktop-fullhd: 1920px;
     height: $modal-height;
 
     &__header {
-      height: 100px;
-      padding: 20px;
-      font-size: 62px;
+      height: 50px;
+      padding: 0 20px;
+      font-size: 22px;
     }
 
     &__content {
-      height: 500px;
-      padding: 10px;
-      font-size: 42px;
+      height: 348px;
+      font-size: 16px;
+
+      &__auth {
+        &__btn-submit,
+        &__btn-cancel {
+          width: 140px;
+          height: 52px;
+          border-radius: 26px;
+        }
+      }
     }
   }
 }

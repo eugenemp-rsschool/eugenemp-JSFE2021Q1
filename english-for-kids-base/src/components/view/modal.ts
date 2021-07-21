@@ -20,7 +20,7 @@ export default class Modal {
     }
 
     if (typeof content === 'string') {
-      this.modalContent.innerHTML = `<span class="modal__text">${content}</span>`;
+      this.modalContent.innerHTML = content;
     }
   }
 

@@ -298,7 +298,10 @@ function spawnModal(heading: string, text: string): void {
   const bg = modal.closest('.modal__bg');
 
   bg?.addEventListener('click', (e) => {
-    if ((e.target as HTMLElement).className === 'modal__bg') modal.remove();
+    if (
+      (e.target as HTMLElement).className === 'modal__bg'
+   || (e.target as HTMLElement).className === 'modal__content__auth__btn-cancel'
+    ) modal.remove();
   });
 
   document.body.appendChild(modal);

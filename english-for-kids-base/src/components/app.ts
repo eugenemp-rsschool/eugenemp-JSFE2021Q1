@@ -12,6 +12,7 @@ import {
 import { generateRepeatWords } from './stats-manager';
 import Words from './words';
 import Router from './router';
+import { MODAL_AUTH } from './view/modal-content-auth';
 
 export default class App {
   private readonly rootElement: HTMLElement | null;
@@ -99,7 +100,7 @@ export default class App {
       }
 
       if ((e.target as HTMLElement).classList.contains('menu__btn-login')) {
-        spawnModal('Oops...', 'This part has not been completed yet');
+        spawnModal('Log in', MODAL_AUTH);
       }
     });
 

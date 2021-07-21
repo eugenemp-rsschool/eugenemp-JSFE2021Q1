@@ -1,0 +1,208 @@
+/*Screen sizes for media queries=============================================*/
+$breakpoint-mobile: 320px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+$breakpoint-desktop-hdready: 1280px;
+$breakpoint-desktop-fullhd: 1920px;
+
+/*Basic rules================================================================*/
+.modal {
+  position: fixed;
+  border: 1px solid #787878;
+
+  &__header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+    padding: 20px;
+    background-color: #787878;
+    font-family: 'Roboto', sans-serif;
+    font-size: 22px;
+    color: #dfdfdf;
+  }
+
+  &__content {
+    width: 100%;
+    height: 160px;
+    padding: 10px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    color: #dfdfdf;
+  }
+}
+
+.modal__bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba($color: #232323, $alpha: 0.8);
+}
+
+/*Mobile=====================================================================*/
+
+/*from 320 to 767*/
+@media screen and (min-width: $breakpoint-mobile)
+              and (orientation: portrait) {
+  $modal-width: 200px;
+  $modal-height: 200px;
+
+  .modal {
+    top: calc(50% - #{$modal-width / 2});
+    left: calc(50% - #{$modal-height / 2});
+    width: $modal-width;
+    height: $modal-height;
+
+    &__header {
+      height: 40px;
+      padding: 20px;
+      font-size: 22px;
+    }
+
+    &__content {
+      height: 160px;
+      padding: 10px;
+      font-size: 16px;
+    }
+  }
+}
+
+/*from 320 to 767*/
+@media screen and (min-width: $breakpoint-mobile)
+              and (orientation: landscape) {
+  $modal-width: 200px;
+  $modal-height: 200px;
+
+  .modal {
+    top: calc(50% - #{$modal-width / 2});
+    left: calc(50% - #{$modal-height / 2});
+    width: $modal-width;
+    height: $modal-height;
+
+    &__header {
+      height: 40px;
+      padding: 20px;
+      font-size: 22px;
+    }
+
+    &__content {
+      height: 160px;
+      padding: 10px;
+      font-size: 16px;
+    }
+  }
+}
+
+
+/*Tablet=====================================================================*/
+
+/*from 768 to 1023*/
+@media screen and (min-width: $breakpoint-tablet) {
+  $modal-width: 200px;
+  $modal-height: 200px;
+
+  .modal {
+    top: calc(50% - #{$modal-width / 2});
+    left: calc(50% - #{$modal-height / 2});
+    width: $modal-width;
+    height: $modal-height;
+
+    &__header {
+      height: 60px;
+      padding: 20px;
+      font-size: 42px;
+    }
+
+    &__content {
+      height: 340px;
+      padding: 10px;
+      font-size: 26px;
+    }
+  }
+}
+
+
+/*Desktop====================================================================*/
+
+/*from 1024 to 1279*/
+@media screen and (min-width: $breakpoint-desktop) {
+  $modal-width: 400px;
+  $modal-height: 400px;
+
+  .modal {
+    top: calc(50% - #{$modal-width / 2});
+    left: calc(50% - #{$modal-height / 2});
+    width: $modal-width;
+    height: $modal-height;
+
+    &__header {
+      height: 60px;
+      padding: 20px;
+      font-size: 42px;
+    }
+
+    &__content {
+      height: 340px;
+      padding: 10px;
+      font-size: 26px;
+    }
+  }
+}
+
+
+/*HD Ready===================================================================*/
+
+/*from 1280 to 1919*/
+@media screen and (min-width: $breakpoint-desktop-hdready) {
+  $modal-width: 500px;
+  $modal-height: 500px;
+
+  .modal {
+    top: calc(50% - #{$modal-width / 2});
+    left: calc(50% - #{$modal-height / 2});
+    width: $modal-width;
+    height: $modal-height;
+
+    &__header {
+      height: 80px;
+      padding: 20px;
+      font-size: 52px;
+    }
+
+    &__content {
+      height: 420px;
+      padding: 10px;
+      font-size: 36px;
+    }
+  }
+}
+
+/*Tablet=====================================================================*/
+
+/*from 1920 and up*/
+@media screen and (min-width: $breakpoint-desktop-fullhd) {
+  $modal-width: 600px;
+  $modal-height: 600px;
+
+  .modal {
+    top: calc(50% - #{$modal-width / 2});
+    left: calc(50% - #{$modal-height / 2});
+    width: $modal-width;
+    height: $modal-height;
+
+    &__header {
+      height: 100px;
+      padding: 20px;
+      font-size: 62px;
+    }
+
+    &__content {
+      height: 500px;
+      padding: 10px;
+      font-size: 42px;
+    }
+  }
+}

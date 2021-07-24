@@ -1,0 +1,110 @@
+/*Screen sizes for media queries=============================================*/
+$breakpoint-mobile: 320px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+$breakpoint-desktop-hdready: 1280px;
+$breakpoint-desktop-fullhd: 1920px;
+
+
+/*Basic rules================================================================*/
+.cards-wrapper-admin {
+  overflow: auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+
+/*Mobile=====================================================================*/
+
+/*from 320 to 767*/
+@media screen and (min-width: $breakpoint-mobile)
+              and (orientation: portrait) {
+  $width: 280px;
+  $height: 70vh;
+
+  .cards-wrapper-admin {
+    top: calc(50% - #{$height / 2});
+    left: calc(50% - #{$width / 2});
+    width: $width;
+    height: $height;
+  }
+}
+
+/*from 320 to 767*/
+@media screen and (min-width: $breakpoint-mobile)
+              and (orientation: landscape) {
+  $width: 520px;
+  $height: 80vh;
+
+  .cards-wrapper-admin {
+    top: calc(50% - #{$height / 2});
+    left: calc(50% - #{$width / 2});
+    width: $width;
+    height: $height;
+  }
+}
+
+
+/*Tablet=====================================================================*/
+
+/*from 768 to 1023*/
+@media screen and (min-width: $breakpoint-tablet) {
+  $width: 440px;
+  $height: 70vh;
+
+  .cards-wrapper-admin {
+    top: calc(50% - #{$height / 2});
+    left: calc(50% - #{$width / 2});
+    width: $width;
+    height: $height;
+  }
+}
+
+
+/*Desktop====================================================================*/
+
+/*from 1024 to 1279*/
+@media screen and (min-width: $breakpoint-desktop) {
+  $width: 1000px;
+  $height: 80vh;
+
+  .cards-wrapper-admin {
+    top: calc(50% - #{$height / 2});
+    left: calc(50% - #{$width / 2});
+    width: $width;
+    height: $height;
+  }
+}
+
+
+/*HD Ready===================================================================*/
+
+/*from 1280 to 1919*/
+@media screen and (min-width: $breakpoint-desktop-hdready) {
+  $width: 1000px;
+  $height: 80vh;
+
+  .cards-wrapper-admin {
+    top: calc(50% - #{$height / 2});
+    left: calc(50% - #{$width / 2});
+    width: $width;
+    height: $height;
+  }
+}
+
+/*Tablet=====================================================================*/
+
+/*from 1920 and up*/
+@media screen and (min-width: $breakpoint-desktop-fullhd) {
+  $width: 1200px;
+  $height: 80vh;
+
+  .cards-wrapper-admin {
+    top: calc(50% - #{$height / 2});
+    left: calc(50% - #{$width / 2});
+    width: $width;
+    height: $height;
+  }
+}

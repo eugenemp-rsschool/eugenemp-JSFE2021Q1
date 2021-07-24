@@ -1,0 +1,230 @@
+/*Screen sizes for media queries=============================================*/
+$breakpoint-mobile: 320px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+$breakpoint-desktop-hdready: 1280px;
+$breakpoint-desktop-fullhd: 1920px;
+
+
+/*Basic rules================================================================*/
+.card-cat {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #727272;
+  background-color: rgba($color: #232323, $alpha: 0.3);
+  filter: drop-shadow(0 5px 10px #232323);
+  transition: filter 0.3s ease-in-out;
+  will-change: filter;
+
+  &:hover {
+    filter: drop-shadow(0 8px 14px #383838);
+  }
+
+  &__heading {
+    font-family: 'Roboto', sans-serif;
+    color: #dfdfdf;
+  }
+
+  &__input {
+    display: none;
+    background-color: transparent;
+    font-family: 'Roboto', sans-serif;
+    color: #dfdfdf;
+    border-bottom: 1px solid #787878;
+  }
+
+  &__count {
+    font-family: 'Roboto', sans-serif;
+    color: #dfdfdf;
+    text-transform: uppercase;
+  }
+
+  &__btn__wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+  }
+
+  &__btn-delete {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-image: url(../../../assets/icons/admin-delete.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    transition: filter 0.2s ease-in-out;
+    will-change: filter;
+
+    &:hover {
+      filter: drop-shadow(0 0 5px #dfdfdf);
+    }
+  }
+
+  &__btn-update,
+  &__btn-add {
+    background-color: #383838;
+    border: 1px solid #727272;
+    font-family: 'Roboto', sans-serif;
+    color: #dfdfdf;
+    transition: filter 0.2s ease-in-out;
+    transition-property: background-color, border-color;
+    will-change: background-color, border-color;
+
+    &:hover {
+      background-color: #727272;
+      border-color: 1px solid #989898;
+    }
+  }
+}
+
+
+/*Mobile=====================================================================*/
+
+/*from 320 to 767*/
+@media screen and (min-width: $breakpoint-mobile)
+              and (orientation: portrait) {
+  .card-cat {
+    width: 120px;
+    height: 120px;
+    padding: 10px;
+    margin-bottom: 10px;
+
+    &__heading,
+    &__count {
+      font-size: 12px;
+    }
+
+    &__btn-delete {
+      top: 10px;
+      right: 10px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+/*from 320 to 767*/
+@media screen and (min-width: $breakpoint-mobile)
+              and (orientation: landscape) {
+  .card-cat {
+    width: 120px;
+    height: 120px;
+    padding: 10px;
+    margin-bottom: 10px;
+
+    &__heading,
+    &__count {
+      font-size: 12px;
+    }
+
+    &__btn-delete {
+      top: 10px;
+      right: 10px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+
+/*Tablet=====================================================================*/
+
+/*from 768 to 1023*/
+@media screen and (min-width: $breakpoint-tablet) {
+  .card-cat {
+    width: 180px;
+    height: 180px;
+    padding: 10px;
+    margin-bottom: 10px;
+
+    &__heading,
+    &__count {
+      font-size: 16px;
+    }
+
+    &__btn-delete {
+      top: 10px;
+      right: 10px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+
+/*Desktop====================================================================*/
+
+/*from 1024 to 1279*/
+@media screen and (min-width: $breakpoint-desktop) {
+  .card-cat {
+    width: 220px;
+    height: 220px;
+    padding: 10px;
+    margin-bottom: 10px;
+
+    &__heading,
+    &__count {
+      font-size: 18px;
+    }
+
+    &__btn-delete {
+      top: 10px;
+      right: 10px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+
+/*HD Ready===================================================================*/
+
+/*from 1280 to 1919*/
+@media screen and (min-width: $breakpoint-desktop-hdready) {
+  .card-cat {
+    width: 220px;
+    height: 220px;
+    padding: 20px;
+    margin-bottom: 20px;
+
+    &__heading,
+    &__count {
+      font-size: 20px;
+    }
+
+    &__btn-delete {
+      top: 20px;
+      right: 20px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+/*Full HD====================================================================*/
+
+/*from 1920 and up*/
+@media screen and (min-width: $breakpoint-desktop-fullhd) {
+  .card-cat {
+    width: 260px;
+    height: 260px;
+    padding: 20px;
+    margin-bottom: 20px;
+
+    &__heading,
+    &__count {
+      font-size: 22px;
+    }
+
+    &__btn-delete {
+      top: 20px;
+      right: 20px;
+      width: 30px;
+      height: 30px;
+    }
+  }
+}

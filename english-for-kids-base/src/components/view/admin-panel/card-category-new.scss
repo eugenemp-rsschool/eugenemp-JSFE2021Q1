@@ -1,0 +1,133 @@
+/*Screen sizes for media queries=============================================*/
+$breakpoint-mobile: 320px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+$breakpoint-desktop-hdready: 1280px;
+$breakpoint-desktop-fullhd: 1920px;
+
+
+/*Basic rules================================================================*/
+.card-cat-new {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  border: 1px solid #727272;
+  background-color: rgba($color: #232323, $alpha: 0.3);
+  background-image: url(../../../assets/icons/admin-add.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 30%;
+  filter: drop-shadow(0 5px 10px #232323);
+  transition: filter 0.3s ease-in-out;
+  will-change: filter;
+
+  &:hover {
+    filter: drop-shadow(0 8px 14px #383838);
+  }
+
+  &__heading {
+    font-family: 'Roboto', sans-serif;
+    color: #dfdfdf;
+  }
+}
+
+
+/*Mobile=====================================================================*/
+
+/*from 320 to 767*/
+@media screen and (min-width: $breakpoint-mobile)
+              and (orientation: portrait) {
+  .card-cat-new {
+    width: 120px;
+    height: 120px;
+    padding: 10px;
+    margin-bottom: 10px;
+
+    &__heading {
+      font-size: 12px;
+    }
+  }
+}
+
+/*from 320 to 767*/
+@media screen and (min-width: $breakpoint-mobile)
+              and (orientation: landscape) {
+  .card-cat-new {
+    width: 120px;
+    height: 120px;
+    padding: 10px;
+    margin-bottom: 10px;
+
+    &__heading {
+      font-size: 12px;
+    }
+  }
+}
+
+
+/*Tablet=====================================================================*/
+
+/*from 768 to 1023*/
+@media screen and (min-width: $breakpoint-tablet) {
+  .card-cat-new {
+    width: 180px;
+    height: 180px;
+    padding: 10px;
+    margin-bottom: 10px;
+
+    &__heading {
+      font-size: 16px;
+    }
+  }
+}
+
+
+/*Desktop====================================================================*/
+
+/*from 1024 to 1279*/
+@media screen and (min-width: $breakpoint-desktop) {
+  .card-cat-new {
+    width: 220px;
+    height: 220px;
+    padding: 10px;
+    margin-bottom: 10px;
+
+    &__heading {
+      font-size: 18px;
+    }
+  }
+}
+
+
+/*HD Ready===================================================================*/
+
+/*from 1280 to 1919*/
+@media screen and (min-width: $breakpoint-desktop-hdready) {
+  .card-cat-new {
+    width: 220px;
+    height: 220px;
+    padding: 20px;
+    margin-bottom: 20px;
+
+    &__heading {
+      font-size: 20px;
+    }
+  }
+}
+
+/*Full HD====================================================================*/
+
+/*from 1920 and up*/
+@media screen and (min-width: $breakpoint-desktop-fullhd) {
+  .card-cat-new {
+    width: 260px;
+    height: 260px;
+    padding: 20px;
+    margin-bottom: 20px;
+
+    &__heading {
+      font-size: 22px;
+    }
+  }
+}

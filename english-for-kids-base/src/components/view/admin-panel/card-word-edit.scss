@@ -1,0 +1,323 @@
+/*Screen sizes for media queries=============================================*/
+$breakpoint-mobile: 320px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+$breakpoint-desktop-hdready: 1280px;
+$breakpoint-desktop-fullhd: 1920px;
+
+
+/*Basic rules================================================================*/
+.card-word-edit {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #727272;
+  background-color: rgba($color: #232323, $alpha: 0.3);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 50px;
+  filter: drop-shadow(0 5px 10px #232323);
+  transition: filter 0.3s ease-in-out;
+  will-change: filter;
+
+  &:hover {
+    filter: drop-shadow(0 8px 15px #383838);
+  }
+
+  &__label {
+    font-family: 'Roboto', sans-serif;
+    color: #dfdfdf;
+  }
+
+  &__text {
+    font-family: 'Roboto', sans-serif;
+    color: #dfdfdf;
+  }
+
+  &__input__wrapper {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  &__input {
+    opacity: 0;
+    width: 100%;
+  }
+
+  &__file__wrapper {
+    position: relative;
+    display: inline;
+  }
+
+  &__btn-select {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #787878;
+    border: 1px solid #afafaf;
+    font-family: 'Roboto', sans-serif;
+    color: #dfdfdf;
+    transition: 0.2s ease-in-out;
+    transition-property: background-color, border-color;
+    will-change: background-color, border-color;
+
+    &:hover {
+      background-color: #989898;
+      border-color: #dfdfdf;
+    }
+  }
+  &__btn-cancel {
+    background-color: #787878;
+    border: 1px solid #afafaf;
+    font-family: 'Roboto', sans-serif;
+    color: #dfdfdf;
+    width: 60%;
+    transition: 0.2s ease-in-out;
+    transition-property: background-color, border-color;
+    will-change: background-color, border-color;
+
+    &:hover {
+      background-color: #989898;
+      border-color: #dfdfdf;
+    }
+  }
+
+  &__btn-delete {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-image: url(../../../assets/icons/admin-delete.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    transition: filter 0.2s ease-in-out;
+    will-change: filter;
+
+    &:hover {
+      filter: drop-shadow(0 0 5px #dfdfdf);
+    }
+  }
+}
+
+
+/*Mobile=====================================================================*/
+
+/*from 320 to 767*/
+@media screen and (min-width: $breakpoint-mobile)
+              and (orientation: portrait) {
+  .card-word-edit {
+    width: 120px;
+    height: 160px;
+    padding: 10px;
+    margin-bottom: 10px;
+
+    &__text {
+      font-size: 12px;
+    }
+
+    &__input-word,
+    &__input-transl {
+      width: 50px;
+    }
+    
+    &__file__wrapper {
+      width: 50px;
+    }
+
+    &__btn-delete {
+      top: 10px;
+      right: 10px;
+      width: 20px;
+      height: 20px;
+    }
+
+    &__btn-select {
+      font-size: 12px;
+    }
+  }
+}
+
+/*from 320 to 767*/
+@media screen and (min-width: $breakpoint-mobile)
+              and (orientation: landscape) {
+  .card-word-edit {
+    width: 120px;
+    height: 160px;
+    padding: 10px;
+    margin-bottom: 10px;
+
+    &__text {
+      font-size: 12px;
+    }
+
+    &__input-word,
+    &__input-transl {
+      width: 50px;
+    }
+
+    &__file__wrapper {
+      width: 50px;
+    }
+
+    &__btn-delete {
+      top: 10px;
+      right: 10px;
+      width: 20px;
+      height: 20px;
+    }
+
+    &__btn-select {
+      font-size: 12px;
+    }
+  }
+}
+
+
+/*Tablet=====================================================================*/
+
+/*from 768 to 1023*/
+@media screen and (min-width: $breakpoint-tablet) {
+  .card-word-edit {
+    width: 180px;
+    height: 220px;
+    padding: 10px;
+    margin-bottom: 10px;
+
+    &__text {
+      font-size: 14px;
+    }
+
+    &__input-word,
+    &__input-transl {
+      width: 100px;
+    }
+
+    &__file__wrapper {
+      width: 100px;
+    }
+
+    &__btn-delete {
+      top: 10px;
+      right: 10px;
+      width: 20px;
+      height: 20px;
+    }
+
+    &__btn-select {
+      font-size: 14px;
+    }
+  }
+}
+
+
+/*Desktop====================================================================*/
+
+/*from 1024 to 1279*/
+@media screen and (min-width: $breakpoint-desktop) {
+  .card-word-edit {
+    width: 220px;
+    height: 260px;
+    padding: 10px;
+    margin-bottom: 10px;
+
+    &__text {
+      font-size: 14px;
+    }
+
+    &__input-word,
+    &__input-transl {
+      width: 100px;
+    }
+
+    &__file__wrapper {
+      width: 100px;
+    }
+
+    &__btn-delete {
+      top: 10px;
+      right: 10px;
+      width: 20px;
+      height: 20px;
+    }
+
+    &__btn-select {
+      font-size: 14px;
+    }
+  }
+}
+
+
+/*HD Ready===================================================================*/
+
+/*from 1280 to 1919*/
+@media screen and (min-width: $breakpoint-desktop-hdready) {
+  .card-word-edit {
+    width: 220px;
+    height: 260px;
+    padding: 20px;
+    margin-bottom: 20px;
+
+    &__text {
+      font-size: 20px;
+    }
+
+    &__input-word,
+    &__input-transl {
+      width: 120px;
+    }
+
+    &__file__wrapper {
+      width: 120px;
+    }
+
+    &__btn-delete {
+      top: 20px;
+      right: 20px;
+      width: 20px;
+      height: 20px;
+    }
+
+    &__btn-select {
+      font-size: 16px;
+    }
+  }
+}
+
+/*Full HD====================================================================*/
+
+/*from 1920 and up*/
+@media screen and (min-width: $breakpoint-desktop-fullhd) {
+  .card-word-edit {
+    width: 260px;
+    height: 320px;
+    padding: 20px;
+    margin-bottom: 20px;
+
+    &__text {
+      font-size: 22px;
+    }
+
+    &__input-word,
+    &__input-transl {
+      width: 150px;
+    }
+
+    &__file__wrapper {
+      width: 150px;
+    }
+
+    &__btn-delete {
+      top: 20px;
+      right: 20px;
+      width: 30px;
+      height: 30px;
+    }
+
+    &__btn-select {
+      font-size: 18px;
+    }
+  }
+}

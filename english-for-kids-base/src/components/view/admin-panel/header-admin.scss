@@ -1,0 +1,131 @@
+$breakpoint-mobile: 320px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+$breakpoint-desktop-hdready: 1280px;
+$breakpoint-desktop-fullhd: 1920px;
+
+/*Base styles*/
+.header-admin {
+  position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background-color: rgba($color: #202020, $alpha: 0.8);
+
+  &__btn__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+  }
+
+  &__btn-cats,
+  &__btn-words,
+  &__btn-logout {
+    height: 100%;
+    font-family: 'Roboto', sans-serif;
+    color: #afafaf;
+    transition: 0.2s ease-out;
+    transition-property: color, background-color;
+    will-change: color, background-color;
+
+    &:hover {
+      color: #dfdfdf;
+      background-color: rgba($color: #585858, $alpha: 0.8);
+    }
+  }
+}
+
+/*from 320 to 767*/
+@media screen and (min-width: $breakpoint-mobile)
+              and (orientation: portrait) {
+  .header-admin {
+    height: 42px;
+    padding: 0 20px;
+
+    &__btn-cats,
+    &__btn-words,
+    &__btn-logout {
+      width: 80px;
+      font-size: 14px;
+    }
+  }
+}
+
+/*from 320 to 767*/
+@media screen and (min-width: $breakpoint-mobile)
+              and (orientation: landscape) {
+  .header-admin {
+    height: 42px;
+    padding: 0 20px;
+
+    &__btn-cats,
+    &__btn-words,
+    &__btn-logout {
+      width: 80px;
+      font-size: 14px;
+    }
+  }
+}
+
+/*from 768 to 1023*/
+@media screen and (min-width: $breakpoint-tablet) {
+  .header-admin {
+    height: 52px;
+    padding: 0 20px;
+
+    &__btn-cats,
+    &__btn-words,
+    &__btn-logout {
+      width: 100px;
+      font-size: 16px;
+    }
+  }
+}
+
+/*from 1024 to 1279*/
+@media screen and (min-width: $breakpoint-desktop) {
+  .header-admin {
+    height: 52px;
+    padding: 0 20px;
+
+    &__btn-cats,
+    &__btn-words,
+    &__btn-logout {
+      width: 100px;
+      font-size: 18px;
+    }
+  }
+}
+
+/*from 1280 to 1919*/
+@media screen and (min-width: $breakpoint-desktop-hdready) {
+  .header-admin {
+    height: 62px;
+    padding: 0 20px;
+
+    &__btn-cats,
+    &__btn-words,
+    &__btn-logout {
+      width: 160px;
+      font-size: 18px;
+    }
+  }
+}
+
+/*from 1920 and up*/
+@media screen and (min-width: $breakpoint-desktop-fullhd) {
+  .header-admin {
+    height: 62px;
+    padding: 0 20px;
+
+    &__btn-cats,
+    &__btn-words,
+    &__btn-logout {
+      width: 160px;
+      font-size: 20px;
+    }
+  }
+}

@@ -12,7 +12,7 @@ import {
 import { generateRepeatWords } from './stats-manager';
 import Words from './words';
 import Router from './router';
-import MODAL_AUTH from './view/modal-content-auth';
+import handleAuth from './auth';
 
 export default class App {
   private readonly rootElement: HTMLElement | null;
@@ -100,7 +100,7 @@ export default class App {
       }
 
       if ((e.target as HTMLElement).classList.contains('menu__btn-login')) {
-        spawnModal('Log in', MODAL_AUTH);
+        handleAuth();
       }
     });
 
